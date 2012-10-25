@@ -2,7 +2,7 @@
 layout: post
 title: "谈数据库索引和Sqlite中索引的使用"
 date: 2012-09-28 19:36
-comments: flase 
+comments: true
 categories: [数据库索引, 数据库优化, sqlite优化] 
 ---
 
@@ -139,7 +139,35 @@ CREATE INDEX idx_ex1 ON ex1(a,b,c,d,e,...,y,z);
 
 索引将不会被使用，因为没有使用前导列，这个查询会是一个全表查询。
 
+3.对于between，or，like，都无法使用索引。
 
+如
+{% codeblock %}
+...WHERE myfield BETWEEN 10 and 20;
+{% endcodeblock %}
+
+这时就应该将其转换成：
+{% codeblock %}
+...WHERE myfield >= 10 AND myfield <= 20;
+{% endcodeblock %}
+
+再如LIKE：
+{% codeblock %}
+...mytable WHERE myfield LIKE 'sql%';;
+{% endcodeblock %}
+
+此时应该将它转换成：
+{% codeblock %}
+...WHERE myfield >= 'sql' AND myfield < 'sqm';
+{% endcodeblock %}
+再如OR：
+ {% codeblock %}
+...WHERE myfield = 'abc' OR myfield = 'xyz';
+{% endcodeblock %}
+此时应该将它转换成：
+ {% codeblock %}
+...WHERE myfield IN ('abc', 'xyz');
+{% endcodeblock %}
 其实除了索引，对查询性能的影响因素还有很多，比如表的连接，是否排序等。影响数据库操作的整体性能就需要考虑更多因素，使用更对的技巧，不得不说这是一个很大的学问。
 	
 最后在android上使用sqlite写一个简单的例子，看下索引对数据库操作的影响。
@@ -176,7 +204,16 @@ db.execSQL("create index if not exists ia on t1(a,b)");
 
 还有个要吐槽的是，android中的rawQurey方法，执行完sql语句后返回一个cursor，其实并没有完成一个查询操作，我在rawquery之前和之后计算查询时间，永远是1ms...这让我无比苦闷。看了下源码，在对cursor调用moveToNext这些移动游标方法时，都会最终先调用getCount方法，而getCount方法才会调用native方法调用真正的查询操作。这种设计显然更加合理。
 
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=1690715" async=""></script>
-<!-- UY END -->
+    	<script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'notice501'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
