@@ -13,6 +13,7 @@ categories: [android framework,android 窗口管理]
 
 - 一种是系统窗口，如状态栏，这类窗口由系统直接通过windowManager来创建，和activity无关。
 
+<!--more-->
 在这里，窗口的概念其实可以说由三部分构成，一部分是用来描述窗口信息的，由WindowState对象表示。一个WindowState对象对应一个窗口，它拥有绘制窗口所需要的信息。但是真正去绘制窗口需要另一部分内容Surface来完成，最终会通过surfaceflinger完成绘图。还有一部分就是对消息的处理，windowmanagerService把窗口信息传递给InputManager，这样InputDispatcher就能根据当前窗口的状态进行消息处理。
 我们先看下整体的架构图，然后再来看这两种窗口的创建。WindowManager和其他很多android的服务一样，采用C/S的架构。其中windowManagerService跑在System_server进程，作为服务端，客户端通过ipc调用和它进行交互。
 {% img http://foocoder.com/images/androidWIndow.png '窗口管理框架图'%}

@@ -1,0 +1,377 @@
+---
+layout: post
+title: "android中的跨进程通信的实现（一）——远程调用过程和aidl"
+date: 2012-11-02 10:44
+comments: true
+categories: [android]
+---
+
+android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和我在一个进程里。
+
+<!--more-->
+我们有没有想过安全性问题，如此简单就可以跨进程的访问，安全性问题怎么保证。本来每个进程都是一个孤岛，而通过ipc，这个孤岛却可以和世界通信了。这里简单介绍下android中的安全机制。
+
+android的安全机制分为三层。最基础的一层，android将数据分为system和data两个区。其中system是只读的，data用来存放应用自己的数据，这保证了系统数据不会被随意改写。第二层用来使应用之间的数据相互独立。每个应用都会有一个user id和group id，只有相同的user id并且来自同一个作者，才能访问它们的数据。作者通过对apk签名来标识自己。签名和uid构成了双重的保证。第三个层次就是权限体系，这个就不用多说了。
+
+拉回正题，那么android是如何实现ipc的呢？答案是binder。我打算用两篇来介绍android的binder机制，这一篇着重如何使用，介绍跨进程调用的过程和aidl。另一篇着重binder实现机制。
+Binder并不是android最早开始使用，它发源于Be和Palm之前的OpenBinder，由Dianne Hackborn领导开发。Hackborn现在就在google，是android framework的工程师，我们可以从https://lkml.org/lkml/2009/6/25/3 看一下，Hackborn如何描述binder。一句话总结：
+
+    In the Android platform, the binder is used for nearly everything that happens across processes in the core platform. 
+
+可是android将binder几乎封装的不可见，我们看下层次结构是怎么样的。
+
+{% img http://foocoder.com/images/aidl1.png %}
+
+最底层的是android的ashmen（Anonymous shared memoryy）机制，它负责辅助实现内存的分配，以及跨进程所需要的内存共享。
+AIDL（android interface definition language）对Binder的使用进行了封装，可以让开发者方便的进行方法的远程调用，后面会详细介绍。
+
+Intent是最高一层的抽象，方便开发者进行常用的跨进程调用。
+
+关于如何使用intent去跨进程的启动一个activity或者service等，这里就不再介绍了，是android中非常基础的内容。
+
+这里讲如何实现远程的方法调用。在android中对方法的远程调用无处不在，随便打开framework/base中的包，都会发现很多aidl文件。AIDL是android为了方便开发者进行远程方法调用，定义的一种语言。使用aidl完成一个远程方法调用只需要三个步骤：
+
+1. 用aidl定义需要被调用方法接口。
+2. 实现这些方法。
+3. 调用这些方法。
+
+我们拿ApiDemo中的例子来学习。在app包下面有一个ISecondary.aidl
+
+{% codeblock lang:java %}interface ISecondary {
+    /**
+     * Request the PID of this service, to do evil things with it.
+     */
+    int getPid();
+    
+    /**
+     * This demonstrates the basic types that you can use as parameters
+     * and return values in AIDL.
+     */
+    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
+            double aDouble, String aString);
+}{% endcodeblock %}
+
+看起来和java没有什么区别。可以看到它定义个了两个接口方法。从这里我们可以知道AIDL（android接口定义语言的由来）。android会将该aidl生成一个java文件（如果你使用eclipse，会自动生成。在gen目录下。），生成的代码如下：
+{% codeblock lang:java %}
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Original file: /home/dd/workspace/ApiDemos/src/com/example/android/apis/app/ISecondary.aidl
+ */
+package com.example.android.apis.app;
+/**
+ * Example of a secondary interface associated with a service.  (Note that
+ * the interface itself doesn't impact, it is just a matter of how you
+ * retrieve it from the service.)
+ */
+public interface ISecondary extends android.os.IInterface
+{
+/** Local-side IPC implementation stub class. */
+public static abstract class Stub extends android.os.Binder implements com.example.android.apis.app.ISecondary
+{
+private static final java.lang.String DESCRIPTOR = "com.example.android.apis.app.ISecondary";
+/** Construct the stub at attach it to the interface. */
+public Stub()
+{
+this.attachInterface(this, DESCRIPTOR);
+}
+/**
+ * Cast an IBinder object into an com.example.android.apis.app.ISecondary interface,
+ * generating a proxy if needed.
+ */
+public static com.example.android.apis.app.ISecondary asInterface(android.os.IBinder obj)
+{
+if ((obj==null)) {
+return null;
+}
+android.os.IInterface iin = (android.os.IInterface)obj.queryLocalInterface(DESCRIPTOR);
+if (((iin!=null)&&(iin instanceof com.example.android.apis.app.ISecondary))) {
+return ((com.example.android.apis.app.ISecondary)iin);
+}
+return new com.example.android.apis.app.ISecondary.Stub.Proxy(obj);
+}
+public android.os.IBinder asBinder()
+{
+return this;
+}
+@Override public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException
+{
+switch (code)
+{
+case INTERFACE_TRANSACTION:
+{
+reply.writeString(DESCRIPTOR);
+return true;
+}
+case TRANSACTION_getPid:
+{
+data.enforceInterface(DESCRIPTOR);
+int _result = this.getPid();
+reply.writeNoException();
+reply.writeInt(_result);
+return true;
+}
+case TRANSACTION_basicTypes:
+{
+data.enforceInterface(DESCRIPTOR);
+int _arg0;
+_arg0 = data.readInt();
+long _arg1;
+_arg1 = data.readLong();
+boolean _arg2;
+_arg2 = (0!=data.readInt());
+float _arg3;
+_arg3 = data.readFloat();
+double _arg4;
+_arg4 = data.readDouble();
+java.lang.String _arg5;
+_arg5 = data.readString();
+this.basicTypes(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);
+reply.writeNoException();
+return true;
+}
+}
+return super.onTransact(code, data, reply, flags);
+}
+private static class Proxy implements com.example.android.apis.app.ISecondary
+{
+private android.os.IBinder mRemote;
+Proxy(android.os.IBinder remote)
+{
+mRemote = remote;
+}
+public android.os.IBinder asBinder()
+{
+return mRemote;
+}
+public java.lang.String getInterfaceDescriptor()
+{
+return DESCRIPTOR;
+}
+/**
+     * Request the PID of this service, to do evil things with it.
+     */
+public int getPid() throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+int _result;
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+mRemote.transact(Stub.TRANSACTION_getPid, _data, _reply, 0);
+_reply.readException();
+_result = _reply.readInt();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+return _result;
+}
+/**
+     * This demonstrates the basic types that you can use as parameters
+     * and return values in AIDL.
+     */
+public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, java.lang.String aString) throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+_data.writeInt(anInt);
+_data.writeLong(aLong);
+_data.writeInt(((aBoolean)?(1):(0)));
+_data.writeFloat(aFloat);
+_data.writeDouble(aDouble);
+_data.writeString(aString);
+mRemote.transact(Stub.TRANSACTION_basicTypes, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+}
+}
+static final int TRANSACTION_getPid = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+static final int TRANSACTION_basicTypes = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
+}
+/**
+     * Request the PID of this service, to do evil things with it.
+     */
+public int getPid() throws android.os.RemoteException;
+/**
+     * This demonstrates the basic types that you can use as parameters
+     * and return values in AIDL.
+     */
+public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, java.lang.String aString) throws android.os.RemoteException;
+}
+{% endcodeblock %}
+
+ 我们分析下，android工具将我们写的aidl文件生成了怎样的一个文件，它都做哪些工作。
+
+ 
+
+首先这个接口继承了android.os.IInterface.它是所有由aidl文件生成的基类。接口里有一个内部类Stub，它继承自Binder并实现了这个生成的java接口ISecondary。但是它并没有实现我们定义的接口方法。而这些接口方法其实就是留给我们去实现的。在ApiDemo中，RemoteService类实现了这些方法：
+
+{% codeblock lang:java %}
+ private final ISecondary.Stub mSecondaryBinder = new ISecondary.Stub() {
+        public int getPid() {
+            return Process.myPid();
+        }
+        public void basicTypes(int anInt, long aLong, boolean aBoolean,
+                float aFloat, double aDouble, String aString) {
+        }
+    };
+{% endcodeblock %}
+
+这就是我们要做的第二部操作，实现这些方法 ,这里第二个方法apidemo没有实现。
+
+ 
+
+
+
+继续看这个接口类。在stub中实现了一个很重要的方法asInterface(android.os.IBinder obj)。该方法中会去查询是否有一个ISecondary的实例，这其实是去查询是不是在同一个应用里去调用它，那我们就不用实行远程调用，直接本地调用就可以了。如果不是本地接口，这时候会返回一个Proxy对象。Proxy类是Stub的一个内部类，也同样实现了ISecondary接口。但是它却已经实现了这些接口方法。这就意味着如果要进行远程调用，必须获取一个Proxy类的实例，自然是通过stub类的asInterface方法获得。看下ApiDemo里如何获取该实例。
+{% codeblock lang:java %}
+private ServiceConnection mSecondaryConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className,
+                    IBinder service) {
+                // Connecting to a secondary interface is the same as any
+                // other interface.
+                mSecondaryService = ISecondary.Stub.asInterface(service);
+                mKillButton.setEnabled(true);
+            }
+
+            public void onServiceDisconnected(ComponentName className) {
+                mSecondaryService = null;
+                mKillButton.setEnabled(false);
+            }
+        };
+{% endcodeblock %}
+
+可以看到是在onServiceConnected里获得了这个远程实例，具体如何得到？ServiceConnection对象其实是在更早之前用来绑定service而调用的bindService方法的参数。
+
+{% codeblock lang:java %}
+bindService(new Intent(ISecondary.class.getName()),
+                        mSecondaryConnection, Context.BIND_AUTO_CREATE);
+{% endcodeblock %}
+
+ActivityManagerService在bindService时，会调用ActivityThread的方法，并会传递一个Binder引用，而ActivityThread会回调ServiceConnection中的OnServiceConnected方法，并将这个Binder对象传入，也就是anInterface方法中的这个service。这样整个流程走完就获得了远程实例，我们一般会把它保存到一个全局变量中，供以后调用远程方法。
+
+这时候我们就可以执行第三步了，进行方法调用。
+{% codeblock lang:java %}
+int pid = mSecondaryService.getPid(); 
+{% endcodeblock %}
+
+其实这时候我们已经完成了远程调用，获取了pid的值。
+
+不过我们不妨继续看下去。我们看另一个方法basicTypes，apidemo没有使用，但是另一个方法传入了参数，更具代表意义，我们去实现basicTypes方法，并通过Proxy进进行远程调用它（代码就不贴了）。此时这个调用会被proxy对象转换成可以用pacel包装的基础数据类型，参数也被序列化写入一个数据包。一个用户定义的int型code将会被指派给transaction，这个code用来标识方法名，因为Binder此时只允许传递int类型。这就需要客户端和远程服务端做好约定。
+
+方法实现如下：
+{% codeblock lang:java %}
+public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, java.lang.String aString) throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+_data.writeInt(anInt);
+_data.writeLong(aLong);
+_data.writeInt(((aBoolean)?(1):(0)));
+_data.writeFloat(aFloat);
+_data.writeDouble(aDouble);
+_data.writeString(aString);
+mRemote.transact(Stub.TRANSACTION_basicTypes, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+} 
+{% endcodeblock %}
+
+方法首先通过obtain方法获取两个Parcel对象。调用writeInterfaceToken方法用来标识，以便服务端能够识别。然后写入参数，注意这个写入顺序和取出顺序必须是一致的。然后对传给Proxy的binder对象调用了transact方法，该方法中就将code作为参数传入。pacel对象通过jni接口传递到Binder的C++空间，最终传递到Binder驱动。binder驱动会让客户端进程休眠，并且将传过来的pacel数据从客户端进程映射到服务端进程。然后反向的传递，从binder驱动传递到C++中间层，再通过JNI传递到java层。此时Stub的ontransact方法会被调用。方法如下：
+{% codeblock lang:java %}
+@Override public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException
+{
+switch (code)
+{
+case INTERFACE_TRANSACTION:
+{
+reply.writeString(DESCRIPTOR);
+return true;
+}
+case TRANSACTION_getPid:
+{
+data.enforceInterface(DESCRIPTOR);
+int _result = this.getPid();
+reply.writeNoException();
+reply.writeInt(_result);
+return true;
+}
+case TRANSACTION_basicTypes:
+{
+data.enforceInterface(DESCRIPTOR);
+int _arg0;
+_arg0 = data.readInt();
+long _arg1;
+_arg1 = data.readLong();
+boolean _arg2;
+_arg2 = (0!=data.readInt());
+float _arg3;
+_arg3 = data.readFloat();
+double _arg4;
+_arg4 = data.readDouble();
+java.lang.String _arg5;
+_arg5 = data.readString();
+this.basicTypes(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);
+reply.writeNoException();
+return true;
+}
+}
+return super.onTransact(code, data, reply, flags);
+}
+{% endcodeblock %}
+
+首先通过对code的判断，执行对应方法的内容，对数据按顺序一一解包，读出参数。最终调用方法，并将返回值写入parcel，传递给binder驱动。binder驱动重新唤醒客户端进程并把返回值传递给proxy对象，并最后被解包并作为proxy方法的返回值。
+
+ 
+
+从这一个流程下来，我们可以知道aidl主要就帮助我们完成了包装数据和解包的过程，并调用了transact过程。而用来传递的数据包我们就称为parcel。关于parcel，我们直接看下官方文档的描述;
+
+    Container for a message (data and object references) that can be sent through an IBinder. A Parcel can contain both flattened data that will be unflattened on the other side of the IPC (using the various methods here for writing specific types, or the general Parcelable interface), and references to live IBinder objects that will result in the other side receiving a proxy IBinder connected with the original IBinder in the Parcel.
+    
+如果要传递的参数不是基础类型，那就需要对其进行包装，成为parcelable的实例。如下：
+{% codeblock lang:java %}
+ public class MyParcelable implements Parcelable {
+     private int mData;
+
+     public int describeContents() {
+         return 0;
+     }
+
+     public void writeToParcel(Parcel out, int flags) {
+         out.writeInt(mData);
+     }
+
+     public static final Parcelable.Creator<MyParcelable> CREATOR
+             = new Parcelable.Creator<MyParcelable>() {
+         public MyParcelable createFromParcel(Parcel in) {
+             return new MyParcelable(in);
+         }
+
+         public MyParcelable[] newArray(int size) {
+             return new MyParcelable[size];
+         }
+     };
+     
+     private MyParcelable(Parcel in) {
+         mData = in.readInt();
+     }
+ }
+ {% endcodeblock %}
+ 
+ 最后看下这张图：
+
+ {% img http://foocoder.com/images/aidl2.png %}
+ 
+ 是不是很明了了？我想大家看完以后手动写一个远程调用而不使用aidl也是可以完成了。不得不说，android设计的非常好，也用aidl让需要用到ipc的时候对开发者非常友好。android中ipc通信的使用和过程大致如此。欢迎转载，请注明出处，http://foocoder.com  谢谢了。

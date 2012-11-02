@@ -2,7 +2,7 @@
 layout: post
 title: "谈数据库索引和Sqlite中索引的使用"
 date: 2012-09-28 19:36
-comments: flase 
+comments: true 
 categories: [数据库索引, 数据库优化, sqlite优化] 
 ---
 
@@ -13,7 +13,7 @@ categories: [数据库索引, 数据库优化, sqlite优化]
   3.	索引的优缺点
   4.	什么时候需要使用索引，如何使用
 围绕这几个问题，来探究索引在数据库操作中所起到的作用。
-
+<!--more-->
 ###1. 数据库索引简介	
 
 回忆一下小时候查字典的步骤，索引和字典目录的概念是一致的。字典目录可以让我们不用翻整本字典就找到我们需要的内容页数，然后翻到那一页就可以。
@@ -176,7 +176,3 @@ db.execSQL("create index if not exists ia on t1(a,b)");
 
 还有个要吐槽的是，android中的rawQurey方法，执行完sql语句后返回一个cursor，其实并没有完成一个查询操作，我在rawquery之前和之后计算查询时间，永远是1ms...这让我无比苦闷。看了下源码，在对cursor调用moveToNext这些移动游标方法时，都会最终先调用getCount方法，而getCount方法才会调用native方法调用真正的查询操作。这种设计显然更加合理。
 
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=1690715" async=""></script>
-<!-- UY END -->
