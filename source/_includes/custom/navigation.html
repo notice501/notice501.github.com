@@ -1,5 +1,16 @@
-<ul class="main">
-	<li><a href="{{ root_url }}/">博客</a></li>
-    <li><a href="{{ root_url }}/blog/archives">文章列表</a></li>
-    <li><a href="{{ root_url }}/about/">关于我</a></li>
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="{{ root_url }}/index.html">主页</a></li>
+	<li id="ajax"><a href="{{ root_url }}/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="{{ root_url }}/about/">关于</a></li>
+    <li><a href="{{ root_url }}/atom.xml">RSS</a></li>
+    {% if site.simple_search %}
+    <li>
+    <div id="dark">
+        <form method="get" action="{{ root_url }}/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+    {% endif %}    
 </ul>
