@@ -1,0 +1,420 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>web app指南之构建html5离线应用 - Code Rush</title>
+    <meta name="author" content="foocoder">
+    
+	<meta name="description" content="创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。 html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Code Rush" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34258052-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        foocoder
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">主页</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="/about/">关于</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Web App指南之构建html5离线应用</h2>
+	<div class="entry-content"><p>创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。</p>
+
+<p>html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的哪些资源已经缓存，而本地缓存对于缓存内容是完全可控的。</p>
+
+<!-- more -->
+<p>使用离线缓存，除了可以使应用可以离线使用外，还能帮助有效的加快网页加载速度（本地的自然更快），同时降低服务器负载（只需要下载更新的内容）。</p>
+
+<p>正如之前所提到的，本地缓存可以指定要缓存的内容，这同过配置manifest来实现。可以为整个app配置manifest，也可以为单独某个页面来配置。</p>
+
+<p>简单的manifest格式如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">CACHE MANIFEST
+</span><span class="line">index.html
+</span><span class="line">stylesheet.css
+</span><span class="line">images/logo.png
+</span><span class="line">scripts/main.js
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>文件的第一行必须是CACHE MANIFEST。</p>
+
+<p>该manifest声明了需要缓存的html页面，css，图片以及js文件。</p>
+
+<p>再看一个比较复杂的manifest文件：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">CACHE MANIFEST
+</span><span class="line"># 指定一个版本号
+</span><span class="line"># version 1
+</span><span class="line"># 该类别指定要缓存的资源文件
+</span><span class="line">CACHE:
+</span><span class="line">/favicon.ico
+</span><span class="line">index.html
+</span><span class="line">stylesheet.css
+</span><span class="line">images/logo.png
+</span><span class="line">scripts/main.js
+</span><span class="line">
+</span><span class="line"># 指定不进行缓存的资源文件
+</span><span class="line">NETWORK:
+</span><span class="line">login.php
+</span><span class="line">http://foocoder.com
+</span><span class="line">
+</span><span class="line"># 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
+</span><span class="line">FALLBACK:
+</span><span class="line">/main.py /static.html
+</span><span class="line">images/large/ images/offline.jpg
+</span><span class="line">*.html /offline.html
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>其中#号开头的为注释。因为只有在manifest文件发生改变时才会更新，所以我们可以加个版本号方便控制。</p>
+
+<p>从该文件中可以看到分为了三个类别：</p>
+
+<p>CACHE类别指定需要被缓存的资源文件。</p>
+
+<p>NETWORK类别指定不缓存的资源文件，即只在联网的情况下才能访问。</p>
+
+<p>FALLBACK每一行都会指定两个文件，第一个为在线时使用的资源，第二个为离线时使用的备用资源。其中*为通配符，表示在线时使用所有的.html文件。</p>
+
+<p>配置好manifest文件之后，我们只需要在页面上引用即可。如下，在html 标签的manifest属性下指定manifest文件的地址：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;html</span> <span class="na">manifest=</span><span class="s">&quot;app.manifest&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">...
+</span><span class="line"><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>该地址可以是绝对地址也可以是相对地址，但是该文件的吗MIME 类型必须是text/cache-manifest，所以需要在服务器做相应配置对该类型添加支持，例如吗，对于apache服务器，需要在配置mime.types中添加如下内容：</p>
+
+<p>AddType text/cache-manifest .manifest
+到这里为止，就完成了离线缓存的基本内容，在manifest文件发生变化时，浏览器会检查manifest文件并更新缓存。</p>
+
+<p>我们不得不考虑一个问题，浏览器如何处理本地缓存？当服务端更新了应用程序后，用户打开时是不是会使用最新的资源了？答案是否定的。这需要了解下在使用离线缓存的情况下，浏览器与服务端的整个交互过程。</p>
+
+<p>1.首次访问</p>
+
+<p>在首次访问时，没有什么特别，浏览器解析index.html，请求所有的资源文件。随后就会处理manifest文件，请求所有的manifest中的资源文件，注意，即使之前已经请求过了所有的资源文件，这里必须进行重复请求。最后将这些文件缓存到本地。</p>
+
+<p>2.再次访问</p>
+
+<p>再次访问时，浏览器发现有本地缓存，所以会加载本地缓存内容。随后会向服务端请求manifest文件，如果manifest文件未更新，返回304代码，浏览器不做处理。如果manifest已经更新过，则请求所有manifest中的资源文件，重新对其缓存。</p>
+
+<p>所以，即使服务端更新了manifest和其他资源，用户打开时扔是之前的页面。需要重新打开才能使用更新过后的资源。</p>
+
+<p>有办法立刻更新缓存么？是可以的。我们可以使用applicationCache对象做到这一点。但是也只是能做到立刻更新缓存，还是需要用户重新打开也没才会生效。接下来就看看如何用applicationCache对象立刻更新缓存。</p>
+
+<p>window.applicationCache下有个status属性。可以通过其知道当前的缓存状态</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">appCache</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">switch</span> <span class="p">(</span><span class="nx">appCache</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">UNCACHED</span><span class="o">:</span> <span class="c1">// UNCACHED == 0 </span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;UNCACHED&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line">  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">IDLE</span><span class="o">:</span> <span class="c1">// IDLE == 1 </span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;IDLE&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line">  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">CHECKING</span><span class="o">:</span> <span class="c1">// CHECKING == 2 </span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;CHECKING&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line">  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">DOWNLOADING</span><span class="o">:</span> <span class="c1">// DOWNLOADING == 3 </span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;DOWNLOADING&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line">  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">UPDATEREADY</span><span class="o">:</span>  <span class="c1">// UPDATEREADY == 4 </span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;UPDATEREADY&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line">  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">OBSOLETE</span><span class="o">:</span> <span class="c1">// OBSOLETE == 5 </span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;OBSOLETE&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line">  <span class="k">default</span><span class="o">:</span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;UKNOWN CACHE STATUS&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>既然可以获得状态，我们只需要请求更新，随后在状态为appCache.UPDATEREADY时更新缓存时即可。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span><span class="err">方法会尝试更新用户缓存，而</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">swapCache</span><span class="p">()</span><span class="err">方法会对本地缓存进行更新：</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">appCache</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">appCache</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span> <span class="c1">// 开始更新</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="p">(</span><span class="nx">appCache</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">UPDATEREADY</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">appCache</span><span class="p">.</span><span class="nx">swapCache</span><span class="p">();</span>  <span class="c1">// 更新缓存</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>正如之前所说的，即使更新了缓存，还是需要重新加载才能使用最新的资源，此时可以提示用户更新。只需要监听onUpdateReady事件，该事件在缓存被下载到本地后出发，从而可以在此时提示用户：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;updateready&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">UPDATEREADY</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">     <span class="c1">//更新本地缓存</span>
+</span><span class="line">      <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">swapCache</span><span class="p">();</span>
+</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="nx">confirm</span><span class="p">(</span><span class="s1">&#39;已经有新的版本，是否立刻切换到最新版?&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">        <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>applicationCache对象还提供了其他事件，分别为：</p>
+
+<p>onchecking，onerror，onnoupdate，ondownloading，onprogress，onupdateready，oncached和onobsolete</p>
+
+<p>在整个浏览器与服务端交互的过程中，所有的错误都会出发error事件，我们可以通过监听error事件进行处理：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">appCache</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">appCache</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">handleCacheError</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">handleCacheError</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Error: Cache failed to update!&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>欢迎留言交流。</p>
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    foocoder
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'foocoder';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'foocoder.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/';
+        var disqus_url = 'foocoder.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

@@ -1,0 +1,815 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>android中的跨进程通信的实现（一）——远程调用过程和aidl - Code Rush</title>
+    <meta name="author" content="foocoder">
+    
+	<meta name="description" content="android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Code Rush" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34258052-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        foocoder
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">主页</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="/about/">关于</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Android中的跨进程通信的实现（一）——远程调用过程和aidl</h2>
+	<div class="entry-content"><p>android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和我在一个进程里。</p>
+
+<!--more-->
+<p>我们有没有想过安全性问题，如此简单就可以跨进程的访问，安全性问题怎么保证。本来每个进程都是一个孤岛，而通过ipc，这个孤岛却可以和世界通信了。这里简单介绍下android中的安全机制。</p>
+
+<p>android的安全机制分为三层。最基础的一层，android将数据分为system和data两个区。其中system是只读的，data用来存放应用自己的数据，这保证了系统数据不会被随意改写。第二层用来使应用之间的数据相互独立。每个应用都会有一个user id和group id，只有相同的user id并且来自同一个作者，才能访问它们的数据。作者通过对apk签名来标识自己。签名和uid构成了双重的保证。第三个层次就是权限体系，这个就不用多说了。</p>
+
+<p>拉回正题，那么android是如何实现ipc的呢？答案是binder。我打算用两篇来介绍android的binder机制，这一篇着重如何使用，介绍跨进程调用的过程和aidl。另一篇着重binder实现机制。
+Binder并不是android最早开始使用，它发源于Be和Palm之前的OpenBinder，由Dianne Hackborn领导开发。Hackborn现在就在google，是android framework的工程师，我们可以从https://lkml.org/lkml/2009/6/25/3 看一下，Hackborn如何描述binder。一句话总结：</p>
+
+<pre><code>In the Android platform, the binder is used for nearly everything that happens across processes in the core platform. 
+</code></pre>
+
+<p>可是android将binder几乎封装的不可见，我们看下层次结构是怎么样的。</p>
+
+<p><img src="http://foocoder.com/images/aidl1.png" /></p>
+
+<p>最底层的是android的ashmen（Anonymous shared memoryy）机制，它负责辅助实现内存的分配，以及跨进程所需要的内存共享。
+AIDL（android interface definition language）对Binder的使用进行了封装，可以让开发者方便的进行方法的远程调用，后面会详细介绍。</p>
+
+<p>Intent是最高一层的抽象，方便开发者进行常用的跨进程调用。</p>
+
+<p>关于如何使用intent去跨进程的启动一个activity或者service等，这里就不再介绍了，是android中非常基础的内容。</p>
+
+<p>这里讲如何实现远程的方法调用。在android中对方法的远程调用无处不在，随便打开framework/base中的包，都会发现很多aidl文件。AIDL是android为了方便开发者进行远程方法调用，定义的一种语言。使用aidl完成一个远程方法调用只需要三个步骤：</p>
+
+<ol>
+  <li>用aidl定义需要被调用方法接口。</li>
+  <li>实现这些方法。</li>
+  <li>调用这些方法。</li>
+</ol>
+
+<p>我们拿ApiDemo中的例子来学习。在app包下面有一个ISecondary.aidl</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">interface</span> <span class="nc">ISecondary</span> <span class="o">{</span>
+</span><span class="line">    <span class="cm">/**</span>
+</span><span class="line"><span class="cm">     * Request the PID of this service, to do evil things with it.</span>
+</span><span class="line"><span class="cm">     */</span>
+</span><span class="line">    <span class="kt">int</span> <span class="nf">getPid</span><span class="o">();</span>
+</span><span class="line">
+</span><span class="line">    <span class="cm">/**</span>
+</span><span class="line"><span class="cm">     * This demonstrates the basic types that you can use as parameters</span>
+</span><span class="line"><span class="cm">     * and return values in AIDL.</span>
+</span><span class="line"><span class="cm">     */</span>
+</span><span class="line">    <span class="kt">void</span> <span class="nf">basicTypes</span><span class="o">(</span><span class="kt">int</span> <span class="n">anInt</span><span class="o">,</span> <span class="kt">long</span> <span class="n">aLong</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">aBoolean</span><span class="o">,</span> <span class="kt">float</span> <span class="n">aFloat</span><span class="o">,</span>
+</span><span class="line">            <span class="kt">double</span> <span class="n">aDouble</span><span class="o">,</span> <span class="n">String</span> <span class="n">aString</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>看起来和java没有什么区别。可以看到它定义个了两个接口方法。从这里我们可以知道AIDL（android接口定义语言的由来）。android会将该aidl生成一个java文件（如果你使用eclipse，会自动生成。在gen目录下。），生成的代码如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+<span class="line-number">123</span>
+<span class="line-number">124</span>
+<span class="line-number">125</span>
+<span class="line-number">126</span>
+<span class="line-number">127</span>
+<span class="line-number">128</span>
+<span class="line-number">129</span>
+<span class="line-number">130</span>
+<span class="line-number">131</span>
+<span class="line-number">132</span>
+<span class="line-number">133</span>
+<span class="line-number">134</span>
+<span class="line-number">135</span>
+<span class="line-number">136</span>
+<span class="line-number">137</span>
+<span class="line-number">138</span>
+<span class="line-number">139</span>
+<span class="line-number">140</span>
+<span class="line-number">141</span>
+<span class="line-number">142</span>
+<span class="line-number">143</span>
+<span class="line-number">144</span>
+<span class="line-number">145</span>
+<span class="line-number">146</span>
+<span class="line-number">147</span>
+<span class="line-number">148</span>
+<span class="line-number">149</span>
+<span class="line-number">150</span>
+<span class="line-number">151</span>
+<span class="line-number">152</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm"> * This file is auto-generated.  DO NOT MODIFY.</span>
+</span><span class="line"><span class="cm"> * Original file: /home/dd/workspace/ApiDemos/src/com/example/android/apis/app/ISecondary.aidl</span>
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">;</span>
+</span><span class="line"><span class="cm">/**</span>
+</span><span class="line"><span class="cm"> * Example of a secondary interface associated with a service.  (Note that</span>
+</span><span class="line"><span class="cm"> * the interface itself doesn&#39;t impact, it is just a matter of how you</span>
+</span><span class="line"><span class="cm"> * retrieve it from the service.)</span>
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ISecondary</span> <span class="kd">extends</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IInterface</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="cm">/** Local-side IPC implementation stub class. */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Stub</span> <span class="kd">extends</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Binder</span> <span class="kd">implements</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">.</span><span class="na">ISecondary</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="n">DESCRIPTOR</span> <span class="o">=</span> <span class="s">&quot;com.example.android.apis.app.ISecondary&quot;</span><span class="o">;</span>
+</span><span class="line"><span class="cm">/** Construct the stub at attach it to the interface. */</span>
+</span><span class="line"><span class="kd">public</span> <span class="nf">Stub</span><span class="o">()</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">this</span><span class="o">.</span><span class="na">attachInterface</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="cm">/**</span>
+</span><span class="line"><span class="cm"> * Cast an IBinder object into an com.example.android.apis.app.ISecondary interface,</span>
+</span><span class="line"><span class="cm"> * generating a proxy if needed.</span>
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kd">static</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">.</span><span class="na">ISecondary</span> <span class="nf">asInterface</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span> <span class="n">obj</span><span class="o">)</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">if</span> <span class="o">((</span><span class="n">obj</span><span class="o">==</span><span class="kc">null</span><span class="o">))</span> <span class="o">{</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IInterface</span> <span class="n">iin</span> <span class="o">=</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IInterface</span><span class="o">)</span><span class="n">obj</span><span class="o">.</span><span class="na">queryLocalInterface</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="k">if</span> <span class="o">(((</span><span class="n">iin</span><span class="o">!=</span><span class="kc">null</span><span class="o">)&amp;&amp;(</span><span class="n">iin</span> <span class="k">instanceof</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">.</span><span class="na">ISecondary</span><span class="o">)))</span> <span class="o">{</span>
+</span><span class="line"><span class="k">return</span> <span class="o">((</span><span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">.</span><span class="na">ISecondary</span><span class="o">)</span><span class="n">iin</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">return</span> <span class="k">new</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">.</span><span class="na">ISecondary</span><span class="o">.</span><span class="na">Stub</span><span class="o">.</span><span class="na">Proxy</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="kd">public</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span> <span class="nf">asBinder</span><span class="o">()</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">onTransact</span><span class="o">(</span><span class="kt">int</span> <span class="n">code</span><span class="o">,</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">data</span><span class="o">,</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">reply</span><span class="o">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">switch</span> <span class="o">(</span><span class="n">code</span><span class="o">)</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">case</span> <span class="nl">INTERFACE_TRANSACTION:</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeString</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">case</span> <span class="nl">TRANSACTION_getPid:</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">data</span><span class="o">.</span><span class="na">enforceInterface</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="kt">int</span> <span class="n">_result</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getPid</span><span class="o">();</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeNoException</span><span class="o">();</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">_result</span><span class="o">);</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">case</span> <span class="nl">TRANSACTION_basicTypes:</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">data</span><span class="o">.</span><span class="na">enforceInterface</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="kt">int</span> <span class="n">_arg0</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+</span><span class="line"><span class="kt">long</span> <span class="n">_arg1</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readLong</span><span class="o">();</span>
+</span><span class="line"><span class="kt">boolean</span> <span class="n">_arg2</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg2</span> <span class="o">=</span> <span class="o">(</span><span class="mi">0</span><span class="o">!=</span><span class="n">data</span><span class="o">.</span><span class="na">readInt</span><span class="o">());</span>
+</span><span class="line"><span class="kt">float</span> <span class="n">_arg3</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg3</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readFloat</span><span class="o">();</span>
+</span><span class="line"><span class="kt">double</span> <span class="n">_arg4</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg4</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readDouble</span><span class="o">();</span>
+</span><span class="line"><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="n">_arg5</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg5</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
+</span><span class="line"><span class="k">this</span><span class="o">.</span><span class="na">basicTypes</span><span class="o">(</span><span class="n">_arg0</span><span class="o">,</span> <span class="n">_arg1</span><span class="o">,</span> <span class="n">_arg2</span><span class="o">,</span> <span class="n">_arg3</span><span class="o">,</span> <span class="n">_arg4</span><span class="o">,</span> <span class="n">_arg5</span><span class="o">);</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeNoException</span><span class="o">();</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">onTransact</span><span class="o">(</span><span class="n">code</span><span class="o">,</span> <span class="n">data</span><span class="o">,</span> <span class="n">reply</span><span class="o">,</span> <span class="n">flags</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Proxy</span> <span class="kd">implements</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">apis</span><span class="o">.</span><span class="na">app</span><span class="o">.</span><span class="na">ISecondary</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="kd">private</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span> <span class="n">mRemote</span><span class="o">;</span>
+</span><span class="line"><span class="n">Proxy</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span> <span class="n">remote</span><span class="o">)</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">mRemote</span> <span class="o">=</span> <span class="n">remote</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="kd">public</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span> <span class="nf">asBinder</span><span class="o">()</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">return</span> <span class="n">mRemote</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="kd">public</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="nf">getInterfaceDescriptor</span><span class="o">()</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">return</span> <span class="n">DESCRIPTOR</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="cm">/**</span>
+</span><span class="line"><span class="cm">     * Request the PID of this service, to do evil things with it.</span>
+</span><span class="line"><span class="cm">     */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPid</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">_data</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span><span class="o">.</span><span class="na">obtain</span><span class="o">();</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">_reply</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span><span class="o">.</span><span class="na">obtain</span><span class="o">();</span>
+</span><span class="line"><span class="kt">int</span> <span class="n">_result</span><span class="o">;</span>
+</span><span class="line"><span class="k">try</span> <span class="o">{</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInterfaceToken</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="n">mRemote</span><span class="o">.</span><span class="na">transact</span><span class="o">(</span><span class="n">Stub</span><span class="o">.</span><span class="na">TRANSACTION_getPid</span><span class="o">,</span> <span class="n">_data</span><span class="o">,</span> <span class="n">_reply</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class="line"><span class="n">_reply</span><span class="o">.</span><span class="na">readException</span><span class="o">();</span>
+</span><span class="line"><span class="n">_result</span> <span class="o">=</span> <span class="n">_reply</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">finally</span> <span class="o">{</span>
+</span><span class="line"><span class="n">_reply</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">return</span> <span class="n">_result</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="cm">/**</span>
+</span><span class="line"><span class="cm">     * This demonstrates the basic types that you can use as parameters</span>
+</span><span class="line"><span class="cm">     * and return values in AIDL.</span>
+</span><span class="line"><span class="cm">     */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">basicTypes</span><span class="o">(</span><span class="kt">int</span> <span class="n">anInt</span><span class="o">,</span> <span class="kt">long</span> <span class="n">aLong</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">aBoolean</span><span class="o">,</span> <span class="kt">float</span> <span class="n">aFloat</span><span class="o">,</span> <span class="kt">double</span> <span class="n">aDouble</span><span class="o">,</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="n">aString</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">_data</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span><span class="o">.</span><span class="na">obtain</span><span class="o">();</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">_reply</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span><span class="o">.</span><span class="na">obtain</span><span class="o">();</span>
+</span><span class="line"><span class="k">try</span> <span class="o">{</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInterfaceToken</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">anInt</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeLong</span><span class="o">(</span><span class="n">aLong</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(((</span><span class="n">aBoolean</span><span class="o">)?(</span><span class="mi">1</span><span class="o">):(</span><span class="mi">0</span><span class="o">)));</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeFloat</span><span class="o">(</span><span class="n">aFloat</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeDouble</span><span class="o">(</span><span class="n">aDouble</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeString</span><span class="o">(</span><span class="n">aString</span><span class="o">);</span>
+</span><span class="line"><span class="n">mRemote</span><span class="o">.</span><span class="na">transact</span><span class="o">(</span><span class="n">Stub</span><span class="o">.</span><span class="na">TRANSACTION_basicTypes</span><span class="o">,</span> <span class="n">_data</span><span class="o">,</span> <span class="n">_reply</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class="line"><span class="n">_reply</span><span class="o">.</span><span class="na">readException</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">finally</span> <span class="o">{</span>
+</span><span class="line"><span class="n">_reply</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">TRANSACTION_getPid</span> <span class="o">=</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span><span class="o">.</span><span class="na">FIRST_CALL_TRANSACTION</span> <span class="o">+</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class="line"><span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">TRANSACTION_basicTypes</span> <span class="o">=</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">IBinder</span><span class="o">.</span><span class="na">FIRST_CALL_TRANSACTION</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="cm">/**</span>
+</span><span class="line"><span class="cm">     * Request the PID of this service, to do evil things with it.</span>
+</span><span class="line"><span class="cm">     */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPid</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span><span class="o">;</span>
+</span><span class="line"><span class="cm">/**</span>
+</span><span class="line"><span class="cm">     * This demonstrates the basic types that you can use as parameters</span>
+</span><span class="line"><span class="cm">     * and return values in AIDL.</span>
+</span><span class="line"><span class="cm">     */</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">basicTypes</span><span class="o">(</span><span class="kt">int</span> <span class="n">anInt</span><span class="o">,</span> <span class="kt">long</span> <span class="n">aLong</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">aBoolean</span><span class="o">,</span> <span class="kt">float</span> <span class="n">aFloat</span><span class="o">,</span> <span class="kt">double</span> <span class="n">aDouble</span><span class="o">,</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="n">aString</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们分析下，android工具将我们写的aidl文件生成了怎样的一个文件，它都做哪些工作。</p>
+
+<p>首先这个接口继承了android.os.IInterface.它是所有由aidl文件生成的基类。接口里有一个内部类Stub，它继承自Binder并实现了这个生成的java接口ISecondary。但是它并没有实现我们定义的接口方法。而这些接口方法其实就是留给我们去实现的。在ApiDemo中，RemoteService类实现了这些方法：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"> <span class="kd">private</span> <span class="kd">final</span> <span class="n">ISecondary</span><span class="o">.</span><span class="na">Stub</span> <span class="n">mSecondaryBinder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ISecondary</span><span class="o">.</span><span class="na">Stub</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPid</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">            <span class="k">return</span> <span class="n">Process</span><span class="o">.</span><span class="na">myPid</span><span class="o">();</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">basicTypes</span><span class="o">(</span><span class="kt">int</span> <span class="n">anInt</span><span class="o">,</span> <span class="kt">long</span> <span class="n">aLong</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">aBoolean</span><span class="o">,</span>
+</span><span class="line">                <span class="kt">float</span> <span class="n">aFloat</span><span class="o">,</span> <span class="kt">double</span> <span class="n">aDouble</span><span class="o">,</span> <span class="n">String</span> <span class="n">aString</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">    <span class="o">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这就是我们要做的第二部操作，实现这些方法 ,这里第二个方法apidemo没有实现。</p>
+
+<p>继续看这个接口类。在stub中实现了一个很重要的方法asInterface(android.os.IBinder obj)。该方法中会去查询是否有一个ISecondary的实例，这其实是去查询是不是在同一个应用里去调用它，那我们就不用实行远程调用，直接本地调用就可以了。如果不是本地接口，这时候会返回一个Proxy对象。Proxy类是Stub的一个内部类，也同样实现了ISecondary接口。但是它却已经实现了这些接口方法。这就意味着如果要进行远程调用，必须获取一个Proxy类的实例，自然是通过stub类的asInterface方法获得。看下ApiDemo里如何获取该实例。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">private</span> <span class="n">ServiceConnection</span> <span class="n">mSecondaryConnection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServiceConnection</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onServiceConnected</span><span class="o">(</span><span class="n">ComponentName</span> <span class="n">className</span><span class="o">,</span>
+</span><span class="line">                    <span class="n">IBinder</span> <span class="n">service</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                <span class="c1">// Connecting to a secondary interface is the same as any</span>
+</span><span class="line">                <span class="c1">// other interface.</span>
+</span><span class="line">                <span class="n">mSecondaryService</span> <span class="o">=</span> <span class="n">ISecondary</span><span class="o">.</span><span class="na">Stub</span><span class="o">.</span><span class="na">asInterface</span><span class="o">(</span><span class="n">service</span><span class="o">);</span>
+</span><span class="line">                <span class="n">mKillButton</span><span class="o">.</span><span class="na">setEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class="line">            <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onServiceDisconnected</span><span class="o">(</span><span class="n">ComponentName</span> <span class="n">className</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                <span class="n">mSecondaryService</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">                <span class="n">mKillButton</span><span class="o">.</span><span class="na">setEnabled</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+</span><span class="line">            <span class="o">}</span>
+</span><span class="line">        <span class="o">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以看到是在onServiceConnected里获得了这个远程实例，具体如何得到？ServiceConnection对象其实是在更早之前用来绑定service而调用的bindService方法的参数。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="n">bindService</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">ISecondary</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">()),</span>
+</span><span class="line">                        <span class="n">mSecondaryConnection</span><span class="o">,</span> <span class="n">Context</span><span class="o">.</span><span class="na">BIND_AUTO_CREATE</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>ActivityManagerService在bindService时，会调用ActivityThread的方法，并会传递一个Binder引用，而ActivityThread会回调ServiceConnection中的OnServiceConnected方法，并将这个Binder对象传入，也就是anInterface方法中的这个service。这样整个流程走完就获得了远程实例，我们一般会把它保存到一个全局变量中，供以后调用远程方法。</p>
+
+<p>这时候我们就可以执行第三步了，进行方法调用。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kt">int</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">mSecondaryService</span><span class="o">.</span><span class="na">getPid</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>其实这时候我们已经完成了远程调用，获取了pid的值。</p>
+
+<p>不过我们不妨继续看下去。我们看另一个方法basicTypes，apidemo没有使用，但是另一个方法传入了参数，更具代表意义，我们去实现basicTypes方法，并通过Proxy进进行远程调用它（代码就不贴了）。此时这个调用会被proxy对象转换成可以用pacel包装的基础数据类型，参数也被序列化写入一个数据包。一个用户定义的int型code将会被指派给transaction，这个code用来标识方法名，因为Binder此时只允许传递int类型。这就需要客户端和远程服务端做好约定。</p>
+
+<p>方法实现如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">basicTypes</span><span class="o">(</span><span class="kt">int</span> <span class="n">anInt</span><span class="o">,</span> <span class="kt">long</span> <span class="n">aLong</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">aBoolean</span><span class="o">,</span> <span class="kt">float</span> <span class="n">aFloat</span><span class="o">,</span> <span class="kt">double</span> <span class="n">aDouble</span><span class="o">,</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="n">aString</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">_data</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span><span class="o">.</span><span class="na">obtain</span><span class="o">();</span>
+</span><span class="line"><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">_reply</span> <span class="o">=</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span><span class="o">.</span><span class="na">obtain</span><span class="o">();</span>
+</span><span class="line"><span class="k">try</span> <span class="o">{</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInterfaceToken</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">anInt</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeLong</span><span class="o">(</span><span class="n">aLong</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(((</span><span class="n">aBoolean</span><span class="o">)?(</span><span class="mi">1</span><span class="o">):(</span><span class="mi">0</span><span class="o">)));</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeFloat</span><span class="o">(</span><span class="n">aFloat</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeDouble</span><span class="o">(</span><span class="n">aDouble</span><span class="o">);</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">writeString</span><span class="o">(</span><span class="n">aString</span><span class="o">);</span>
+</span><span class="line"><span class="n">mRemote</span><span class="o">.</span><span class="na">transact</span><span class="o">(</span><span class="n">Stub</span><span class="o">.</span><span class="na">TRANSACTION_basicTypes</span><span class="o">,</span> <span class="n">_data</span><span class="o">,</span> <span class="n">_reply</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class="line"><span class="n">_reply</span><span class="o">.</span><span class="na">readException</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">finally</span> <span class="o">{</span>
+</span><span class="line"><span class="n">_reply</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+</span><span class="line"><span class="n">_data</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>方法首先通过obtain方法获取两个Parcel对象。调用writeInterfaceToken方法用来标识，以便服务端能够识别。然后写入参数，注意这个写入顺序和取出顺序必须是一致的。然后对传给Proxy的binder对象调用了transact方法，该方法中就将code作为参数传入。pacel对象通过jni接口传递到Binder的C++空间，最终传递到Binder驱动。binder驱动会让客户端进程休眠，并且将传过来的pacel数据从客户端进程映射到服务端进程。然后反向的传递，从binder驱动传递到C++中间层，再通过JNI传递到java层。此时Stub的ontransact方法会被调用。方法如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">onTransact</span><span class="o">(</span><span class="kt">int</span> <span class="n">code</span><span class="o">,</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">data</span><span class="o">,</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Parcel</span> <span class="n">reply</span><span class="o">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">RemoteException</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">switch</span> <span class="o">(</span><span class="n">code</span><span class="o">)</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="k">case</span> <span class="nl">INTERFACE_TRANSACTION:</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeString</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">case</span> <span class="nl">TRANSACTION_getPid:</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">data</span><span class="o">.</span><span class="na">enforceInterface</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="kt">int</span> <span class="n">_result</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getPid</span><span class="o">();</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeNoException</span><span class="o">();</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">_result</span><span class="o">);</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">case</span> <span class="nl">TRANSACTION_basicTypes:</span>
+</span><span class="line"><span class="o">{</span>
+</span><span class="line"><span class="n">data</span><span class="o">.</span><span class="na">enforceInterface</span><span class="o">(</span><span class="n">DESCRIPTOR</span><span class="o">);</span>
+</span><span class="line"><span class="kt">int</span> <span class="n">_arg0</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+</span><span class="line"><span class="kt">long</span> <span class="n">_arg1</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readLong</span><span class="o">();</span>
+</span><span class="line"><span class="kt">boolean</span> <span class="n">_arg2</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg2</span> <span class="o">=</span> <span class="o">(</span><span class="mi">0</span><span class="o">!=</span><span class="n">data</span><span class="o">.</span><span class="na">readInt</span><span class="o">());</span>
+</span><span class="line"><span class="kt">float</span> <span class="n">_arg3</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg3</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readFloat</span><span class="o">();</span>
+</span><span class="line"><span class="kt">double</span> <span class="n">_arg4</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg4</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readDouble</span><span class="o">();</span>
+</span><span class="line"><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="n">_arg5</span><span class="o">;</span>
+</span><span class="line"><span class="n">_arg5</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
+</span><span class="line"><span class="k">this</span><span class="o">.</span><span class="na">basicTypes</span><span class="o">(</span><span class="n">_arg0</span><span class="o">,</span> <span class="n">_arg1</span><span class="o">,</span> <span class="n">_arg2</span><span class="o">,</span> <span class="n">_arg3</span><span class="o">,</span> <span class="n">_arg4</span><span class="o">,</span> <span class="n">_arg5</span><span class="o">);</span>
+</span><span class="line"><span class="n">reply</span><span class="o">.</span><span class="na">writeNoException</span><span class="o">();</span>
+</span><span class="line"><span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line"><span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">onTransact</span><span class="o">(</span><span class="n">code</span><span class="o">,</span> <span class="n">data</span><span class="o">,</span> <span class="n">reply</span><span class="o">,</span> <span class="n">flags</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>首先通过对code的判断，执行对应方法的内容，对数据按顺序一一解包，读出参数。最终调用方法，并将返回值写入parcel，传递给binder驱动。binder驱动重新唤醒客户端进程并把返回值传递给proxy对象，并最后被解包并作为proxy方法的返回值。</p>
+
+<p>从这一个流程下来，我们可以知道aidl主要就帮助我们完成了包装数据和解包的过程，并调用了transact过程。而用来传递的数据包我们就称为parcel。关于parcel，我们直接看下官方文档的描述;</p>
+
+<pre><code>Container for a message (data and object references) that can be sent through an IBinder. A Parcel can contain both flattened data that will be unflattened on the other side of the IPC (using the various methods here for writing specific types, or the general Parcelable interface), and references to live IBinder objects that will result in the other side receiving a proxy IBinder connected with the original IBinder in the Parcel.
+</code></pre>
+
+<p>如果要传递的参数不是基础类型，那就需要对其进行包装，成为parcelable的实例。如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyParcelable</span> <span class="kd">implements</span> <span class="n">Parcelable</span> <span class="o">{</span>
+</span><span class="line">     <span class="kd">private</span> <span class="kt">int</span> <span class="n">mData</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">describeContents</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">         <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class="line">     <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">writeToParcel</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">out</span><span class="o">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">         <span class="n">out</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">mData</span><span class="o">);</span>
+</span><span class="line">     <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">     <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Parcelable</span><span class="o">.</span><span class="na">Creator</span><span class="o">&lt;</span><span class="n">MyParcelable</span><span class="o">&gt;</span> <span class="n">CREATOR</span>
+</span><span class="line">             <span class="o">=</span> <span class="k">new</span> <span class="n">Parcelable</span><span class="o">.</span><span class="na">Creator</span><span class="o">&lt;</span><span class="n">MyParcelable</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class="line">         <span class="kd">public</span> <span class="n">MyParcelable</span> <span class="nf">createFromParcel</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">in</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">             <span class="k">return</span> <span class="k">new</span> <span class="nf">MyParcelable</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+</span><span class="line">         <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">         <span class="kd">public</span> <span class="n">MyParcelable</span><span class="o">[]</span> <span class="nf">newArray</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">             <span class="k">return</span> <span class="k">new</span> <span class="n">MyParcelable</span><span class="o">[</span><span class="n">size</span><span class="o">];</span>
+</span><span class="line">         <span class="o">}</span>
+</span><span class="line">     <span class="o">};</span>
+</span><span class="line">
+</span><span class="line">     <span class="kd">private</span> <span class="nf">MyParcelable</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">in</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">         <span class="n">mData</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+</span><span class="line">     <span class="o">}</span>
+</span><span class="line"> <span class="o">}</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>最后看下这张图：</p>
+
+<p><img src="http://foocoder.com/images/aidl2.png" /></p>
+
+<p>是不是很明了了？我想大家看完以后手动写一个远程调用而不使用aidl也是可以完成了。不得不说，android设计的非常好，也用aidl让需要用到ipc的时候对开发者非常友好。android中ipc通信的使用和过程大致如此。欢迎转载，请注明出处，http://foocoder.com  谢谢了。</p>
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    foocoder
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'foocoder';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'foocoder.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/';
+        var disqus_url = 'foocoder.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
