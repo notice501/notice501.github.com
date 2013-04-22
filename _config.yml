@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: foocoder.com 
+url: http://notice501.github.com
 title: Code Rush 
 subtitle: Stay hungry，Stay foolish
 author: foocoder
@@ -93,8 +93,8 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: foocoder 
-disqus_show_comment_count: true 
+disqus_short_name: foocoder
+disqus_show_comment_count: true
 
 # Google Analytics
 google_analytics_tracking_id: UA-34258052-1
