@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类：数据库索引 | Code Rush]]></title>
-  <link href="foocoder.com/blog/categories/数据库索引/atom.xml" rel="self"/>
-  <link href="foocoder.com/"/>
-  <updated>2013-04-22T18:27:45+08:00</updated>
-  <id>foocoder.com/</id>
+  <link href="http://notice501.github.com/blog/categories/数据库索引/atom.xml" rel="self"/>
+  <link href="http://notice501.github.com/"/>
+  <updated>2013-04-22T18:56:16+08:00</updated>
+  <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[谈数据库索引和Sqlite中索引的使用]]></title>
-    <link href="foocoder.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/"/>
+    <link href="http://notice501.github.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/"/>
     <updated>2012-09-28T19:36:00+08:00</updated>
-    <id>foocoder.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong</id>
+    <id>http://notice501.github.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong</id>
     <content type="html"><![CDATA[<p>要使用索引对数据库的数据操作进行优化，那必须明确几个问题</p>
 
 <ol>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Code Rush]]></title>
-  <link href="foocoder.com/atom.xml" rel="self"/>
-  <link href="foocoder.com/"/>
-  <updated>2013-04-22T18:27:45+08:00</updated>
-  <id>foocoder.com/</id>
+  <link href="http://notice501.github.com/atom.xml" rel="self"/>
+  <link href="http://notice501.github.com/"/>
+  <updated>2013-04-22T18:56:16+08:00</updated>
+  <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[web app指南之构建html5离线应用]]></title>
-    <link href="foocoder.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/"/>
+    <link href="http://notice501.github.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/"/>
     <updated>2013-02-25T13:02:00+08:00</updated>
-    <id>foocoder.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong</id>
+    <id>http://notice501.github.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong</id>
     <content type="html"><![CDATA[<p>创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。</p>
 
 <p>html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的哪些资源已经缓存，而本地缓存对于缓存内容是完全可控的。</p>
@@ -268,9 +268,9 @@
   
   <entry>
     <title type="html"><![CDATA[android中的跨进程通信的实现（一）——远程调用过程和aidl]]></title>
-    <link href="foocoder.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/"/>
+    <link href="http://notice501.github.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/"/>
     <updated>2012-11-02T10:44:00+08:00</updated>
-    <id>foocoder.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-([?]-)-yuan-cheng-diao-yong-guo-cheng-he-aidl</id>
+    <id>http://notice501.github.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-([?]-)-yuan-cheng-diao-yong-guo-cheng-he-aidl</id>
     <content type="html"><![CDATA[<p>android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和我在一个进程里。</p>
 
 <!--more-->
@@ -916,9 +916,9 @@ AIDL（android interface definition language）对Binder的使用进行了封装
   
   <entry>
     <title type="html"><![CDATA[android窗口管理框架解析]]></title>
-    <link href="foocoder.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/"/>
+    <link href="http://notice501.github.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/"/>
     <updated>2012-10-25T16:17:00+08:00</updated>
-    <id>foocoder.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi</id>
+    <id>http://notice501.github.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi</id>
     <content type="html"><![CDATA[<p>窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。</p>
 
 <p>窗口可以分为两类：</p>
@@ -987,9 +987,9 @@ AIDL（android interface definition language）对Binder的使用进行了封装
   
   <entry>
     <title type="html"><![CDATA[谈数据库索引和Sqlite中索引的使用]]></title>
-    <link href="foocoder.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/"/>
+    <link href="http://notice501.github.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/"/>
     <updated>2012-09-28T19:36:00+08:00</updated>
-    <id>foocoder.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong</id>
+    <id>http://notice501.github.com/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong</id>
     <content type="html"><![CDATA[<p>要使用索引对数据库的数据操作进行优化，那必须明确几个问题</p>
 
 <ol>

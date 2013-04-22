@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类：android | Code Rush]]></title>
-  <link href="foocoder.com/blog/categories/android/atom.xml" rel="self"/>
-  <link href="foocoder.com/"/>
-  <updated>2013-04-22T18:27:45+08:00</updated>
-  <id>foocoder.com/</id>
+  <link href="http://notice501.github.com/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://notice501.github.com/"/>
+  <updated>2013-04-22T18:56:16+08:00</updated>
+  <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[android中的跨进程通信的实现（一）——远程调用过程和aidl]]></title>
-    <link href="foocoder.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/"/>
+    <link href="http://notice501.github.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/"/>
     <updated>2012-11-02T10:44:00+08:00</updated>
-    <id>foocoder.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-([?]-)-yuan-cheng-diao-yong-guo-cheng-he-aidl</id>
+    <id>http://notice501.github.com/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-([?]-)-yuan-cheng-diao-yong-guo-cheng-he-aidl</id>
     <content type="html"><![CDATA[<p>android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和我在一个进程里。</p>
 
 <!--more-->

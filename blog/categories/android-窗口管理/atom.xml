@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类：android 窗口管理 | Code Rush]]></title>
-  <link href="foocoder.com/blog/categories/android-窗口管理/atom.xml" rel="self"/>
-  <link href="foocoder.com/"/>
-  <updated>2013-04-22T18:27:45+08:00</updated>
-  <id>foocoder.com/</id>
+  <link href="http://notice501.github.com/blog/categories/android-窗口管理/atom.xml" rel="self"/>
+  <link href="http://notice501.github.com/"/>
+  <updated>2013-04-22T18:56:16+08:00</updated>
+  <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[android窗口管理框架解析]]></title>
-    <link href="foocoder.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/"/>
+    <link href="http://notice501.github.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/"/>
     <updated>2012-10-25T16:17:00+08:00</updated>
-    <id>foocoder.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi</id>
+    <id>http://notice501.github.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi</id>
     <content type="html"><![CDATA[<p>窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。</p>
 
 <p>窗口可以分为两类：</p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[分类：html5 | Code Rush]]></title>
-  <link href="foocoder.com/blog/categories/html5/atom.xml" rel="self"/>
-  <link href="foocoder.com/"/>
-  <updated>2013-04-22T18:27:45+08:00</updated>
-  <id>foocoder.com/</id>
+  <link href="http://notice501.github.com/blog/categories/html5/atom.xml" rel="self"/>
+  <link href="http://notice501.github.com/"/>
+  <updated>2013-04-22T18:56:16+08:00</updated>
+  <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[web app指南之构建html5离线应用]]></title>
-    <link href="foocoder.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/"/>
+    <link href="http://notice501.github.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/"/>
     <updated>2013-02-25T13:02:00+08:00</updated>
-    <id>foocoder.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong</id>
+    <id>http://notice501.github.com/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong</id>
     <content type="html"><![CDATA[<p>创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。</p>
 
 <p>html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的哪些资源已经缓存，而本地缓存对于缓存内容是完全可控的。</p>
