@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://notice501.github.com
-title: Code Rush 
+title: Code Rush
 subtitle: Stay hungry，Stay foolish
 author: foocoder
 simple_search: http://google.com/search
@@ -37,7 +37,7 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
-markdown: kramdown 
+markdown: kramdown
 pygments: false # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
@@ -93,7 +93,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: foocoder
+disqus_short_name: notice501
 disqus_show_comment_count: true
 
 # Google Analytics
