@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Blog Archives - Code Rush</title>
+	<title>记录遇到的零碎问题 - Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="2013 记录遇到的零碎问题 Jul 10 Comments 详解JavaScript中的this May 3 JavaScript Comments web app指南之构建html5离线应用 Feb 25 html5 Comments 2012 android中的跨进程通信的实现（一）—— &hellip;">
+	<meta name="description" content="日常开发过程中总会遇到各种各样奇怪的问题。相信大家都会有这样的体会：如果有人也遇到过这个问题，并分享了解决过程，自己就会很开心。如果这个问题没人分享过，那恐怕就要费劲一番周折了。这里记录那些各种小的莫名的琐碎的问题。方便自己查阅，也方便他人。会有大致分类，也会不定期更新。 vim &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -102,132 +102,54 @@
 <div id="toload">
 <!-- begin toload --> 
     <div id="content" class="inner">
-        
-	
+        <article class="post">
+	<h2 class="title">记录遇到的零碎问题</h2>
+	<div class="entry-content"><p>日常开发过程中总会遇到各种各样奇怪的问题。相信大家都会有这样的体会：如果有人也遇到过这个问题，并分享了解决过程，自己就会很开心。如果这个问题没人分享过，那恐怕就要费劲一番周折了。这里记录那些各种小的莫名的琐碎的问题。方便自己查阅，也方便他人。会有大致分类，也会不定期更新。</p>
+
+<h3 id="vim">vim</h3>
+<ul>
+  <li>
+    <p>在使用了session的情况下，neocomplete对于session中加载的文件无法正常使用。原因是其completefunc为空。解决办法是在session加载之前，执行vimrcneocomplete#initialize()。（在vimrc中加入execute neocomplete#initialize()即可）</p>
+  </li>
+  <li>
+    <p>在mac中alt的map会有问题。原因是alt加某个字符都会代笔新的字符，比如 ,在我的mac中alt-1/2/3分别是¡/™/£。所以要map alt-1，只要map ¡即可。</p>
+  </li>
+</ul>
+
+<h3 id="zsh">zsh</h3>
+<ul>
+  <li>zsh中使用一些符号需要加上转义字符。比如rake new_post[“记录遇到的零碎问题”],git reset HEAD\^,否则会报zsh: no matches found:错误。</li>
+</ul>
+
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/#disqus_thread">Comments</a></span>
 
 
-	
-	
-	<section class="archives"><h1 class="year">2013</h1>
-
-<article>
-	<h2 class="title"><a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/">记录遇到的零碎问题</a></h2>
-	<div class="meta">
-		<span class="date">Jul 10</span>
-		<span class="tags">
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
+</div>
 </article>
 
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
 	
-
-
-<article>
-	<h2 class="title"><a href="/blog/xiang-jie-javascriptzhong-de-this.html/">详解JavaScript中的this</a></h2>
-	<div class="meta">
-		<span class="date">May  3</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/javascript/'>JavaScript</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/xiang-jie-javascriptzhong-de-this.html/#disqus_thread">Comments</a></span>
-	    
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
 	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/">web app指南之构建html5离线应用</a></h2>
-	<div class="meta">
-		<span class="date">Feb 25</span>
-		<span class="tags">
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
 
 
-	<a class='category' href='/blog/categories/html5/'>html5</a>
 
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-	
-	
-		</section>
-	
-	<section class="archives"><h1 class="year">2012</h1>
-
-<article>
-	<h2 class="title"><a href="/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/">android中的跨进程通信的实现（一）——远程调用过程和aidl</a></h2>
-	<div class="meta">
-		<span class="date">Nov  2</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/android/'>android</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/">android窗口管理框架解析</a></h2>
-	<div class="meta">
-		<span class="date">Oct 25</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/android-framework/'>android framework</a>, <a class='category' href='/blog/categories/android-窗口管理/'>android 窗口管理</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/">谈数据库索引和Sqlite中索引的使用</a></h2>
-	<div class="meta">
-		<span class="date">Sep 28</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/sqlite优化/'>sqlite优化</a>, <a class='category' href='/blog/categories/数据库优化/'>数据库优化</a>, <a class='category' href='/blog/categories/数据库索引/'>数据库索引</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 
     </div>
     <footer id="footer">
@@ -253,7 +175,10 @@
       var disqus_shortname = 'notice501';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://notice501.github.com/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/';
+        var disqus_url = 'http://notice501.github.com/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
