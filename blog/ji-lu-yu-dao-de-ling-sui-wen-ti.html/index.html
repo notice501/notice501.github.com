@@ -114,7 +114,28 @@
   <li>
     <p>在mac中alt的map会有问题。原因是alt加某个字符都会代表新的字符，比如 ,在我的mac中alt-1/2/3分别是¡/™/£。所以要map alt-1，只要map ¡即可。</p>
   </li>
+  <li>
+    <p>macvim获取的 $PATH并不是用户常规设置的 $PATH。这会导致一些在 $PATH中加入的执行文件在macvim中无法执行，比如sytanstic众多的语法检查。这可以说是macvim的一个bug。相反，macvim使用的是/usr/libexec/path_helper，它使用两个部分的内容，一部分是/etc/paths，另一部分是/etc/paths.d。所以只要修改etc/paths.d，加入所需的环境变量即可。</p>
+  </li>
+  <li>
+    <p>在终端中用mvim打开文件会直接在新窗口打开，可以加入–remote-tab参数在新标签打开。我还是喜欢在新标签打开，每次输入这个参数太麻烦。修改mvim执行文件，在头部加入tabs=true，并将#last step的if块替换为：</p>
+  </li>
 </ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">if [ "$gui" ]; then
+</span><span class="line"> 	if $tabs &amp;&amp; [[ `$binary --serverlist` = "VIM" ]]; 	then
+</span><span class="line">   	 exec "$binary" -g $opts --remote-tab-silent 	${1:+"$@"}
+</span><span class="line">else    exec "$binary" -g $opts ${1:+"$@"}
+</span><span class="line">	fi
+</span><span class="line">else  exec "$binary" $opts ${1:+"$@"}
+</span><span class="line">	fi</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h3 id="zsh">zsh</h3>
 <ul>
