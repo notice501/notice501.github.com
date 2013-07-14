@@ -4,7 +4,7 @@
   <title><![CDATA[分类：mac | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-15T00:00:32+08:00</updated>
+  <updated>2013-07-15T00:01:05+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -38,7 +38,8 @@
   <li>快捷键丰富。
     <ul>
       <li><code>⌘ + 数字</code>:  切换标签页。⌘ + 方向键 按方向切换标签页。</li>
-      <li><code>⌘ + enter</code>: 切换全屏</li>
+      <li><code>⌘ + enter</code>: 切换全屏
+<!--more--></li>
       <li><code>⌘ + f</code>: 查找。支持正则。其中查找的内容会被自动复制。省去了再去⌘+c的步骤。同样，鼠标去选中的内容也会自动复制，也可以鼠标中键直接粘贴。一般在使用时，键入搜索关键词，然后用<code>shift-tab</code>或者<code>tab</code>左右自动补全，<code>option + enter</code>则自动将搜索结果键入，并且复制到剪贴板。</li>
       <li><code>⌘ + d</code>: 垂直分屏，<code>⌘ + shift + d</code>: 水平分屏。使用<code>⌘ + ]</code>和<code>⌘ + [</code>在最近使用的分屏直接切换.而<code>⌘ + opt + 方向键</code>切换到指定位置的分屏。</li>
       <li><code>⌘ + t</code> :新的标签页</li>
