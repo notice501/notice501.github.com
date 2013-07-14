@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-14T23:20:12+08:00</updated>
+  <updated>2013-07-14T23:23:15+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -41,7 +41,7 @@
  		<img src="http://foocoder.com/images/mac/autocom.png" alt="自动补全" />
  	* ⌘ + shift + h 剪贴板历史，如图：
 
- 		<img src="http://foocoder.com/images/mac/hisory.png" alt="剪贴板历史" />
+ 		<img src="http://foocoder.com/images/mac/history.png" alt="剪贴板历史" />
  	* ctrl + u 清空当前行。这里要注意，mac默认的ctrl+u为清楚当前光标至行首的内容，在iTerm2中则直接清除本行。iTerm2 也支持其他常用的操作命令，这里顺带讲下，因为这些命令都是mac下非常常用也很好用的：
  		* ctrl + a 到行首
  		* ctrl + e 行末
