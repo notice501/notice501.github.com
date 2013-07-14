@@ -1,0 +1,247 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>我在用的mac软件(1)--终端环境之iTerm2 - Code Rush</title>
+    <meta name="author" content="foocoder">
+    
+	<meta name="description" content="之前一直有朋友要我分享下在用的mac软件，今天有空就来写一下，可能不止于软件，会有一些配置或者工具，或者叫环境更合适。有些可能一句话带过，有些会详细介绍。也不分类了，想到哪个就写出来。如果已经写的足够长了，就会分几篇来写。 iTerm2+zsh+tmux的终端环境
+#####iTerm2 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Code Rush" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34258052-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        foocoder
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  <iframe width="200px" height="72px" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1775595064&verifier=34d9820b&dpc=1"></iframe>
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/notice501" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/118277216932640089008?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">主页</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="/about/">关于</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">我在用的mac软件(1)--终端环境之iTerm2</h2>
+	<div class="entry-content"><p>之前一直有朋友要我分享下在用的mac软件，今天有空就来写一下，可能不止于软件，会有一些配置或者工具，或者叫环境更合适。有些可能一句话带过，有些会详细介绍。也不分类了，想到哪个就写出来。如果已经写的足够长了，就会分几篇来写。</p>
+
+<h3 id="iterm2zshtmux">iTerm2+zsh+tmux的终端环境</h3>
+<p>#####iTerm2
+其实现在os x的terminal已经做的很好了，但是iTerm2的功能依然要更强大一些。简述下优点和常用功能：</p>
+
+<ul>
+  <li>开源免费。 </li>
+  <li>兼容性比默认Terminal更好。
+ 	* 对于经常要远程使用的情况下，默认的Terminal在使用vi时经常出现不兼容的问题，而iTerm2在这方面显然做的更好。</li>
+  <li>快捷键丰富。
+ 	* ⌘ + 数字  切换标签页。⌘ + 方向键 按方向切换标签页。
+ 	* ⌘ + enter 切换全屏
+ 	* ⌘ + f 查找。支持正则。其中查找的内容会被自动复制。省去了再去⌘+c的步骤。同样，鼠标去选中的内容也会自动复制，也可以鼠标中键直接粘贴。一般在使用时，键入搜索关键词，然后用shift-tab或者tab左右自动补全，option + enter则自动将搜索结果键入，并且复制到剪贴板。
+ 	* ⌘ + d 垂直分屏，⌘ + shift + d 水平分屏。使用⌘ + ]和⌘ + [在最近使用的分屏直接切换.而⌘ + opt + 方向键切换到指定位置的分屏。
+ 	* ⌘ + t 新的标签页
+ 	* ⌘ + w 关闭当前标签页
+ 	* ⌘ + ；自动补全历史命令。如图：</li>
+</ul>
+
+ 		<img src="http://foocoder.com/images/mac/autocom.png" alt="自动补全" />
+ 	* ⌘ + shift + h 剪贴板历史，如图：
+
+ 		<img src="http://foocoder.com/images/mac/hisory.png" alt="剪贴板历史" />
+ 	* ctrl + u 清空当前行。这里要注意，mac默认的ctrl+u为清楚当前光标至行首的内容，在iTerm2中则直接清除本行。iTerm2 也支持其他常用的操作命令，这里顺带讲下，因为这些命令都是mac下非常常用也很好用的：
+ 		* ctrl + a 到行首
+ 		* ctrl + e 行末
+ 		* ctrl + f/b 前进后退，相当于左右方向键，但是显然比移开手按方向键更快
+ 		* ctrl + p 上一条命令，相当于方向键上
+ 		* ctrl + r 搜索命令历史，这个大家都应该很熟悉了
+ 		* ctrl + d 删除当前字符
+ 		* ctrl + h 删除之前的字符
+ 		* ctrl + w 删除光标前的单词
+ 		* ctrl + k 删除到文本末尾
+ 		* ctrl + t 交还光标处文本
+
+ 	* ⌘ + —/+/0 调整字体大小
+ 	* ⌘ + r 清屏，其实是滚到新的一屏，并没有清空。ctrl + l 也可以做到。
+<ul>
+  <li>更多实用功能。
+ 	* Exposé 标签 按⌘ + opt + e 打开Exposé，并支持搜索。如图：</li>
+</ul>
+
+ 		<img src="http://foocoder.com/images/mac/expose.png" alt="Exposé" />
+ 	* 全局呼出快捷键。如图：
+
+ 		<img src="http://foocoder.com/images/mac/hotkeys.png" alt="呼出快捷键" />
+ 	* ⌘ + / 找到当前光标位置。
+ 	* shift + ⌘ + s 保存当前窗口快照。
+ 	* ⌘ + apt + b 快照回放。很有意思的功能，你可以对你的操作根据时间轴进行回放。可以拖动下方的时间轴，也可以按左右方向键。如图：
+
+ 		<img src="http://foocoder.com/images/mac/replay.png" alt="快照回放" />
+<ul>
+  <li>支持256色。方便配置vi配色。但是在某些远超服务器上不支持256色，则只要在Prefences-&gt;Profiles-&gt;Terminal里设置为xterm。</li>
+</ul>
+
+<hr />
+<p>光写个iTerm2没想到就写了这么多，稍微打了下腹稿，后面zsh + tmux 肯定比这里还要多。下篇继续吧。</p>
+
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/wo-zai-yong-de-macruan-jian.html/#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    foocoder
+
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'notice501';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian.html/';
+        var disqus_url = 'http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian.html/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
