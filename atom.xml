@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-15T12:54:48+08:00</updated>
+  <updated>2013-07-15T23:23:49+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -57,7 +57,7 @@
           <li><code>ctrl + h</code>: 删除之前的字符</li>
           <li><code>ctrl + w</code>: 删除光标前的单词</li>
           <li><code>ctrl + k</code>: 删除到文本末尾</li>
-          <li><code>ctrl + t</code>: 交还光标处文本</li>
+          <li><code>ctrl + t</code>: 交换光标处文本</li>
         </ul>
       </li>
       <li><code>⌘ + —/+/0</code>: 调整字体大小</li>
