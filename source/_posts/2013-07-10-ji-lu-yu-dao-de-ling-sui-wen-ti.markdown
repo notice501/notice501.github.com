@@ -30,3 +30,6 @@ else  exec "$binary" $opts ${1:+"$@"}
 ### zsh
 * zsh中使用一些符号需要加上转义字符。比如rake new_post\["记录遇到的零碎问题"\],git reset HEAD\^,否则会报zsh: no matches found:错误。
 
+### Parallels
+* Parallels中登陆windows时提示密码过期，需要更高。但是我根本没设置过密码。原因可能是安装时跳过了设置。只需要保持原密码字段为空，键入新密码设置密码即可。
+
