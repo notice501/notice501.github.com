@@ -4,7 +4,7 @@
   <title><![CDATA[分类：zsh | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-22T09:50:37+08:00</updated>
+  <updated>2013-07-22T09:52:43+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -30,11 +30,12 @@
   <li>OS X默认的bash版本实在是太老了啊……</li>
   <li>拼写纠正。你总会不小心打错命令。这时，zsh会进行自动拼写纠正，如图：<img src="http://foocoder.com/images/mac/cerrect.png" alt="" /></li>
   <li>更强大的补全。
+ <!--more-->
     <ul>
       <li>连按两次tab会列出所有的补全列表并直接开始选择。如图：<img src="http://foocoder.com/images/mac/tabcd.png" alt="" />
  	并且可以用方向键来选择，但是对我这种很少用方向键的人来说只能猛敲tab了么，不是，zsh支持使用<code>&lt;ctrl-n/p/f/b&gt;</code>来选择，perfect!</li>
       <li>命令选项补全。有多少人依然记不住tar的命令选项？中枪的去抄20遍……在zsh中只需要键入<code>tar - &lt;tab&gt;</code>就会列出所有的选项和帮助说明。用了zsh之后<code>man</code>少用了好多……</li>
-      <li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="" />。这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示<img src="http://foocoder.com/images/mac/kill1.png" alt="" />，自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
+      <li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="" />这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示<img src="http://foocoder.com/images/mac/kill1.png" alt="" />，自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
     </ul>
   </li>
   <li>更智能的历史命令。在用<ctrl-p>或者`方向上键`查找历史命令时，zsh支持限制查找。比如，输入`ls `然后再按方向上键,则只会查找用过的ls命令。而此时使用`<ctrl-p>`则会仍然按之前的方式查找，忽略`ls`。</ctrl-p></ctrl-p></li>
