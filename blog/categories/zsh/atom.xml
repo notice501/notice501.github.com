@@ -4,7 +4,7 @@
   <title><![CDATA[分类：zsh | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-22T09:52:43+08:00</updated>
+  <updated>2013-07-22T09:53:56+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -35,14 +35,14 @@
       <li>连按两次tab会列出所有的补全列表并直接开始选择。如图：<img src="http://foocoder.com/images/mac/tabcd.png" alt="" />
  	并且可以用方向键来选择，但是对我这种很少用方向键的人来说只能猛敲tab了么，不是，zsh支持使用<code>&lt;ctrl-n/p/f/b&gt;</code>来选择，perfect!</li>
       <li>命令选项补全。有多少人依然记不住tar的命令选项？中枪的去抄20遍……在zsh中只需要键入<code>tar - &lt;tab&gt;</code>就会列出所有的选项和帮助说明。用了zsh之后<code>man</code>少用了好多……</li>
-      <li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="" />这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示<img src="http://foocoder.com/images/mac/kill1.png" alt="" />，自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
+      <li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="" />这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示:<img src="http://foocoder.com/images/mac/kill1.png" alt="" />自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
     </ul>
   </li>
   <li>更智能的历史命令。在用<ctrl-p>或者`方向上键`查找历史命令时，zsh支持限制查找。比如，输入`ls `然后再按方向上键,则只会查找用过的ls命令。而此时使用`<ctrl-p>`则会仍然按之前的方式查找，忽略`ls`。</ctrl-p></ctrl-p></li>
   <li>多个终端会话共享历史记录。经常有多个窗口，tab，tmux的多个session，panel。这些命令历史不能共享实在是很糟糕的回忆。但是有了zsh之后，这些确实成了回忆了,所有的命令历史都可以共享。</li>
   <li>更智能的<code>cd</code>。首先你甚至不需要再输入cd了，直接输入路径即可。第二，在你知道路径的情况下，比如<code>/usr/local/bin</code>你可以输入<code>cd /u/l/b</code>然后按<code>&lt;Tab&gt;</code>进行补全快速输入。这显然不够，zsh还支持路径替换，如果你其实想进入的是<code>/usr/local/bin</code>，不再需要<code>../</code> 了，直接在当前输入<code>cd bin share</code>即可，则<code>bin</code>会替换为<code>share</code>。在之后我会介绍z和autojumper，目录跳转会更方便。 </li>
   <li>更强大的alias。zsh不仅支持普通的alias，例如：<code>alias ls ='ls --color=auto'</code>。zsh还支持后缀alias,即以什么命令打开特定的后缀名文件。例如<code>alias -s js=mvim</code>,输入<code>hello.js</code>，会以vim打开该文件,而不在需要<code>vim hello.js</code>。</li>
-  <li>通配符搜索。这也是我最爱的功能之一。之前讲过由于命令补全少用了很多<code>man</code>命令，而这个功能让我少用了很多<code>find</code>命令。	一般的通配符搜索无非是<code>ls -l *.log</code>,如图:<img src="http://foocoder.com/images/mac/ls1.png" alt="" />。在zsh中可以做到递归的通配符搜索。使用<code>**/</code>来递归搜索，如图<img src="http://foocoder.com/images/mac/ls2.png" alt="" />.是不是在很多场景下可以取代<code>find</code>？</li>
+  <li>通配符搜索。这也是我最爱的功能之一。之前讲过由于命令补全少用了很多<code>man</code>命令，而这个功能让我少用了很多<code>find</code>命令。	一般的通配符搜索无非是<code>ls -l *.log</code>,如图:<img src="http://foocoder.com/images/mac/ls1.png" alt="" />在zsh中可以做到递归的通配符搜索。使用<code>**/</code>来递归搜索，如图<img src="http://foocoder.com/images/mac/ls2.png" alt="" />是不是在很多场景下可以取代<code>find</code>？</li>
 </ol>
 
 <p>以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问<a href="http://zsh.sourceforge.net/Guide/zshguide.html">A User’s Guide to the Z-Shell</a>。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是<a href="">oh-my-zsh</a>,oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题<code>robbyrussell</code>，如图<img src="http://foocoder.com/images/mac/gitoh.png" alt="" />可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。</p>
