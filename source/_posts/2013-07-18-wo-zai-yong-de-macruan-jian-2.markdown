@@ -32,8 +32,12 @@ categories: [mac,zsh,shell]
 以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问[A User's Guide to the Z-Shell](http://zsh.sourceforge.net/Guide/zshguide.html)。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是[oh-my-zsh](),oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题`robbyrussell`，如图![](http://foocoder.com/images/mac/gitoh.png)可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。
 
 当然zsh也不是完美无缺。在我使用过程中有两点不是很舒服：
-1. 自动纠正并不总是那么智能。如图：![](http://foocoder.com/images/mac/wrongcorrect.png)
-2. 一些符号是zsh中保留的，使用需要转义，如图：![](http://foocoder.com/images/mac/zhuanyi.png)
+1. 自动纠正并不总是那么智能。如图：![](http://foocoder.com/images/mac/zhuanyi.png)
+	但是可以对这些命令使用alias 加上`nocorrect`前缀，如：
+	
+`alias rake deploy='nocorrect rake deploy'`
+
+2. 一些符号是zsh中保留的，使用需要转义，如图：![](http://foocoder.com/images/mac/wrongcorrect.png)
  
  ---
  
