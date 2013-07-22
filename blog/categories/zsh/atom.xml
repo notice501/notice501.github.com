@@ -4,7 +4,7 @@
   <title><![CDATA[分类：zsh | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-22T09:53:56+08:00</updated>
+  <updated>2013-07-22T22:27:25+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -48,8 +48,14 @@
 <p>以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问<a href="http://zsh.sourceforge.net/Guide/zshguide.html">A User’s Guide to the Z-Shell</a>。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是<a href="">oh-my-zsh</a>,oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题<code>robbyrussell</code>，如图<img src="http://foocoder.com/images/mac/gitoh.png" alt="" />可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。</p>
 
 <p>当然zsh也不是完美无缺。在我使用过程中有两点不是很舒服：
-1. 自动纠正并不总是那么智能。如图：<img src="http://foocoder.com/images/mac/wrongcorrect.png" alt="" />
-2. 一些符号是zsh中保留的，使用需要转义，如图：<img src="http://foocoder.com/images/mac/zhuanyi.png" alt="" /></p>
+1. 自动纠正并不总是那么智能。如图：<img src="http://foocoder.com/images/mac/zhuanyi.png" alt="" />
+	但是可以对这些命令使用alias 加上<code>nocorrect</code>前缀，如：</p>
+
+<p><code>nocorrect alias rake deploy ='nocorrect rake deploy'</code></p>
+
+<ol>
+  <li>一些符号是zsh中保留的，使用需要转义，如图：<img src="http://foocoder.com/images/mac/wrongcorrect.png" alt="" /></li>
+</ol>
 
 <hr />
 
