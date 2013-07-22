@@ -4,7 +4,7 @@
   <title><![CDATA[分类：zsh | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-22T22:46:49+08:00</updated>
+  <updated>2013-07-22T22:52:05+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -38,7 +38,7 @@
       <li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="" />这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示:<img src="http://foocoder.com/images/mac/kill1.png" alt="" />自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
     </ul>
   </li>
-  <li>更智能的历史命令。在用<ctrl-p>或者`方向上键`查找历史命令时，zsh支持限制查找。比如，输入`ls `然后再按方向上键,则只会查找用过的ls命令。而此时使用`<ctrl-p>`则会仍然按之前的方式查找，忽略`ls`。</ctrl-p></ctrl-p></li>
+  <li>更智能的历史命令。在用<code>&lt;ctrl-p&gt;</code>或者<code>方向上键</code>查找历史命令时，zsh支持限制查找。比如，输入<code>ls </code>然后再按方向上键,则只会查找用过的ls命令。而此时使用<code>&lt;ctrl-p&gt;</code>则会仍然按之前的方式查找，忽略<code>ls</code>。</li>
   <li>多个终端会话共享历史记录。经常有多个窗口，tab，tmux的多个session，panel。这些命令历史不能共享实在是很糟糕的回忆。但是有了zsh之后，这些确实成了回忆了,所有的命令历史都可以共享。</li>
   <li>更智能的<code>cd</code>。首先你甚至不需要再输入cd了，直接输入路径即可。第二，在你知道路径的情况下，比如<code>/usr/local/bin</code>你可以输入<code>cd /u/l/b</code>然后按<code>&lt;Tab&gt;</code>进行补全快速输入。这显然不够，zsh还支持路径替换，如果你其实想进入的是<code>/usr/local/bin</code>，不再需要<code>../</code> 了，直接在当前输入<code>cd bin share</code>即可，则<code>bin</code>会替换为<code>share</code>。在之后我会介绍z和autojumper，目录跳转会更方便。 </li>
   <li>更强大的alias。zsh不仅支持普通的alias，例如：<code>alias ls ='ls --color=auto'</code>。zsh还支持后缀alias,即以什么命令打开特定的后缀名文件。例如<code>alias -s js=mvim</code>,输入<code>hello.js</code>，会以vim打开该文件,而不在需要<code>vim hello.js</code>。</li>
