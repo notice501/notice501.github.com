@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-22T22:29:00+08:00</updated>
+  <updated>2013-07-22T22:32:11+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -51,7 +51,7 @@
 1. 自动纠正并不总是那么智能。如图：<img src="http://foocoder.com/images/mac/zhuanyi.png" alt="" />
 	但是可以对这些命令使用alias 加上<code>nocorrect</code>前缀，如：</p>
 
-<p><code>alias rake deploy ='nocorrect rake deploy'</code></p>
+<p><code>alias rake deploy='nocorrect rake deploy'</code></p>
 
 <ol>
   <li>一些符号是zsh中保留的，使用需要转义，如图：<img src="http://foocoder.com/images/mac/wrongcorrect.png" alt="" /></li>
