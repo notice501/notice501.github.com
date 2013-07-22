@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[分类：mac | Code Rush]]></title>
-  <link href="http://notice501.github.com/blog/categories/mac/atom.xml" rel="self"/>
+  <title><![CDATA[分类：shell | Code Rush]]></title>
+  <link href="http://notice501.github.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
   <updated>2013-07-22T09:44:31+08:00</updated>
   <id>http://notice501.github.com/</id>
@@ -103,77 +103,6 @@ brew install autojump
 </code></p>
 
 <p>有问题和分享欢迎留言交流。也欢迎关注我的<a href="http://weibo.com/notice520">微博</a>。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我在用的mac软件(1)--终端环境之iTerm2]]></title>
-    <link href="http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian.html/"/>
-    <updated>2013-07-14T20:42:00+08:00</updated>
-    <id>http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian</id>
-    <content type="html"><![CDATA[<p>之前一直有朋友要我分享下在用的mac软件，今天有空就来写一下，可能不止于软件，会有一些配置或者工具，或者叫环境更合适。有些可能一句话带过，有些会详细介绍。也不分类了，想到哪个就写出来。如果已经写的足够长了，就会分几篇来写。</p>
-
-<h3 id="iterm2zshtmux">iTerm2+zsh+tmux的终端环境</h3>
-
-<h5 id="iterm2">iTerm2</h5>
-
-<p>其实现在os x的terminal已经做的很好了，但是iTerm2的功能依然要更强大一些。简述下优点和常用功能：</p>
-
-<ul>
-  <li>
-    <p>开源免费。 </p>
-  </li>
-  <li>兼容性比默认Terminal更好。
-    <ul>
-      <li>对于经常要远程使用的情况下，默认的Terminal在使用vi时经常出现不兼容的问题，而iTerm2在这方面显然做的更好。</li>
-    </ul>
-  </li>
-  <li>快捷键丰富。
-    <ul>
-      <li><code>⌘ + 数字</code>:  切换标签页。 <code>⌘ + 方向键</code> 按方向切换标签页。</li>
-      <li><code>⌘ + enter</code>: 切换全屏
-<!--more--></li>
-      <li><code>⌘ + f</code>: 查找。支持正则。其中查找的内容会被自动复制。省去了再去⌘+c的步骤。同样，鼠标去选中的内容也会自动复制，也可以鼠标中键直接粘贴。一般在使用时，键入搜索关键词，然后用<code>shift-tab</code>或者<code>tab</code>左右自动补全，<code>option + enter</code>则自动将搜索结果键入，并且复制到剪贴板。</li>
-      <li><code>⌘ + d</code>: 垂直分屏，<code>⌘ + shift + d</code>: 水平分屏。使用<code>⌘ + ]</code>和<code>⌘ + [</code>在最近使用的分屏直接切换.而<code>⌘ + opt + 方向键</code>切换到指定位置的分屏。</li>
-      <li><code>⌘ + t</code> :新的标签页</li>
-      <li><code>⌘ + w</code> :关闭当前标签页</li>
-      <li><code>⌘ + ；</code>:自动补全历史命令。如图:<img src="http://foocoder.com/images/mac/autocom.png" alt="自动补全" /></li>
-      <li><code>⌘ + shift + h</code>: 剪贴板历史，如图：<img src="http://foocoder.com/images/mac/history.png" alt="剪贴板历史" /></li>
-      <li><code>ctrl + u</code>: 清空当前行。这里要注意，mac默认的ctrl+u为清楚当前光标至行首的内容，在iTerm2中则直接清除本行。iTerm2 也支持其他常用的操作命令，这里顺带讲下，因为这些命令都是mac下非常常用也很好用的：
-        <ul>
-          <li><code>ctrl + a</code>: 到行首	</li>
-          <li><code>ctrl + e</code>: 行末</li>
-          <li><code>ctrl + f/b</code>: 前进后退，相当于左右方向键，但是显然比移开手按方向键更快 		</li>
-          <li><code>ctrl + p</code>: 上一条命令，相当于方向键上</li>
-          <li><code>ctrl + r</code>: 搜索命令历史，这个大家都应该很熟悉了</li>
-          <li><code>ctrl + d</code>: 删除当前字符</li>
-          <li><code>ctrl + h</code>: 删除之前的字符</li>
-          <li><code>ctrl + w</code>: 删除光标前的单词</li>
-          <li><code>ctrl + k</code>: 删除到文本末尾</li>
-          <li><code>ctrl + t</code>: 交换光标处文本</li>
-        </ul>
-      </li>
-      <li><code>⌘ + —/+/0</code>: 调整字体大小</li>
-      <li><code>⌘ + r</code>:清屏，其实是滚到新的一屏，并没有清空。ctrl + l 也可以做到。</li>
-    </ul>
-  </li>
-  <li>更多实用功能。
-    <ul>
-      <li>Exposé 标签 按<code>⌘ + opt + e </code>打开Exposé，并支持搜索。如图：<img src="http://foocoder.com/images/mac/expose.png" alt="Exposé" /></li>
-      <li>全局呼出快捷键。如图：
-<img src="http://foocoder.com/images/mac/hotkeys.png" alt="呼出快捷键" /></li>
-      <li><code>⌘ + /</code>: 找到当前光标位置，有时会很有用。</li>
-      <li><code>shift + ⌘ + s</code>: 保存当前窗口快照。</li>
-      <li><code>⌘ + opt + b</code>: 快照回放。很有意思的功能，你可以对你的操作根据时间轴进行回放。可以拖动下方的时间轴，也可以按左右方向键。如图：<img src="http://foocoder.com/images/mac/replay.png" alt="快照回放" /></li>
-    </ul>
-  </li>
-  <li>支持256色。方便配置vi配色。但是在某些远超服务器上不支持256色，则只要在Prefences-&gt;Profiles-&gt;Terminal里设置为xterm。</li>
-</ul>
-
-<hr />
-
-<p>光写个iTerm2没想到就写了这么多，稍微打了下腹稿，后面zsh + tmux 肯定比这里还要多。下篇继续吧。</p>
 
 ]]></content>
   </entry>
