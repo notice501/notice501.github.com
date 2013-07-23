@@ -22,7 +22,7 @@ categories: [mac,zsh,shell]
  	并且可以用方向键来选择，但是对我这种很少用方向键的人来说只能猛敲tab了么，不是，zsh支持使用`<ctrl-n/p/f/b>`来选择，perfect!
    * 命令选项补全。有多少人依然记不住tar的命令选项？中枪的去抄20遍……在zsh中只需要键入`tar - <tab>`就会列出所有的选项和帮助说明。用了zsh之后`man`少用了好多……
    * 命令参数补全。zsh 对命令的参数补全也很强大。键入`kill <tab>`就会列出所有的进程名和对应的进程号。如图：![](http://foocoder.com/images/mac/kill2.png)这还不够，试试键入`kill sbin <tab>`,如图所示:![](http://foocoder.com/images/mac/kill1.png)自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。
- 5. 更智能的历史命令。在用<ctrl-p>或者`方向上键`查找历史命令时，zsh支持限制查找。比如，输入`ls `然后再按方向上键,则只会查找用过的ls命令。而此时使用`<ctrl-p>`则会仍然按之前的方式查找，忽略`ls`。
+ 5. 更智能的历史命令。在用`<ctrl-p>`或者`方向上键`查找历史命令时，zsh支持限制查找。比如，输入`ls `然后再按方向上键,则只会查找用过的ls命令。而此时使用`<ctrl-p>`则会仍然按之前的方式查找，忽略`ls`。
  6. 多个终端会话共享历史记录。经常有多个窗口，tab，tmux的多个session，panel。这些命令历史不能共享实在是很糟糕的回忆。但是有了zsh之后，这些确实成了回忆了,所有的命令历史都可以共享。
  7. 更智能的`cd`。首先你甚至不需要再输入cd了，直接输入路径即可。第二，在你知道路径的情况下，比如`/usr/local/bin`你可以输入`cd /u/l/b`然后按`<Tab>`进行补全快速输入。这显然不够，zsh还支持路径替换，如果你其实想进入的是`/usr/local/bin`，不再需要`../` 了，直接在当前输入`cd bin share`即可，则`bin`会替换为`share`。在之后我会介绍z和autojumper，目录跳转会更方便。 
  8. 更强大的alias。zsh不仅支持普通的alias，例如：`alias ls ='ls --color=auto'`。zsh还支持后缀alias,即以什么命令打开特定的后缀名文件。例如`alias -s js=mvim`,输入`hello.js`，会以vim打开该文件,而不在需要`vim hello.js`。
