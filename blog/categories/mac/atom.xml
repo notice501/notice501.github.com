@@ -4,7 +4,7 @@
   <title><![CDATA[分类：mac | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-07-25T09:16:40+08:00</updated>
+  <updated>2013-07-25T13:57:06+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -95,7 +95,7 @@ curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | 
 
 <h1 id="zautojump">z和autojump</h1>
 
-<p><a href="https://github.com/rupa/z">z</a>和<a href="https://github.com/joelthelion/autojump">autojump</a>的功能类似，前者是简单的shell脚本实现，后者由python实现，功能都是可以方便自动匹配到你最多使用的目录并跳转。我在用的是z，如图，我在根目录输入<code>z github</code>可以自动跳转到我常用的<code>notice501.github.com</code>这个目录，也就是本博客的工程目录。超级方便的工具。autojump用法类似，命令为<code>j</code>而不是<code>z</code>两者的安装方式：</p>
+<p><a href="https://github.com/rupa/z">z</a>和<a href="https://github.com/joelthelion/autojump">autojump</a>的功能类似，前者是简单的shell脚本实现，后者由python实现，功能都是可以方便自动匹配到你最多使用的目录并跳转。我在用的是z，如图<img src="http://foocoder.com/images/mac/zjump.png" alt="" />，我在根目录输入<code>z github</code>可以自动跳转到我常用的<code>notice501.github.com</code>这个目录，也就是本博客的工程目录。超级方便的工具。autojump用法类似，命令为<code>j</code>而不是<code>z</code>两者的安装方式：</p>
 
 <p><strong>z</strong></p>
 
