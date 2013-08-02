@@ -29,7 +29,7 @@ categories: [mac,zsh,shell]
  9. 通配符搜索。这也是我最爱的功能之一。之前讲过由于命令补全少用了很多`man`命令，而这个功能让我少用了很多`find`命令。	一般的通配符搜索无非是`ls -l *.log`,如图:![](http://foocoder.com/images/mac/ls1.png)在zsh中可以做到递归的通配符搜索。使用`**/`来递归搜索，如图![](http://foocoder.com/images/mac/ls2.png)是不是在很多场景下可以取代`find`？
  
  
-以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问[A User's Guide to the Z-Shell](http://zsh.sourceforge.net/Guide/zshguide.html)。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是[oh-my-zsh](),oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题`robbyrussell`，如图![](http://foocoder.com/images/mac/gitoh.png)可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。
+以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问[A User's Guide to the Z-Shell](http://zsh.sourceforge.net/Guide/zshguide.html)。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh?source=c),oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题`robbyrussell`，如图![](http://foocoder.com/images/mac/gitoh.png)可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。
 
 当然zsh也不是完美无缺。在我使用过程中有两点不是很舒服：
 1. 自动纠正并不总是那么智能。如图：![](http://foocoder.com/images/mac/zhuanyi.png)
@@ -77,7 +77,7 @@ curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | 
  
 # z和autojump
 
-[z](https://github.com/rupa/z)和[autojump](https://github.com/joelthelion/autojump)的功能类似，前者是简单的shell脚本实现，后者由python实现，功能都是可以方便自动匹配到你最多使用的目录并跳转。我在用的是z，如图，我在根目录输入`z github`可以自动跳转到我常用的`notice501.github.com`这个目录，也就是本博客的工程目录。超级方便的工具。autojump用法类似，命令为`j`而不是`z`两者的安装方式：
+[z](https://github.com/rupa/z)和[autojump](https://github.com/joelthelion/autojump)的功能类似，前者是简单的shell脚本实现，后者由python实现，功能都是可以方便自动匹配到你最多使用的目录并跳转。我在用的是z，如图![](http://foocoder.com/images/mac/zjump.png)，我在根目录输入`z github`可以自动跳转到我常用的`notice501.github.com`这个目录，也就是本博客的工程目录。超级方便的工具。autojump用法类似，命令为`j`而不是`z`两者的安装方式：
 
 __z__
 
