@@ -4,7 +4,7 @@
   <title><![CDATA[分类：shell | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-08-03T18:52:47+08:00</updated>
+  <updated>2013-08-03T22:20:42+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -32,12 +32,12 @@
   <li>状态行配置很容易。</li>
   <li>vi 模式</li>
   <li>复制粘贴缓冲区</li>
-  <li>脚本化.通过脚本话可以自动化窗口布局。</li>
+  <li>脚本化.通过脚本可以自动化窗口布局。</li>
 </ol>
 
 <h2 id="tmux-1">tmux简单介绍</h2>
 
-<p>简单来说，tmux是一个<code>multiplexers</code>,他可以让你同时运行多个终端，在多个终端之间切换。你可以断开终端的同时让终端继续运行（例如之前我提到的编译任务），类似的还有<code>screen</code>。</p>
+<p>简单来说，tmux是一个<code>multiplexers</code>,他可以让你同时运行多个终端，在多个终端之间切换。你可以断开终端的同时让终端内容继续运行（例如之前我提到的编译任务），类似的还有<code>screen</code>。</p>
 
 <p>tmux是典型的c/s架构。有如下几个概念。</p>
 
@@ -49,7 +49,9 @@
 
 <h2 id="tmux-2">tmux的使用</h2>
 <p>正如上所述，在终端中输入<code>tmux</code>就可以打开一个tmux session。如图：
-<img src="" alt="" /> 底部会出现状态栏。左边表示当前为session 0， window 1， pane 1，中间会显示当前窗口编号和路径，右侧会本机信息和时间。这并不是默认设置，但是配置tmux的状态行非常容易，在后面我会简单的介绍如何配置tmux，并提供我的配置文件。</p>
+<img src="http://foocoder.com/images/mac/tmux.png" alt="" /></p>
+
+<p>底部会出现状态栏。左边表示当前为session 0， window 1， pane 1，中间会显示当前窗口编号和路径，右侧会本机信息和时间。这并不是默认设置，但是配置tmux的状态行非常容易，在后面我会简单的介绍如何配置tmux，并提供我的配置文件。</p>
 
 <p>tmux的所有操作必须先使用一个前缀键进入命令模式，或者说进入控制台，就像vi中的<code>esc</code>。默认的前缀为<code>&lt;c-b&gt;</code>,比较难按，很多人会改为screen中的<code>&lt;c-a&gt;</code>，来保持一致性。可是这和emacs风格的终端回到行首的快捷键冲突，我使用的是<code>c-k</code>。大家可以根据自己喜好来配置：</p>
 
