@@ -1,0 +1,436 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>终端环境之tmux - Code Rush</title>
+    <meta name="author" content="foocoder">
+    
+	<meta name="description" content="今天继续介绍tmux。 why tmux?
+用一个工具的第一问自然还是为什么要用。其实当时使用tmux的原因很简单。工作中经常需要长时间的编译。总想要下班后要关机的情况下，（肯定有人问我为什么关机，我觉得环保:)而且很多时候是笔记本工作，下班还带回去。），让远超服务器继续进行编译。 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Code Rush" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34258052-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        foocoder
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  <iframe width="200px" height="72px" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1775595064&verifier=34d9820b&dpc=1"></iframe>
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/notice501" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/118277216932640089008?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">主页</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="/about/">关于</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">终端环境之tmux</h2>
+	<div class="entry-content"><h2 id="tmux">今天继续介绍tmux。</h2>
+
+<h2 id="why-tmux">why tmux?</h2>
+<p>用一个工具的第一问自然还是为什么要用。其实当时使用tmux的原因很简单。工作中经常需要长时间的编译。总想要下班后要关机的情况下，（肯定有人问我为什么关机，我觉得环保:)而且很多时候是笔记本工作，下班还带回去。），让远超服务器继续进行编译。简单的寻觅一番之后，就发现了tmux。而且远超预期，就一直用了下来。</p>
+
+<p>其他让我非常喜欢的功能有：</p>
+
+<!--more-->
+
+<ol>
+  <li>window，pane的概念可以很好地进行多窗口切换，窗口分割。</li>
+  <li>状态行配置很容易。</li>
+  <li>vi 模式</li>
+  <li>复制粘贴缓冲区</li>
+  <li>脚本化.通过脚本话可以自动化窗口布局。</li>
+</ol>
+
+<h2 id="tmux-1">tmux简单介绍</h2>
+
+<p>简单来说，tmux是一个<code>multiplexers</code>,他可以让你同时运行多个终端，在多个终端之间切换。你可以断开终端的同时让终端继续运行（例如之前我提到的编译任务），类似的还有<code>screen</code>。</p>
+
+<p>tmux是典型的c/s架构。有如下几个概念。</p>
+
+<ul>
+  <li>session. session是一个特定的终端组合。输入tmux就可以打开一个新的session。</li>
+  <li>window。window 为session中的终端。</li>
+  <li>pane 。pane为一个window分隔出来的各个间隔，即window中的终端。</li>
+</ul>
+
+<h2 id="tmux-2">tmux的使用</h2>
+<p>正如上所述，在终端中输入<code>tmux</code>就可以打开一个tmux session。如图：
+<img src="" alt="" /> 底部会出现状态栏。左边表示当前为session 0， window 1， pane 1，中间会显示当前窗口编号和路径，右侧会本机信息和时间。这并不是默认设置，但是配置tmux的状态行非常容易，在后面我会简单的介绍如何配置tmux，并提供我的配置文件。</p>
+
+<p>tmux的所有操作必须先使用一个前缀键进入命令模式，或者说进入控制台，就像vi中的<code>esc</code>。默认的前缀为<code>&lt;c-b&gt;</code>,比较难按，很多人会改为screen中的<code>&lt;c-a&gt;</code>，来保持一致性。可是这和emacs风格的终端回到行首的快捷键冲突，我使用的是<code>c-k</code>。大家可以根据自己喜好来配置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">set -g prefix ^k
+</span><span class="line">unbind ^b</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>输入<code>?</code>显示所有的bind-key，如图<img src="http://foocoder.com/images/mac/allbindkey.png" alt="" /></p>
+
+<p>如果设置了<code>setw -g mode-keys vi</code>,可以使用vi 的 <code>j</code> <code>k</code>风格快捷键上下浏览。这些bind-key显示了所有的tmux操作。按q退出。</p>
+
+<p>下面就介绍一些常用的操作，为了方便大家查看，所有的bind-key都是系统默认的，而不是我自己配置的。省略了前缀键。</p>
+
+<h3 id="section">复制粘贴</h3>
+<ul>
+  <li><code>[</code> 进入复制模式。</li>
+  <li><code>]</code> 粘贴</li>
+</ul>
+
+<p>进入复制模式后，可以用vi风格的快捷键进行移动（按上文的设置）。按下<code>sapce</code>就可以选择文本。回车键进行复制。然后再通过<code>]</code>进行粘贴。</p>
+
+<p>这里我将复制粘贴设为类似vi的模式,使用<code>esc</code>进入复制模式，<code>v</code>进入粘贴模式，选择后<code>y</code>进行复制。<code>&lt;Prefix-p&gt;</code>进行粘贴.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># Copy and paste like in vim
+</span><span class="line">unbind [
+</span><span class="line">bind Escape copy-mode
+</span><span class="line">unbind p
+</span><span class="line">bind p paste-buffer
+</span><span class="line">bind -t vi-copy 'v' begin-selection
+</span><span class="line">bind -t vi-copy 'y' copy-selection</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>所有的复制都会被记录到缓冲区，输入<code>#</code>或者 <code>tmux list-buffers</code>查看缓冲区,同时也进入了复制模式。也可以使用”=”来选择并粘贴缓冲区内容。tmux的缓冲区和系统剪贴板是完全独立的，为了复制到系统剪贴板，我做了如下处理，对于mac os X用户：</p>
+
+<p>第一步：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">brew install reattach-to-user-namespace</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>而后增加配置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># getting tmux to copy a buffer to system clipboard
+</span><span class="line">set-option -g default-command "reattach-to-user-namespace -l zsh" # or bash...
+</span><span class="line">bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy" \; display-message "Copied tmux buffer to system clipboard"
+</span><span class="line">bind C-v run "reattach-to-user-namespace pbpaste | tmux load-buffer - &amp;&amp; tmux paste-buffer"</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这样，在tmux中进行复制后。按下前缀键后键入<code>y</code>,就会在状态栏显示已粘贴到剪贴板，如图<img src="http://foocoder.com/images/mac/paste.png" alt="" />
+此时，就可以用<code>cmd-v</code>进行粘贴了。系统剪贴板的也可以键入<code>&lt;C-v&gt;</code>粘贴。（当然，更方便的还是直接<code>cmd-v</code>,无需前缀键）。</p>
+
+<p>对于linux用户,可以使用xclip,配置如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">bind y run-shell "tmux show-buffer | xclip -sel clip -i" \; display-message "Copied tmux buffer to system clipboard"</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>同样键入<code>y</code>复制buffer中最新的内容到系统剪贴板。</p>
+
+<h3 id="session">session操作</h3>
+<ul>
+  <li><code>d</code> deattch当前session。输入<code>tmux attach [-t sessionname]</code>重新进入该session。</li>
+  <li><code>tmux ls</code> 列出所有session。如图:<img src="http://foocoder.com/images/mac/allsession.png" alt="" />输入，退出当前session后，<code>tmux attach -t 1</code>即可切换到名字为1的session。</li>
+  <li><code>$</code> 重命名当前session</li>
+  <li><code>&lt;c-z&gt;</code> 挂起当前session</li>
+</ul>
+
+<h3 id="window">window操作</h3>
+<ul>
+  <li><code>c</code> 创建一个新的window</li>
+  <li><code>b</code> 重命名当前window</li>
+  <li><code>&amp;</code> 关闭当前window</li>
+  <li><code>n</code> 移动到下一个窗口</li>
+  <li><code>p</code> 移动到前一个窗口</li>
+  <li><code>l</code> 切换到上一个窗口</li>
+  <li><code>w</code> 列出所有窗口编号,并进行选择切换</li>
+  <li><code>编号</code> 移动到指定编号的窗口。</li>
+  <li><code>.</code> 修改窗口编号，相当于排序。</li>
+  <li><code>f</code> 搜索所有的窗口。非常方便的功能。如图<img src="http://foocoder.com/images/mac/search.png" alt="" /></li>
+</ul>
+
+<h4 id="pane">pane操作</h4>
+<ul>
+  <li><code>"</code> 横向分割</li>
+  <li><code>%</code> 纵向分割</li>
+  <li><code>方向键</code> 在pane直接移动</li>
+  <li><code>o</code> 到下一个pane</li>
+  <li><code>opt+方向键</code> 调整pane大小</li>
+  <li><code>{ / }</code>左右pane交换</li>
+  <li><code>空格</code> 横竖切换</li>
+  <li><code>q</code> 显示pane的编号</li>
+  <li><code>x</code> 关闭当前pane</li>
+</ul>
+
+<p>我的配置将分割操作改为vi风格的<code>v</code>和<code>s</code>,而pane之间的跳转也改为vi风格,调整pane的大小也是一样。配置如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># split windows like vim.  - Note: vim's definition of a horizontal/vertical split is reversed from tmux's
+</span><span class="line">unbind '"'
+</span><span class="line">unbind %
+</span><span class="line">unbind s
+</span><span class="line">bind s split-window -v
+</span><span class="line">bind S split-window -v -l 40
+</span><span class="line">bind v split-window -h
+</span><span class="line">bind V split-window -h -l 120
+</span><span class="line">
+</span><span class="line"># navigate panes with hjkl
+</span><span class="line">bind h select-pane -L
+</span><span class="line">bind j select-pane -D
+</span><span class="line">bind k select-pane -U
+</span><span class="line">bind l select-pane -R
+</span><span class="line">
+</span><span class="line"># resize panes like vim
+</span><span class="line">bind &lt; resize-pane -L 10
+</span><span class="line">bind L resize-pane -L 100
+</span><span class="line">bind &gt; resize-pane -R 10
+</span><span class="line">bind R resize-pane -R 100
+</span><span class="line">bind - resize-pane -D 5
+</span><span class="line">bind D resize-pane -D 36
+</span><span class="line">bind + resize-pane -U 5
+</span><span class="line">bind U resize-pane -U 35
+</span><span class="line">
+</span><span class="line"># swap panes
+</span><span class="line">bind ^u swapp -U
+</span><span class="line">bind ^d swapp -D</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>同时还绑定了</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">bind q killp</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>使用<code>q</code>来关闭pane，免去了关闭确认.但是会覆盖掉原有的<code>p</code>操作，显示pane编号。我不需要这个，覆盖就覆盖了。</p>
+
+<h3 id="tmux-3">脚本化tmux</h3>
+<p>tmux可以进入命令行模式，快捷键为<code>:</code>。而且运行的命令在不同的session中都会生效。我绑定了一个命令：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">bind r source-file ~/.tmux.conf \; display "Configuration Reloaded!"</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这样只要输入<code>r</code>,就可以重新加载tmux.conf配置文件。</p>
+
+<p>还可以用来进行自动化布局，例如：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">selectp -t 0             
+</span><span class="line">splitw -h -p 50           
+</span><span class="line">selectp -t 1              
+</span><span class="line">splitw -v -p 40 'node'  
+</span><span class="line">selectp -t 2              </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>将其保存在随便在一个文件中，而后使用和上述类似的<code>source-file</code>加载该文件，就会分隔三个pane，其中一个pane 会输入node，开启一个node的js shell。其中的50，40 为占窗口大小的百分比。</p>
+
+<p>同时，tmux还支持运行shell脚本。可以写一个shell脚本进行各种环境初始化和布局初始化。这里就不再介绍了。</p>
+
+<h3 id="section-1">状态栏</h3>
+
+<p>tmux的状态栏配置非常简单。相比screen就…… 比如我的配置中：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">set -g status-left "#[fg=green]s#S:w#I.p#P#[default]"</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这一行就将状态栏左侧配置为：<img src="http://foocoder.com/images/mac/statusbar.png" alt="" /></p>
+
+<p>绿色，#S,#I,#p分别表示session，window，pane编号。</p>
+
+<p>当然，你可以让状态行更强大,可以使用<a href="https://github.com/erikw/tmux-powerline">tmux-powerline</a>。
+如图<img src="http://foocoder.com/images/mac/powerline-status.png" alt="" />是一个示例样式。
+不过我还是喜欢简洁，而且大多数的信息其实都没什么用。自己并没有使用，不过还是推荐大家试一试，使用也不复杂，按照说明一步步来就可以了。使用powerline需要使用pathc过的字体，在<a href="https://github.com/Lokaltog/powerline-fonts">这里</a>可以找到一些，当然也可以自己patch。</p>
+
+<hr />
+<p>最后提供我的整个配置文件，可以在我的<a href="https://github.com/notice501/dotfiles">dotfiles</a>的tmux目录下找到。</p>
+
+<p>欢迎留言交流。也可以关注我的微博<strong><a href="http://weibo.com/notice520">foocoder</a></strong>。</p>
+
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/zhong-duan-huan-jing-zhi-tmux.html/#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r2.gif&amp;uid=1341920728041342" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    foocoder
+
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'notice501';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://notice501.github.com/blog/zhong-duan-huan-jing-zhi-tmux.html/';
+        var disqus_url = 'http://notice501.github.com/blog/zhong-duan-huan-jing-zhi-tmux.html/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
