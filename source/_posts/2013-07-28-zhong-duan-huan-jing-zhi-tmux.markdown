@@ -5,7 +5,8 @@ date: 2013-07-28 17:09
 comments: true
 categories: [shell,tmux,mac]
 ---
-##今天继续介绍tmux。
+今天继续介绍我的终端环境，tmux。
+------------
 
 ##why tmux?
 用一个工具的第一问自然还是为什么要用。其实当时使用tmux的原因很简单。工作中经常需要长时间的编译。总想要下班后要关机的情况下，（肯定有人问我为什么关机，我觉得环保:)而且很多时候是笔记本工作，下班还带回去。），让远超服务器继续进行编译。简单的寻觅一番之后，就发现了tmux。而且远超预期，就一直用了下来。
@@ -19,11 +20,11 @@ categories: [shell,tmux,mac]
 2. 状态行配置很容易。
 3. vi 模式
 4. 复制粘贴缓冲区
-4. 脚本化.通过脚本话可以自动化窗口布局。
+4. 脚本化.通过脚本可以自动化窗口布局。
 
 ## tmux简单介绍
 
-简单来说，tmux是一个`multiplexers`,他可以让你同时运行多个终端，在多个终端之间切换。你可以断开终端的同时让终端继续运行（例如之前我提到的编译任务），类似的还有`screen`。
+简单来说，tmux是一个`multiplexers`,他可以让你同时运行多个终端，在多个终端之间切换。你可以断开终端的同时让终端内容继续运行（例如之前我提到的编译任务），类似的还有`screen`。
 
 tmux是典型的c/s架构。有如下几个概念。
 
@@ -34,7 +35,9 @@ tmux是典型的c/s架构。有如下几个概念。
 
 ##tmux的使用
 正如上所述，在终端中输入`tmux`就可以打开一个tmux session。如图：
-![]() 底部会出现状态栏。左边表示当前为session 0， window 1， pane 1，中间会显示当前窗口编号和路径，右侧会本机信息和时间。这并不是默认设置，但是配置tmux的状态行非常容易，在后面我会简单的介绍如何配置tmux，并提供我的配置文件。
+![](http://foocoder.com/images/mac/tmux.png)
+
+底部会出现状态栏。左边表示当前为session 0， window 1， pane 1，中间会显示当前窗口编号和路径，右侧会本机信息和时间。这并不是默认设置，但是配置tmux的状态行非常容易，在后面我会简单的介绍如何配置tmux，并提供我的配置文件。
 
 tmux的所有操作必须先使用一个前缀键进入命令模式，或者说进入控制台，就像vi中的`esc`。默认的前缀为`<c-b>`,比较难按，很多人会改为screen中的`<c-a>`，来保持一致性。可是这和emacs风格的终端回到行首的快捷键冲突，我使用的是`c-k`。大家可以根据自己喜好来配置：
 
@@ -201,7 +204,9 @@ set -g status-left "#[fg=green]s#S:w#I.p#P#[default]"
 绿色，#S,#I,#p分别表示session，window，pane编号。
 
 当然，你可以让状态行更强大,可以使用[tmux-powerline](https://github.com/erikw/tmux-powerline)。
-如图![](http://foocoder.com/images/mac/powerline-status.png)是一个示例样式。
+如图![](http://foocoder.com/images/mac/powerline-status.png)
+
+是一个示例样式。
 不过我还是喜欢简洁，而且大多数的信息其实都没什么用。自己并没有使用，不过还是推荐大家试一试，使用也不复杂，按照说明一步步来就可以了。使用powerline需要使用pathc过的字体，在[这里](https://github.com/Lokaltog/powerline-fonts)可以找到一些，当然也可以自己patch。
 
 --------------
