@@ -4,7 +4,7 @@
   <title><![CDATA[分类：mac | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-08-07T11:25:50+08:00</updated>
+  <updated>2013-08-13T16:21:38+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -20,8 +20,10 @@
     <id>http://notice501.github.com/blog/zhong-duan-huan-jing-zhi-tmux</id>
     <content type="html"><![CDATA[<h2 id="tmux">今天继续介绍我的终端环境，tmux。</h2>
 
+<p>tmux 是一个优秀的终端复用软件，类似 GNU Screen，但来自于OpenBSD，采用BSD授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机。简单来说，tmux是一个<code>multiplexers</code>,他可以让你同时运行多个终端，在多个终端之间切换。</p>
+
 <h2 id="why-tmux">why tmux?</h2>
-<p>用一个工具的第一问自然还是为什么要用。其实当时使用tmux的原因很简单。工作中经常需要长时间的编译。在想要回家时编译还没结束，可以在计算机休眠的情况下继续编译。（更正之前的关机说法，关机后session不保存。从来都是休眠，以为关机也一样……）简单的寻觅一番之后，就发现了tmux。而且远超预期，就一直用了下来。</p>
+<p>用一个工具的第一问自然还是为什么要用。其实当时使用tmux的原因很简单。工作中经常需要长时间的编译。在想要回家时编译还没结束，可以在计算机休眠的情况下继续编译。简单的寻觅一番之后，就发现了tmux。而且远超预期，就一直用了下来。</p>
 
 <p>其他让我非常喜欢的功能有：</p>
 
@@ -36,8 +38,6 @@
 </ol>
 
 <h2 id="tmux-1">tmux简单介绍</h2>
-
-<p>简单来说，tmux是一个<code>multiplexers</code>,他可以让你同时运行多个终端，在多个终端之间切换。你可以断开终端的同时让终端内容继续运行（例如之前我提到的编译任务），类似的还有<code>screen</code>。</p>
 
 <p>tmux是典型的c/s架构。有如下几个概念。</p>
 
