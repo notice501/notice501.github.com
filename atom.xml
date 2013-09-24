@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2013-09-22T21:23:21+08:00</updated>
+  <updated>2013-09-24T21:10:02+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -65,6 +65,18 @@
 <p>synergy用来用一套键鼠操作多个电脑。如图：<img src="http://foocoder.com/images/mac/synergy1.png" alt="" /></p>
 
 <p>一台作为服务端，共享它的键鼠，其他的作为client端。填上相应的ip地址，拖动屏幕的相对位置即可，非常方便。<img src="http://foocoder.com/images/mac/synergy2.png" alt="" /></p>
+
+<hr />
+<p>9.24更新</p>
+
+<h4 id="eggscellent">eggscellent</h4>
+<p><a href="http://www.eggscellentapp.com/">eggscellent</a>是一款todolist加上番茄工作法的效率应用。番茄工作法的软件很多，我觉得这款还是很不错的。todolist可以和things等GTD应用融合，非常方便。在things上today中的事项都会自动添加到其列表上。ui也非常漂亮。总的来说，是一款功能强大，又不失简洁的番茄工作法应用。</p>
+
+<p><img src="http://foocoder.com/images/mac/eggs1.jpeg" alt="" /></p>
+
+<p><img src="http://foocoder.com/images/mac/eggs2.jpeg" alt="" /></p>
+
+<p>顺便提一下，在这之前，我用的是叫smart Timer的一个小应用，没有todo list，就一个时间倒计时，非常简洁，也是非常好用的，喜欢功能单一的朋友可以用下这个试试。</p>
 
 <p>就写到这里吧，很多软件我也不知道该不该界定为效率软件。不过这些都是我常用而且感觉对效率有提升的软件。欢迎留言交流。</p>
 
