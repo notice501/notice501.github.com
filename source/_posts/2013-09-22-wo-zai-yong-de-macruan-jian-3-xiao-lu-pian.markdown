@@ -11,7 +11,7 @@ categories: [mac]
 
 ####GTD
 mac下好用的GTD太多了，比如非常强大的ommniFocus，也有极其简洁的clear。
-
+<!--more-->
 在试用了各种以后（这绝对不是一件有效率的事情……），我现在用的是**Things**和**clear**。
 
 Things是标准GTD理念很好的载体。在inbox中记录各个要完成的任务，然后分类整理到不同的project或者不同的周期段。关于具体的使用方式我就不多说了，大家可以去搜索下，GTD或者Things相关的介绍还是非常多的。我用Things主要记一些耗时较长的任务。我会在next里面放一些即将要去做的事情，在someday里放一些不那么紧急却想做的事情（也用来记录灵感）。secheduled用来记录周期性的东西，比如每天固定时间把pocket中的文章一起读一下。而project就是一个项目分类，比如工作项目，比如读书计划等。things遗憾的是没有提醒功能，手机端也只有ios。可以考虑使用免费的[doit.im](http://doit.im/),功能和things基本一致，还弥补了上述不足。
