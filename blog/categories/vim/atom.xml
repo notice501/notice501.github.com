@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-01T23:41:09+08:00</updated>
+  <updated>2014-04-01T23:43:01+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -164,6 +164,7 @@ Plugin 'file///path/from/root/to/plugin'
 
 <p>搜索结果会在新窗口打开，然后可以进行直接安装删除等操作。</p>
 
+<hr />
 <p>从Vundle开始，享受vim丰富的插件带来的爽快感吧~</p>
 ]]></content>
   </entry>
