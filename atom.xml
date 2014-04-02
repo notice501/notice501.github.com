@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-01T23:43:01+08:00</updated>
+  <updated>2014-04-02T21:44:22+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每天一个vim插件--有道翻译]]></title>
+    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/"/>
+    <updated>2014-04-02T21:34:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-you-dao-fan-yi</id>
+    <content type="html"><![CDATA[<p>今天头疼。简短介绍一个实用又好用的插件，在vim中直接进行有道翻译,<a href="https://github.com/ianva/vim-youdao-translater">vim-youdao-translater</a>，来自ianva.我非常喜欢的一个插件,在这里再次感谢作者ianva。</p>
+
+<p>安装就不介绍了，不知道怎么安装看上一篇博客。</p>
+
+<p>使用方式copy自ianva：</p>
+
+<p>在普通模式下，按 ctrl+t， 会翻译当前光标下的单词；</p>
+
+<p>在 visual 模式下选中单词，按 ctrl+t，会翻译选择的单词；</p>
+
+<p>点击引导键再点y，d，可以在命令行输入要翻译的单词；</p>
+
+<p>译文将会在编辑器底部的命令栏显示。 </p>
+
+<p>上述操作的配置：</p>
+
+<pre><code>vnoremap &lt;silent&gt; &lt;C-T&gt; &lt;Esc&gt;:Ydv&lt;CR&gt; 
+nnoremap &lt;silent&gt; &lt;C-T&gt; &lt;Esc&gt;:Ydc&lt;CR&gt; 
+noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
+</code></pre>
+
+<p>明天继续。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--开篇之vundle]]></title>
@@ -36,94 +66,52 @@
   <li>配置vimrc。我建议像我一样单独写个bundles.vim，(我还是用的Bundle这个名字，但是写这篇博客的时候发现作者已经废弃了这个名字，统一叫做plugin)方便管理。示例如下：</li>
 </ol>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">set nocompatible              " be iMproved, required
-</span><span class="line">filetype off                  " required
-</span><span class="line">
-</span><span class="line">" set the runtime path to include Vundle and initialize
-</span><span class="line">set rtp+=~/.vim/bundle/vundle/
-</span><span class="line">call vundle#rc()
-</span><span class="line">" alternatively, pass a path where Vundle should install plugins
-</span><span class="line">"let path = '~/some/path/here'
-</span><span class="line">"call vundle#rc(path)
-</span><span class="line">
-</span><span class="line">" let Vundle manage Vundle, required
-</span><span class="line">Plugin 'gmarik/vundle'
-</span><span class="line">
-</span><span class="line">" The following are examples of different formats supported.
-</span><span class="line">" Keep Plugin commands between here and filetype plugin indent on.
-</span><span class="line">" scripts on GitHub repos
-</span><span class="line">Plugin 'tpope/vim-fugitive'
-</span><span class="line">Plugin 'Lokaltog/vim-easymotion'
-</span><span class="line">Plugin 'tpope/vim-rails.git'
-</span><span class="line">" The sparkup vim script is in a subdirectory of this repo called vim.
-</span><span class="line">" Pass the path to set the runtimepath properly.
-</span><span class="line">Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-</span><span class="line">" scripts from http://vim-scripts.org/vim/scripts.html
-</span><span class="line">Plugin 'L9'
-</span><span class="line">Plugin 'FuzzyFinder'
-</span><span class="line">" scripts not on GitHub
-</span><span class="line">Plugin 'git://git.wincent.com/command-t.git'
-</span><span class="line">" git repos on your local machine (i.e. when working on your own plugin)
-</span><span class="line">Plugin 'file:///home/gmarik/path/to/plugin'
-</span><span class="line">" ...
-</span><span class="line">
-</span><span class="line">filetype plugin indent on     " required
-</span><span class="line">" To ignore plugin indent changes, instead use:
-</span><span class="line">"filetype plugin on
-</span><span class="line">"
-</span><span class="line">" Brief help
-</span><span class="line">" :PluginList          - list configured plugins
-</span><span class="line">" :PluginInstall(!)    - install (update) plugins
-</span><span class="line">" :PluginSearch(!) foo - search (or refresh cache first) for foo
-</span><span class="line">" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-</span><span class="line">"
-</span><span class="line">" see :h vundle for more details or wiki for FAQ
-</span><span class="line">" NOTE: comments after Plugin commands are not allowed.
-</span><span class="line">" Put your stuff after this line</span></code></pre></td></tr></table></div></figure></notextile></div>
+<pre><code> {% codeblock %
+ set nocompatible              " be iMproved, required filetype off                  " required
+</code></pre>
+
+<p>” set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+“ alternatively, pass a path where Vundle should install plugins
+“let path = ‘~/some/path/here’
+“call vundle#rc(path)</p>
+
+<p>” let Vundle manage Vundle, required
+Plugin ‘gmarik/vundle’</p>
+
+<p>” The following are examples of different formats supported.
+“ Keep Plugin commands between here and filetype plugin indent on.
+“ scripts on GitHub repos
+Plugin ‘tpope/vim-fugitive’
+Plugin ‘Lokaltog/vim-easymotion’
+Plugin ‘tpope/vim-rails.git’
+“ The sparkup vim script is in a subdirectory of this repo called vim.
+“ Pass the path to set the runtimepath properly.
+Plugin ‘rstacruz/sparkup’, {‘rtp’: ‘vim/’}
+“ scripts from http://vim-scripts.org/vim/scripts.html
+Plugin ‘L9’
+Plugin ‘FuzzyFinder’
+“ scripts not on GitHub
+Plugin ‘git://git.wincent.com/command-t.git’
+“ git repos on your local machine (i.e. when working on your own plugin)
+Plugin ‘file:///home/gmarik/path/to/plugin’
+“ …</p>
+
+<p>filetype plugin indent on     “ required
+“ To ignore plugin indent changes, instead use:
+“filetype plugin on
+“
+“ Brief help
+“ :PluginList          - list configured plugins
+“ :PluginInstall(!)    - install (update) plugins
+“ :PluginSearch(!) foo - search (or refresh cache first) for foo
+“ :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+“
+“ see :h vundle for more details or wiki for FAQ
+“ NOTE: comments after Plugin commands are not allowed.
+“ Put your stuff after this line
+{% endcodeblock %}</p>
 
 <p>然后在vimrc的开头引入bundles.vim:</p>
 

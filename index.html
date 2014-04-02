@@ -6,8 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 1st, 2014 Tags: vim 一直想写一篇博客介绍我的vim配置和插件，但是这篇博客却难产了快半年……
-工作太忙，写博客变成了奢侈的事情。那何不每天写一点点呢？于是决定每天介绍一个vim插件或者一个技巧。 大致看了一下自己的vim配置， &hellip;">
+	<meta name="description" content="Published on: Apr 2nd, 2014 Tags: vim 今天头疼。简短介绍一个实用又好用的插件，在vim中直接进行有道翻译,vim-youdao-translater，来自ianva.我非常喜欢的一个插件,在这里再次感谢作者ianva。 安装就不介绍了， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -104,6 +103,72 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/">
+		
+			每天一个vim插件&#8211;有道翻译</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-02T21:34:00+08:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p>今天头疼。简短介绍一个实用又好用的插件，在vim中直接进行有道翻译,<a href="https://github.com/ianva/vim-youdao-translater">vim-youdao-translater</a>，来自ianva.我非常喜欢的一个插件,在这里再次感谢作者ianva。</p>
+
+<p>安装就不介绍了，不知道怎么安装看上一篇博客。</p>
+
+<p>使用方式copy自ianva：</p>
+
+<p>在普通模式下，按 ctrl+t， 会翻译当前光标下的单词；</p>
+
+<p>在 visual 模式下选中单词，按 ctrl+t，会翻译选择的单词；</p>
+
+<p>点击引导键再点y，d，可以在命令行输入要翻译的单词；</p>
+
+<p>译文将会在编辑器底部的命令栏显示。 </p>
+
+<p>上述操作的配置：</p>
+
+<pre><code>vnoremap &lt;silent&gt; &lt;C-T&gt; &lt;Esc&gt;:Ydv&lt;CR&gt; 
+nnoremap &lt;silent&gt; &lt;C-T&gt; &lt;Esc&gt;:Ydc&lt;CR&gt; 
+noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
+</code></pre>
+
+<p>明天继续。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -564,52 +629,6 @@
 <div class="meta">
 
   <span class="comments"><a href="/blog/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/">
-		
-			Android中的跨进程通信的实现（一）——远程调用过程和aidl</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-02T10:44:00+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/android/'>android</a>
-
-
-</div>
-    </div>
-		<p>android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和我在一个进程里。</p>
-
-
-		
-		<a href="/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian-%28%5B%3F%5D-%29-yuan-cheng-diao-yong-guo-cheng-he-aidl.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>
