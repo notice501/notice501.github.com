@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-03T14:37:36+08:00</updated>
+  <updated>2014-04-03T22:19:56+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,69 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每天一个vim插件--goyo]]></title>
+    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-goyo.html/"/>
+    <updated>2014-04-03T21:50:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-goyo</id>
+    <content type="html"><![CDATA[<p>一如既往很忙……所以今天还是分享一个可以一句话说明白的插件，也是我非常常用的–<a href="https://github.com/junegunn/goyo.vim">goyo</a></p>
+
+<p>一直非常喜欢写作软件iawriter，goyo让我可以用同样的方式来写代码，当然goyo还免费开源，这比iawriter好。用作者的描述就是：Distraction-free writing in Vim. 不会被任何的其他元素打扰。
+直接上张图：<img src="http://ww4.sinaimg.cn/large/69d56e38gw1ef2r2wod9uj21kw0zkte6.jpg" alt="" />
+<img src="https://raw.github.com/junegunn/i/master/goyo.png" alt="" /></p>
+
+<p>第一张是我的配色，第二张是作者的示例。是不是很cool？</p>
+
+<p>安装当然借用vundle了。</p>
+
+<pre><code>nnoremap &lt;Leader&gt;d :Goyo&lt;CR&gt;
+</code></pre>
+
+<p>就可以按引导键加逗号呼出goyo模式了。
+可以按自己的需求配置宽高和位置：</p>
+
+<ul>
+  <li><code>g:goyo_width</code> (default: 80)</li>
+  <li><code>g:goyo_margin_top</code> (default: 4)</li>
+  <li><code>g:goyo_margin_bottom</code> (default: 4)</li>
+  <li><code>g:goyo_linenr</code> (default: 0)</li>
+  <li><code>g:goyo_callbacks</code> ([before_funcref, after_funcref])</li>
+</ul>
+
+<p>goyo模式中默认禁用了
+<a href="https://github.com/bling/vim-airline">vim-airline</a>,
+<a href="https://github.com/Lokaltog/vim-powerline">vim-powerline</a>,
+<a href="https://github.com/Lokaltog/powerline">powerline</a>,
+<a href="https://github.com/itchyny/lightline.vim">lightline.vim</a>, and
+<a href="https://github.com/airblade/vim-gitgutter">vim-gitgutter</a>插件。如果需要自定义goyo模式或者一些插件的enable/disable，</p>
+
+<p>可以在vimrc中定义before和after回掉：</p>
+
+<p>```vim
+function! s:goyo_before()
+  silent !tmux set status off
+  set noshowmode
+  set noshowcmd
+  “ …
+endfunction</p>
+
+<p>function! s:goyo_after()
+  silent !tmux set status on
+  set showmode
+  set showcmd
+  “ …
+endfunction</p>
+
+<p>let g:goyo_callbacks = [function(‘s:goyo_before’), function(‘s:goyo_after’)]
+```</p>
+
+<p>可以在<a href="https://github.com/junegunn/goyo.vim/wiki/Customization">这里</a>看到更多的自定义示例</p>
+
+<p>好吧，基本就是翻译了一下……因为插件很简单，文档也很详细。我自己非常喜欢这个插件，希望大家也会喜欢～</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--有道翻译]]></title>
@@ -66,94 +129,52 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
   <li>配置vimrc。我建议像我一样单独写个bundles.vim，(我还是用的Bundle这个名字，但是写这篇博客的时候发现作者已经废弃了这个名字，统一叫做plugin)方便管理。示例如下：</li>
 </ol>
 
-<pre><code> <div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>set nocompatible              " be iMproved, required filetype off                  " required
-</span><span class='line'>&lt;/code>&lt;/pre>
-</span><span class='line'>
-</span><span class='line'>&lt;p>” set the runtime path to include Vundle and initialize
-</span><span class='line'>set rtp+=~/.vim/bundle/vundle/
-</span><span class='line'>call vundle#rc()
-</span><span class='line'>“ alternatively, pass a path where Vundle should install plugins
-</span><span class='line'>“let path = ‘~/some/path/here’
-</span><span class='line'>“call vundle#rc(path)&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;p>” let Vundle manage Vundle, required
-</span><span class='line'>Plugin ‘gmarik/vundle’&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;p>” The following are examples of different formats supported.
-</span><span class='line'>“ Keep Plugin commands between here and filetype plugin indent on.
-</span><span class='line'>“ scripts on GitHub repos
-</span><span class='line'>Plugin ‘tpope/vim-fugitive’
-</span><span class='line'>Plugin ‘Lokaltog/vim-easymotion’
-</span><span class='line'>Plugin ‘tpope/vim-rails.git’
-</span><span class='line'>“ The sparkup vim script is in a subdirectory of this repo called vim.
-</span><span class='line'>“ Pass the path to set the runtimepath properly.
-</span><span class='line'>Plugin ‘rstacruz/sparkup’, {‘rtp’: ‘vim/’}
-</span><span class='line'>“ scripts from http://vim-scripts.org/vim/scripts.html
-</span><span class='line'>Plugin ‘L9’
-</span><span class='line'>Plugin ‘FuzzyFinder’
-</span><span class='line'>“ scripts not on GitHub
-</span><span class='line'>Plugin ‘git://git.wincent.com/command-t.git’
-</span><span class='line'>“ git repos on your local machine (i.e. when working on your own plugin)
-</span><span class='line'>Plugin ‘file:///home/gmarik/path/to/plugin’
-</span><span class='line'>“ …&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;p>filetype plugin indent on     “ required
-</span><span class='line'>“ To ignore plugin indent changes, instead use:
-</span><span class='line'>“filetype plugin on
-</span><span class='line'>“
-</span><span class='line'>“ Brief help
-</span><span class='line'>“ :PluginList          - list configured plugins
-</span><span class='line'>“ :PluginInstall(!)    - install (update) plugins
-</span><span class='line'>“ :PluginSearch(!) foo - search (or refresh cache first) for foo
-</span><span class='line'>“ :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-</span><span class='line'>“
-</span><span class='line'>“ see :h vundle for more details or wiki for FAQ
-</span><span class='line'>“ NOTE: comments after Plugin commands are not allowed.
-</span><span class='line'>“ Put your stuff after this line</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>```vim
+	 set nocompatible              “ be iMproved, required
+filetype off                  “ required</p>
+
+<p>” set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+“ alternatively, pass a path where Vundle should install plugins
+“let path = ‘~/some/path/here’
+“call vundle#rc(path)</p>
+
+<p>” let Vundle manage Vundle, required
+Plugin ‘gmarik/vundle’</p>
+
+<p>” The following are examples of different formats supported.
+“ Keep Plugin commands between here and filetype plugin indent on.
+“ scripts on GitHub repos
+Plugin ‘tpope/vim-fugitive’
+Plugin ‘Lokaltog/vim-easymotion’
+Plugin ‘tpope/vim-rails.git’
+“ The sparkup vim script is in a subdirectory of this repo called vim.
+“ Pass the path to set the runtimepath properly.
+Plugin ‘rstacruz/sparkup’, {‘rtp’: ‘vim/’}
+“ scripts from http://vim-scripts.org/vim/scripts.html
+Plugin ‘L9’
+Plugin ‘FuzzyFinder’
+“ scripts not on GitHub
+Plugin ‘git://git.wincent.com/command-t.git’
+“ git repos on your local machine (i.e. when working on your own plugin)
+Plugin ‘file:///home/gmarik/path/to/plugin’
+“ …</p>
+
+<p>filetype plugin indent on     “ required
+“ To ignore plugin indent changes, instead use:
+“filetype plugin on
+“
+“ Brief help
+“ :PluginList          - list configured plugins
+“ :PluginInstall(!)    - install (update) plugins
+“ :PluginSearch(!) foo - search (or refresh cache first) for foo
+“ :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+“
+“ see :h vundle for more details or wiki for FAQ
+“ NOTE: comments after Plugin commands are not allowed.
+“ Put your stuff after this line
+```</p>
 
 <p>然后在vimrc的开头引入bundles.vim:</p>
 
