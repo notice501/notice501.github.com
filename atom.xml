@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-09T23:38:09+08:00</updated>
+  <updated>2014-04-09T23:50:32+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -74,7 +74,6 @@
 <p>插件还支持正则匹配，不过要用到正则去匹配的时候我就用%s来替换了。要了解详情可以去插件的github页继续了解。</p>
 
 <p>今天就介绍这个性感无比的插件。</p>
-
 ]]></content>
   </entry>
   
