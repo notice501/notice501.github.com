@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 3rd, 2014 Tags: vim 一如既往很忙……所以今天还是分享一个可以一句话说明白的插件，也是我非常常用的–goyo 一直非常喜欢写作软件iawriter，goyo让我可以用同样的方式来写代码，当然goyo还免费开源，这比iawriter好。 &hellip;">
+	<meta name="description" content="Published on: Apr 9th, 2014 Tags: vim 前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累…… 今天介绍一款我用的非常多，也非常有用的插件–vim-multiple-cursors。 这个插件copy了sublime text的多重光标选取功能， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -103,6 +103,107 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/">
+		
+			每天一个vim插件&#8211;vim-multiple-cursors</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-09T22:19:00+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p>前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累……</p>
+
+<p>今天介绍一款我用的非常多，也非常有用的插件–<a href="">vim-multiple-cursors</a>。</p>
+
+<p>这个插件copy了sublime text的多重光标选取功能，非常强大。</p>
+
+<p>sublime text 官网有几张图来介绍sublime text的多重选取功能，插件作者也实现了一样的效果：
+<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="example" /></p>
+
+<p>上图按键：</p>
+
+<ul>
+  <li>fp跳到p处</li>
+  <li>按下<c-n>选中光标下的单词</c-n></li>
+  <li>继续按下<c-n>两次选中另外两个相同的单词</c-n></li>
+  <li>按下c进行修改</li>
+  <li>键入修改</li>
+  <li>按下 <esc> 退出</esc></li>
+</ul>
+
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pzm3d13g20sy0900zt.gif" alt="example2" /></p>
+
+<p>上图按键：</p>
+
+<ul>
+  <li>按下V选中整行</li>
+  <li>按下G到达末行</li>
+  <li>按下<c-n> 在每行的开头加上一个光标并返回普通模式</c-n></li>
+  <li>按下I在每行的头部插入</li>
+  <li>键入”, 按下<c-e>到达行末, 键入另一个&#8221;和逗号</c-e></li>
+  <li>然后将每个光标都下移一行，按下delete	</li>
+</ul>
+
+<p>再也不用羡慕sublime了。</p>
+
+<p>使用也非常简单，几乎0配置。</p>
+
+<p>默认的mapping：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">" Default mapping
+</span><span class="line">let g:multi_cursor_next_key='&lt;C-n&gt;'
+</span><span class="line">let g:multi_cursor_prev_key='&lt;C-p&gt;'
+</span><span class="line">let g:multi_cursor_skip_key='&lt;C-x&gt;'
+</span><span class="line">let g:multi_cursor_quit_key='&lt;Esc&gt;'</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>在普通模式下，按下<code>Ctrl-n</code>开始进入可视模式并选中光标下的单词，继续按<code>Ctrl-n</code>选择下一个相同的单词，按下<code>Ctrl-p</code>往回选一个，<code>Ctrl-x</code>则跳过下一个相同单词。</p>
+
+<p>选中后就可以对单词进行批量改动了，比如按下c，就同时修改选中单词。</p>
+
+<p>插件还支持正则匹配，不过要用到正则去匹配的时候我就用%s来替换了。要了解详情可以去插件的github页继续了解。</p>
+
+<p>今天就介绍这个性感无比的插件。</p>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -580,54 +681,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 <div class="meta">
 
   <span class="comments"><a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/xiang-jie-javascriptzhong-de-this.html/">
-		
-			详解JavaScript中的this</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-03T19:28:00+08:00" pubdate data-updated="true">May 3<span>rd</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/javascript/'>JavaScript</a>
-
-
-</div>
-    </div>
-		<p>JavaScript中的this总是让人迷惑，应该是js众所周知的坑之一。
-个人也觉得js中的this不是一个好的设计，由于this晚绑定的特性，它可以是全局对象，当前对象，或者…有人甚至因为坑大而不用this。</p>
-
-<p>其实如果完全掌握了this的工作原理，自然就不会走进这些坑。来看下以下这些情况中的this分别会指向什么：
-
-		
-		<a href="/blog/xiang-jie-javascriptzhong-de-this.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/xiang-jie-javascriptzhong-de-this.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>

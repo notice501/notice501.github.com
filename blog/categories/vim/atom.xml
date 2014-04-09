@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-03T22:22:05+08:00</updated>
+  <updated>2014-04-09T23:34:57+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每天一个vim插件--vim-multiple-cursors]]></title>
+    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/"/>
+    <updated>2014-04-09T22:19:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-vim-multiple-cursors</id>
+    <content type="html"><![CDATA[<p>前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累……</p>
+
+<p>今天介绍一款我用的非常多，也非常有用的插件–<a href="">vim-multiple-cursors</a>。</p>
+
+<p>这个插件copy了sublime text的多重光标选取功能，非常强大。</p>
+
+<p>sublime text 官网有几张图来介绍sublime text的多重选取功能，插件作者也实现了一样的效果：
+<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="example" /></p>
+
+<p>上图按键：</p>
+
+<ul>
+  <li>fp跳到p处</li>
+  <li>按下<c-n>选中光标下的单词</c-n></li>
+  <li>继续按下<c-n>两次选中另外两个相同的单词</c-n></li>
+  <li>按下c进行修改</li>
+  <li>键入修改</li>
+  <li>按下 <esc> 退出</esc></li>
+</ul>
+
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pzm3d13g20sy0900zt.gif" alt="example2" /></p>
+
+<p>上图按键：</p>
+
+<ul>
+  <li>按下V选中整行</li>
+  <li>按下G到达末行</li>
+  <li>按下<c-n> 在每行的开头加上一个光标并返回普通模式</c-n></li>
+  <li>按下I在每行的头部插入</li>
+  <li>键入”, 按下<c-e>到达行末, 键入另一个"和逗号</c-e></li>
+  <li>然后将每个光标都下移一行，按下delete	</li>
+</ul>
+
+<p>再也不用羡慕sublime了。</p>
+
+<p>使用也非常简单，几乎0配置。</p>
+
+<p>默认的mapping：</p>
+
+<p><code>
+" Default mapping
+let g:multi_cursor_next_key='&lt;C-n&gt;'
+let g:multi_cursor_prev_key='&lt;C-p&gt;'
+let g:multi_cursor_skip_key='&lt;C-x&gt;'
+let g:multi_cursor_quit_key='&lt;Esc&gt;'
+</code>
+在普通模式下，按下<code>Ctrl-n</code>开始进入可视模式并选中光标下的单词，继续按<code>Ctrl-n</code>选择下一个相同的单词，按下<code>Ctrl-p</code>往回选一个，<code>Ctrl-x</code>则跳过下一个相同单词。</p>
+
+<p>选中后就可以对单词进行批量改动了，比如按下c，就同时修改选中单词。</p>
+
+<p>插件还支持正则匹配，不过要用到正则去匹配的时候我就用%s来替换了。要了解详情可以去插件的github页继续了解。</p>
+
+<p>今天就介绍这个性感无比的插件。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--goyo]]></title>
