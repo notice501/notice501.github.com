@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-09T23:50:32+08:00</updated>
+  <updated>2014-04-09T23:53:28+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -25,9 +25,11 @@
 <p>这个插件copy了sublime text的多重光标选取功能，非常强大。</p>
 
 <p>sublime text 官网有几张图来介绍sublime text的多重选取功能，插件作者也实现了一样的效果：
-<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="" />
+<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="" /></p>
+
 <!--more-->
-上图按键：</p>
+
+<p>上图按键：</p>
 
 <ul>
   <li>fp跳到p处</li>
