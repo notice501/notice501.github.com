@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-09T23:34:57+08:00</updated>
+  <updated>2014-04-09T23:38:09+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -25,29 +25,29 @@
 <p>这个插件copy了sublime text的多重光标选取功能，非常强大。</p>
 
 <p>sublime text 官网有几张图来介绍sublime text的多重选取功能，插件作者也实现了一样的效果：
-<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="example" /></p>
-
-<p>上图按键：</p>
+<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="" />
+<!--more-->
+上图按键：</p>
 
 <ul>
   <li>fp跳到p处</li>
-  <li>按下<c-n>选中光标下的单词</c-n></li>
-  <li>继续按下<c-n>两次选中另外两个相同的单词</c-n></li>
+  <li>按下<code>&lt;C-n&gt;</code>选中光标下的单词</li>
+  <li>继续按下<code>&lt;C-n&gt;</code>两次选中另外两个相同的单词</li>
   <li>按下c进行修改</li>
   <li>键入修改</li>
-  <li>按下 <esc> 退出</esc></li>
+  <li>按下 <code>&lt;Esc&gt;</code> 退出</li>
 </ul>
 
-<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pzm3d13g20sy0900zt.gif" alt="example2" /></p>
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pzm3d13g20sy0900zt.gif" alt="" /></p>
 
 <p>上图按键：</p>
 
 <ul>
   <li>按下V选中整行</li>
   <li>按下G到达末行</li>
-  <li>按下<c-n> 在每行的开头加上一个光标并返回普通模式</c-n></li>
+  <li>按下<code>&lt;C-n&gt;</code> 在每行的开头加上一个光标并返回普通模式</li>
   <li>按下I在每行的头部插入</li>
-  <li>键入”, 按下<c-e>到达行末, 键入另一个"和逗号</c-e></li>
+  <li>键入”, 按下<code>&lt;C-e&gt;</code>到达行末, 键入另一个”和逗号</li>
   <li>然后将每个光标都下移一行，按下delete	</li>
 </ul>
 
