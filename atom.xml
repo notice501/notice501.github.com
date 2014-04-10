@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-10T21:41:39+08:00</updated>
+  <updated>2014-04-10T21:46:06+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -22,7 +22,8 @@
 
 <p>配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个<a href="https://github.com/tomasr/molokai">molokai</a>配色插件。之所以叫molokai，因为这个配色是monokai的修改版，将monokai的背景色改为了深色。我想要一个深色背景的molokai.正和我意啊。</p>
 
-<p>下面是两张作者的原图：</p>
+<p>下面是两张作者的原图：
+<!--more--></p>
 
 <p><img src="http://www.winterdom.com/weblog/content/binary/WindowsLiveWriter/MolokaiforVim_8602/molokai_normal_small_3.png" alt="" /></p>
 
@@ -39,6 +40,8 @@
 <p>两者的差别除了缩进显示之外就是字体了。</p>
 
 <p>字体也是我非常喜欢，精挑细选的字体<a href="https://github.com/adobe/source-code-pro">Source code pro</a></p>
+
+<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efatye9ls3j20lw0haacp.jpg" alt="" /></p>
 
 <p>链接里有下载和安装方法，喜欢就试试吧。</p>
 ]]></content>
