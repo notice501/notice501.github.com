@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 9th, 2014 Tags: vim 前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累…… 今天介绍一款我用的非常多，也非常有用的插件–vim-multiple-cursors。 这个插件copy了sublime text的多重光标选取功能， &hellip;">
+	<meta name="description" content="Published on: Apr 10th, 2014 Tags: vim 今天其实不介绍插件。因为有一些朋友问，所以今天单独介绍下我的配色和字体。 配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个molokai配色插件。之所以叫molokai， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -103,6 +103,73 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html/">
+		
+			每天一个vim插件&#8211;我的配色 Molokai</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-10T21:24:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p>今天其实不介绍插件。因为有一些朋友问，所以今天单独介绍下我的配色和字体。</p>
+
+<p>配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个<a href="https://github.com/tomasr/molokai">molokai</a>配色插件。之所以叫molokai，因为这个配色是monokai的修改版，将monokai的背景色改为了深色。我想要一个深色背景的molokai.正和我意啊。</p>
+
+<p>下面是两张作者的原图：</p>
+
+<p><img src="http://www.winterdom.com/weblog/content/binary/WindowsLiveWriter/MolokaiforVim_8602/molokai_normal_small_3.png" alt="" /></p>
+
+<p><img src="http://www.winterdom.com/weblog/content/binary/WindowsLiveWriter/MolokaiforVim_8602/molokai_original_small_3.png" alt="" /></p>
+
+<p>如果要使用monokai原始的背景色，加上配置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">let g:molokai_original = 1</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>下面再放上一张我自己的图：
+<img src="http://ww1.sinaimg.cn/large/69d56e38gw1efatpzm085j21kw0zrdnu.jpg" alt="" /></p>
+
+<p>两者的差别除了缩进显示之外就是字体了。</p>
+
+<p>字体也是我非常喜欢，精挑细选的字体<a href="https://github.com/adobe/source-code-pro">Source code pro</a></p>
+
+<p>链接里有下载和安装方法，喜欢就试试吧。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -587,52 +654,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 <div class="meta">
 
   <span class="comments"><a href="/blog/wo-zai-yong-de-macruan-jian.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/">
-		
-			记录遇到的零碎问题</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T20:47:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-</div>
-    </div>
-		<p>日常开发过程中总会遇到各种各样奇怪的问题。相信大家都会有这样的体会：如果有人也遇到过这个问题，并分享了解决过程，自己就会很开心。如果这个问题没人分享过，那恐怕就要费劲一番周折了。这里记录那些各种小的莫名的琐碎的问题。方便自己查阅，也方便他人。会有大致分类，也会不定期更新。</p>
-
-<h3 id="vim">vim</h3>
-<ul>
-  <li>
-    <p>在使用了session的情况下，neocomplete对于session中加载的文件无法正常使用。原因是其completefunc为空。解决办法是在session加载之前，执行vimrcneocomplete#initialize()。（在vimrc中加入execute neocomplete#initialize()即可）
- 
-		
-		<a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/ji-lu-yu-dao-de-ling-sui-wen-ti.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>
