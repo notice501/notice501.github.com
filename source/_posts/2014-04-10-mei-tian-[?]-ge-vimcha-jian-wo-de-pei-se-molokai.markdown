@@ -26,6 +26,7 @@ let g:molokai_original = 1
 下面再放上一张我自己的图：
 ![](http://ww1.sinaimg.cn/large/69d56e38gw1efatpzm085j21kw0zrdnu.jpg)
 
+
 两者的差别除了缩进显示之外就是字体了。
 
 字体也是我非常喜欢，精挑细选的字体[Source code pro](https://github.com/adobe/source-code-pro)
@@ -33,3 +34,8 @@ let g:molokai_original = 1
 ![](http://ww2.sinaimg.cn/large/69d56e38gw1efatye9ls3j20lw0haacp.jpg)
 
 链接里有下载和安装方法，喜欢就试试吧。
+
+---------
+4月11号更新：
+看到下面评论有晒自己的配色，想起来有个repo，里面收集了非常多的vim 配色。
+这里也贴出来——[vim-colorschemes](https://github.com/flazz/vim-colorschemes)
