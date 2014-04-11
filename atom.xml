@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-11T17:04:54+08:00</updated>
+  <updated>2014-04-11T18:35:58+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--缩进显示vim-indent-guides]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/"/>
+    <updated>2014-04-11T17:49:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides</id>
+    <content type="html"><![CDATA[<p>今天有朋友留言问昨天晒配色的图中缩进用的什么插件，那今天就介绍这个缩进插件——<a href="https://github.com/nathanaelkane/vim-indent-guides">vim-indent-guides</a></p>
+
+<p>选择这个插件主要有几个理由：</p>
+
+<ol>
+  <li>插件对tab和空格的支持都很好。</li>
+  <li>比较美观。</li>
+  <li>能够自动适配当前使用的colorscheme来选择缩进颜色（只能是gvim，macvim下适配的不错）</li>
+</ol>
+
+<p>默认的快捷键是<code>&lt;Leader&gt;ig</code>,开关插件。我一般都默认启动就开启,只要设置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:indent_guides_enable_on_vim_startup <span class="p">=</span> <span class="m">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>前面说了缩进的颜色是自动选择的，非常方便，但是想要自定义颜色也是支持的：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:indent_guides_auto_colors <span class="p">=</span> <span class="m">0</span>
+</span><span class="line">autocmd <span class="nb">VimEnter</span><span class="p">,</span>Colorscheme * :<span class="k">hi</span> IndentGuidesOdd  guibg<span class="p">=</span><span class="k">red</span>   ctermbg<span class="p">=</span><span class="m">3</span>
+</span><span class="line">autocmd <span class="nb">VimEnter</span><span class="p">,</span>Colorscheme * :<span class="k">hi</span> IndentGuidesEven guibg<span class="p">=</span>green ctermbg<span class="p">=</span><span class="m">4</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>在终端中该插件就不支持颜色自动选择了。只取决于<code>background</code>设置为<code>dark</code>还是<code>light</code>,如果设置了<code>dark</code>,就相当于配置了</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">hi</span> IndentGuidesOdd  ctermbg<span class="p">=</span>black
+</span><span class="line"><span class="k">hi</span> IndentGuidesEven ctermbg<span class="p">=</span>darkgrey
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>来几张图，图上标注了相应的配置：</p>
+
+<p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1efbth8m9aij20cg0cgta5.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtngrerjj20cg0cg3zt.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtqa6k47j20cg0cgjsq.jpg" alt="" /></p>
+
+<p>这个插件并不能很好的标记出tab和空格混用的情况，只能显示当前缩进。所以我在我的vimrc中加了一行：
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="vim"><span class="line"><span class="c">&quot; highlight tabs and trailing spaces</span>
+</span><span class="line"><span class="k">set</span> <span class="nb">list</span>
+</span><span class="line"><span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;-,</span>trail:<span class="p">-,</span>extends:<span class="p">&gt;,</span>precedes:<span class="p">&lt;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
+这样tab会被显示为&gt;-，而尾部空格被显示为-，这样写出来的代码就不会再有杂乱符号啦。</p>
+
+<p>今天就介绍到这里。我开通了一个微信公众账号，以后每天的文章会通过微信公众账号推送，欢迎关注。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--我的配色 molokai]]></title>

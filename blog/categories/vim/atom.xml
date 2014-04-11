@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-11T17:04:54+08:00</updated>
+  <updated>2014-04-11T18:35:58+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--缩进显示vim-indent-guides]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/"/>
+    <updated>2014-04-11T17:49:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides</id>
+    <content type="html"><![CDATA[<p>今天有朋友留言问昨天晒配色的图中缩进用的什么插件，那今天就介绍这个缩进插件——<a href="https://github.com/nathanaelkane/vim-indent-guides">vim-indent-guides</a></p>
+
+<p>选择这个插件主要有几个理由：</p>
+
+<ol>
+  <li>插件对tab和空格的支持都很好。</li>
+  <li>比较美观。</li>
+  <li>能够自动适配当前使用的colorscheme来选择缩进颜色（只能是gvim，macvim下适配的不错）</li>
+</ol>
+
+<p>默认的快捷键是<code>&lt;Leader&gt;ig</code>,开关插件。我一般都默认启动就开启,只要设置：</p>
+
+<p><code>vim
+let g:indent_guides_enable_on_vim_startup = 1
+</code></p>
+
+<p>前面说了缩进的颜色是自动选择的，非常方便，但是想要自定义颜色也是支持的：</p>
+
+<p><code>vim
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+</code></p>
+
+<p>在终端中该插件就不支持颜色自动选择了。只取决于<code>background</code>设置为<code>dark</code>还是<code>light</code>,如果设置了<code>dark</code>,就相当于配置了</p>
+
+<p><code>vim
+hi IndentGuidesOdd  ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
+</code>
+来几张图，图上标注了相应的配置：</p>
+
+<p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1efbth8m9aij20cg0cgta5.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtngrerjj20cg0cg3zt.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtqa6k47j20cg0cgjsq.jpg" alt="" /></p>
+
+<p>这个插件并不能很好的标记出tab和空格混用的情况，只能显示当前缩进。所以我在我的vimrc中加了一行：
+<code>
+" highlight tabs and trailing spaces
+set list
+set listchars=tab:&gt;-,trail:-,extends:&gt;,precedes:&lt;
+</code>
+这样tab会被显示为&gt;-，而尾部空格被显示为-，这样写出来的代码就不会再有杂乱符号啦。</p>
+
+<p>今天就介绍到这里。我开通了一个微信公众账号，以后每天的文章会通过微信公众账号推送，欢迎关注。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--我的配色 molokai]]></title>
@@ -207,120 +260,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 </code></pre>
 
 <p>明天继续。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每天一个vim插件--开篇之vundle]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html/"/>
-    <updated>2014-04-01T22:34:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-kai-pian-zhi-vundle</id>
-    <content type="html"><![CDATA[<p>一直想写一篇博客介绍我的vim配置和插件，但是这篇博客却难产了快半年……
-工作太忙，写博客变成了奢侈的事情。那何不每天写一点点呢？于是决定每天介绍一个vim插件或者一个技巧。</p>
-
-<p>大致看了一下自己的<a href="https://github.com/notice501/dotfiles">vim配置</a>，竟然都快有100个插件之多了……</p>
-
-<p>但是我从来都没有感觉到插件管理有多麻烦，我可以经常更新，删除和安装想用的插件。所以第一个介绍的插件必须是用来管理插件的神器–<a href="https://github.com/gmarik/Vundle.vim">Vundle</a></p>
-
-<p>在使用vundle之前，我使用Pathogen与git submodule来管理Vim插件，而vundle更为强大，不需要再手动操作git了。Vundle会自动去对应的插件git库获取最新的插件。
-<!--more--></p>
-
-<p>Vundle的安装非常简单：</p>
-
-<ol>
-  <li>当然你需要安装git</li>
-  <li>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle</li>
-  <li>配置vimrc。我建议像我一样单独写个bundles.vim，(我还是用的Bundle这个名字，但是写这篇博客的时候发现作者已经废弃了这个名字，统一叫做plugin)方便管理。示例如下：</li>
-</ol>
-
-<p>```vim
-	 set nocompatible              “ be iMproved, required
-filetype off                  “ required</p>
-
-<p>” set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-“ alternatively, pass a path where Vundle should install plugins
-“let path = ‘~/some/path/here’
-“call vundle#rc(path)</p>
-
-<p>” let Vundle manage Vundle, required
-Plugin ‘gmarik/vundle’</p>
-
-<p>” The following are examples of different formats supported.
-“ Keep Plugin commands between here and filetype plugin indent on.
-“ scripts on GitHub repos
-Plugin ‘tpope/vim-fugitive’
-Plugin ‘Lokaltog/vim-easymotion’
-Plugin ‘tpope/vim-rails.git’
-“ The sparkup vim script is in a subdirectory of this repo called vim.
-“ Pass the path to set the runtimepath properly.
-Plugin ‘rstacruz/sparkup’, {‘rtp’: ‘vim/’}
-“ scripts from http://vim-scripts.org/vim/scripts.html
-Plugin ‘L9’
-Plugin ‘FuzzyFinder’
-“ scripts not on GitHub
-Plugin ‘git://git.wincent.com/command-t.git’
-“ git repos on your local machine (i.e. when working on your own plugin)
-Plugin ‘file:///home/gmarik/path/to/plugin’
-“ …</p>
-
-<p>filetype plugin indent on     “ required
-“ To ignore plugin indent changes, instead use:
-“filetype plugin on
-“
-“ Brief help
-“ :PluginList          - list configured plugins
-“ :PluginInstall(!)    - install (update) plugins
-“ :PluginSearch(!) foo - search (or refresh cache first) for foo
-“ :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-“
-“ see :h vundle for more details or wiki for FAQ
-“ NOTE: comments after Plugin commands are not allowed.
-“ Put your stuff after this line
-```</p>
-
-<p>然后在vimrc的开头引入bundles.vim:</p>
-
-<pre><code>source ~/.vim/bundles.vim
-</code></pre>
-
-<p>4.如示例所示，将所有的插件都写成plugin ‘user/repo’即可。vundle会从该库中去取。</p>
-
-<p>如果未加’/’，则默认从vim script: https://github.com/vim-scripts/ 去取
-	还可以加上非github库：</p>
-
-<pre><code>Plugin 'git://git.wincent.com/command-t.git'
-	
-或者本地文件
-
-Plugin 'file///path/from/root/to/plugin'
-</code></pre>
-
-<p>5.安装只需输入</p>
-
-<pre><code>:BundleInstall 或者 :pluginInstall
-</code></pre>
-
-<p>更新：</p>
-
-<pre><code>:pluginUpdate
-</code></pre>
-
-<p>删除：</p>
-
-<pre><code>:pluginClean
-</code></pre>
-
-<p>6.vundle 还带了插件搜索功能</p>
-
-<pre><code>:PluginSearch foo
-</code></pre>
-
-<p>搜索结果会在新窗口打开，然后可以进行直接安装删除等操作。</p>
-
-<hr />
-<p>从Vundle开始，享受vim丰富的插件带来的爽快感吧~</p>
 ]]></content>
   </entry>
   

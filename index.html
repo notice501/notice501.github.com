@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 10th, 2014 Tags: vim 今天其实不介绍插件。因为有一些朋友问，所以今天单独介绍下我的配色和字体。 配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个molokai配色插件。之所以叫molokai， &hellip;">
+	<meta name="description" content="Published on: Apr 11th, 2014 Tags: vim 今天有朋友留言问昨天晒配色的图中缩进用的什么插件，那今天就介绍这个缩进插件——vim-indent-guides 选择这个插件主要有几个理由： 插件对tab和空格的支持都很好。 比较美观。 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -136,6 +136,100 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/">
+		
+			每日vim插件&#8211;缩进显示vim-indent-guides</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-11T17:49:00+08:00" pubdate data-updated="true">Apr 11<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p>今天有朋友留言问昨天晒配色的图中缩进用的什么插件，那今天就介绍这个缩进插件——<a href="https://github.com/nathanaelkane/vim-indent-guides">vim-indent-guides</a></p>
+
+<p>选择这个插件主要有几个理由：</p>
+
+<ol>
+  <li>插件对tab和空格的支持都很好。</li>
+  <li>比较美观。</li>
+  <li>能够自动适配当前使用的colorscheme来选择缩进颜色（只能是gvim，macvim下适配的不错）</li>
+</ol>
+
+<p>默认的快捷键是<code>&lt;Leader&gt;ig</code>,开关插件。我一般都默认启动就开启,只要设置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:indent_guides_enable_on_vim_startup <span class="p">=</span> <span class="m">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>前面说了缩进的颜色是自动选择的，非常方便，但是想要自定义颜色也是支持的：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:indent_guides_auto_colors <span class="p">=</span> <span class="m">0</span>
+</span><span class="line">autocmd <span class="nb">VimEnter</span><span class="p">,</span>Colorscheme * :<span class="k">hi</span> IndentGuidesOdd  guibg<span class="p">=</span><span class="k">red</span>   ctermbg<span class="p">=</span><span class="m">3</span>
+</span><span class="line">autocmd <span class="nb">VimEnter</span><span class="p">,</span>Colorscheme * :<span class="k">hi</span> IndentGuidesEven guibg<span class="p">=</span>green ctermbg<span class="p">=</span><span class="m">4</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>在终端中该插件就不支持颜色自动选择了。只取决于<code>background</code>设置为<code>dark</code>还是<code>light</code>,如果设置了<code>dark</code>,就相当于配置了</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">hi</span> IndentGuidesOdd  ctermbg<span class="p">=</span>black
+</span><span class="line"><span class="k">hi</span> IndentGuidesEven ctermbg<span class="p">=</span>darkgrey
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>来几张图，图上标注了相应的配置：</p>
+
+<p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1efbth8m9aij20cg0cgta5.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtngrerjj20cg0cg3zt.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtqa6k47j20cg0cgjsq.jpg" alt="" /></p>
+
+<p>这个插件并不能很好的标记出tab和空格混用的情况，只能显示当前缩进。所以我在我的vimrc中加了一行：
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="vim"><span class="line"><span class="c">&quot; highlight tabs and trailing spaces</span>
+</span><span class="line"><span class="k">set</span> <span class="nb">list</span>
+</span><span class="line"><span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;-,</span>trail:<span class="p">-,</span>extends:<span class="p">&gt;,</span>precedes:<span class="p">&lt;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
+这样tab会被显示为&gt;-，而尾部空格被显示为-，这样写出来的代码就不会再有杂乱符号啦。</p>
+
+<p>今天就介绍到这里。我开通了一个微信公众账号，以后每天的文章会通过微信公众账号推送，欢迎关注。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -604,71 +698,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 <div class="meta">
 
   <span class="comments"><a href="/blog/wo-zai-yong-de-macruan-jian-2.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/wo-zai-yong-de-macruan-jian.html/">
-		
-			我在用的mac软件(1)&#8211;终端环境之iTerm2</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-14T20:42:00+08:00" pubdate data-updated="true">Jul 14<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/mac/'>mac</a>
-
-
-</div>
-    </div>
-		<p>之前一直有朋友要我分享下在用的mac软件，今天有空就来写一下，可能不止于软件，会有一些配置或者工具，或者叫环境更合适。有些可能一句话带过，有些会详细介绍。也不分类了，想到哪个就写出来。如果已经写的足够长了，就会分几篇来写。</p>
-
-<h3 id="iterm2zshtmux">iTerm2+zsh+tmux的终端环境</h3>
-
-<h5 id="iterm2">iTerm2</h5>
-
-<p>其实现在os x的terminal已经做的很好了，但是iTerm2的功能依然要更强大一些。简述下优点和常用功能：</p>
-
-<ul>
-  <li>
-    <p>开源免费。 </p>
-  </li>
-  <li>兼容性比默认Terminal更好。
-    <ul>
-      <li>对于经常要远程使用的情况下，默认的Terminal在使用vi时经常出现不兼容的问题，而iTerm2在这方面显然做的更好。</li>
-    </ul>
-  </li>
-  <li>快捷键丰富。
-    <ul>
-      <li><code>⌘ + 数字</code>:  切换标签页。 <code>⌘ + 方向键</code> 按方向切换标签页。</li>
-      <li><code>⌘ + enter</code>: 切换全屏
-
-		
-		<a href="/blog/wo-zai-yong-de-macruan-jian.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/wo-zai-yong-de-macruan-jian.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>
