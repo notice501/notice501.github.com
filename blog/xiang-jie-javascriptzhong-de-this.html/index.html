@@ -59,6 +59,35 @@
   <p>关注我的微信公众账号</p>
   <img src="http://ww3.sinaimg.cn/large/69d56e38gw1efbhqnrgj2j20760763z1.jpg" alt="">
 </div>
+<script type="text/javascript">
+  var weixin = (function() {
+    var weixinDiv = document.querySelector("#weixin");
+
+    var browser={
+      versions:function(){
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+               android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+               iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+               iPad: u.indexOf('iPad') > -1, //是否iPad
+               webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+      }(),
+      language:(navigator.browserLanguage || navigator.language).toLowerCase()
+    };
+
+    if (browser.versions.mobile) {
+      console.log("mobile");
+      weixinDiv.style.display = "none";
+    }
+  })();
+</script>
 <ul id="social-links" style="text-align:center">
   <iframe width="200px" height="72px" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1775595064&verifier=34d9820b&dpc=1"></iframe>
   
