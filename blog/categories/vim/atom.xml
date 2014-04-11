@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-11T13:08:23+08:00</updated>
+  <updated>2014-04-11T17:04:54+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -45,6 +45,11 @@ let g:molokai_original = 1
 <p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efatye9ls3j20lw0haacp.jpg" alt="" /></p>
 
 <p>链接里有下载和安装方法，喜欢就试试吧。</p>
+
+<hr />
+<p>4月11号更新：
+看到下面评论有晒自己的配色，想起来有个repo，里面收集了非常多的vim 配色。
+这里也贴出来——<a href="https://github.com/flazz/vim-colorschemes">vim-colorschemes</a></p>
 ]]></content>
   </entry>
   
