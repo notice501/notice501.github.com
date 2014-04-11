@@ -262,3 +262,19 @@ ul#nav li#active a {
     background-repeat: no-repeat;
     background-position: center top;
 }
+
+#weixin {
+    position: fixed;
+    right: 30px;
+    top: 400px;
+}
+
+#weixin p {
+    text-align:center;
+    margin-bottom:8px;
+}
+
+#weixin img {
+    width:200px;
+    height:200px;
+}
