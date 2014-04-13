@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-12T13:09:02+08:00</updated>
+  <updated>2014-04-13T22:57:30+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--surround.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-surround-dot-vim.html/"/>
+    <updated>2014-04-13T22:11:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-surround-dot-vim</id>
+    <content type="html"><![CDATA[<p>今天介绍一个必备的插件——<a href="https://github.com/tpope/vim-surround">surround.vim</a>,来自Tim Pope大神，很多著名的插件包括pathogen.vim都是出自他手，后面我还会介绍更多他写的插件。</p>
+
+<p>是我最常用的插件之一。这个插件专门用来处理成对的包围符号……比如说括号，单双引号，XML标签等。</p>
+
+<p>使用也非常简单好记，遵循vim本身的规则。</p>
+
+<p>先来看一组实例，就知道这个插件的用途和使用方式了：</p>
+
+<p>光标在</p>
+
+<pre><code>"Hello world!" 中时按下`cs"'` ，则会替换双引号为单引号：
+
+'Hello world!' 继续按下`cs'&lt;q&gt;`，则会替换单引号为&lt;q&gt;标签
+
+&lt;q&gt;Hello world!&lt;/q&gt;
+</code></pre>
+
+<p>按下 <code>cst"</code>，则回到初始的双引号：
+	 “Hello world!”</p>
+
+<p>要删除符号，则按下<code>ds"</code></p>
+
+<pre><code>Hello world! 当光标在hello上时，按下`ysiw]`，则会变为
+
+ [Hello] world! 这个操作为其加上了包围符号。
+</code></pre>
+
+<p>总结下：</p>
+
+<p>1.删除包围符号的命令是<code>ds</code>,后面加的字符表示要删除的符号。比如：</p>
+
+<pre><code>"Hello *world!"           ds"         Hello world! 2.替换包围符号的命令是`cs`,命令后跟两个参数，分别是被替换的符号和需要使用的符号。比如
+
+"Hello *world!"           cs"'        'Hello world!' 3.添加包围符号的命令是`ys`(ys可以记为you surround)，命令后同样跟两个参数，第一个是一个vim“动作”（motion）或者是一个文本对象。（motion即vim动作，比如说`w`向后一个单词。文本对象简单的来说主要是来通过一些分隔符来标识一段文本，比如`iw`就是一个文本对象，即光标下的单词。不理解的朋友可以将光标放置在单词hello的中央，分别试一下`ysw`和`ysiw`的区别应该就明白啦。如果大家需要详细介绍motion和文本对象，可以留言或者直接公众账号回复，我看看要不要单独介绍下。）
+
+  Hello w*orld!             ysiw)       Hello (world)! 另外：`yss`命令可以用于整行操作，忽略中间的空格。 `yS`和`ySS`还能让包围内容单独一行并且加上缩进。
+</code></pre>
+
+<p>4.添加包围符号还有个非常好用的：在可视模式v下，按下<code>S</code>后即可添加想要添加的包围符号了。</p>
+
+<p>再说一个小技巧：在包围符号为括时，输入左括号<code>(或者{</code>,则会留一个空格
+	Hello w*orld!             ysiw(       Hello ( world )!</p>
+
+<p>而右括号则不留空格，也是非常好用，看编码风格使用。</p>
+
+<p>今天就介绍到这里，欢迎关注我的公众账号，最新的文章都会第一时间推送到。有问题可以直接回复。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--缩进显示vim-indent-guides]]></title>
@@ -231,36 +285,6 @@ endfunction</p>
 
 <p>好吧，基本就是翻译了一下……因为插件很简单，文档也很详细。我自己非常喜欢这个插件，希望大家也会喜欢～</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每天一个vim插件--有道翻译]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/"/>
-    <updated>2014-04-02T21:34:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-you-dao-fan-yi</id>
-    <content type="html"><![CDATA[<p>今天头疼。简短介绍一个实用又好用的插件，在vim中直接进行有道翻译,<a href="https://github.com/ianva/vim-youdao-translater">vim-youdao-translater</a>，来自ianva.我非常喜欢的一个插件,在这里再次感谢作者ianva。</p>
-
-<p>安装就不介绍了，不知道怎么安装看上一篇博客。</p>
-
-<p>使用方式copy自ianva：</p>
-
-<p>在普通模式下，按 ctrl+t， 会翻译当前光标下的单词；</p>
-
-<p>在 visual 模式下选中单词，按 ctrl+t，会翻译选择的单词；</p>
-
-<p>点击引导键再点y，d，可以在命令行输入要翻译的单词；</p>
-
-<p>译文将会在编辑器底部的命令栏显示。 </p>
-
-<p>上述操作的配置：</p>
-
-<pre><code>vnoremap &lt;silent&gt; &lt;C-T&gt; &lt;Esc&gt;:Ydv&lt;CR&gt; 
-nnoremap &lt;silent&gt; &lt;C-T&gt; &lt;Esc&gt;:Ydc&lt;CR&gt; 
-noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
-</code></pre>
-
-<p>明天继续。</p>
 ]]></content>
   </entry>
   
