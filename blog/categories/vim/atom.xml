@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-14T23:59:21+08:00</updated>
+  <updated>2014-04-15T00:03:11+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -30,6 +30,8 @@
 </code></pre>
 
 <p>可以看到文本对象和motion的操作是完全一致的，第一个是数字，比如3w，就向前移动三个单词。</p>
+
+<!--more-->
 
 <p>文本对象大致有以下几种：</p>
 

@@ -181,90 +181,9 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 
 <p>可以看到文本对象和motion的操作是完全一致的，第一个是数字，比如3w，就向前移动三个单词。</p>
 
-<p>文本对象大致有以下几种：</p>
-
-<pre><code>w  s  p '' ""  &lt;&gt;  []  ()  {} &lt;tag&gt;
-</code></pre>
-
-<p>其中w表示word，s表示句子，p表示段落，其他的就是昨天介绍过的包围符号，标签用t表示。</p>
-
-<p>文本对象的操作范围有两种，一种用<code>i</code>表示,是inner的意思，即不包括单词边上的空格符，亦或是<code>&lt;</code>保包围符号本身。一种用<code>a</code>表示，是arround的意思，和i相反，使用a就包括了空格符或者包围符号本身。</p>
-
-<p>文本对象的编辑命令就是vim中的几个常用编辑命令，分别是</p>
-
-<pre><code>`y：复制`，`d：删除`,`c：替换`，`v：选中`
-</code></pre>
-
-<p>说的有点多了，来几个例子相信大家就立刻理解了。（例子中*都是光标所在位置）</p>
-
-<p>比如：</p>
-
-<pre><code>&lt;*h2&gt;Sample Title&lt;/h2&gt;
-</code></pre>
-
-<p>按下<code>cit</code>,文本变为：</p>
-
-<pre><code>&lt;h2&gt;*&lt;/h2&gt;
-</code></pre>
-
-<p>再比如：
-	console.log(“stay hungry,” + “stay *foolish”)</p>
-
-<p>按下<code>da"</code>，文本变为：</p>
-
-<pre><code>console.log("stay hungry," +*)
-</code></pre>
-
-<p>再按下<code>di)</code>，文本变为：</p>
-
-<pre><code>console.log()
-</code></pre>
-
-<p>比如</p>
-
-<pre><code>Hello Worl*d
-</code></pre>
-
-<p>按下<code>diw</code>,文本变为：</p>
-
-<pre><code>Hello
-</code></pre>
-
-<p>很容易理解是不是？有没有发现为什么说文本对象会非常方便了？无论光标在文本的哪个位置，都可以直接操作整个文本。体验箭步如飞的感觉吧。</p>
-
-<p>vim还允许使用脚本来自定义文本对象，这就是我们今天要介绍的插件了，这些插件自定义了一些文本对象。</p>
-
-<p>1.CamelCaseMotion</p>
-
-<p>该插件是把驼峰词语的每个单词分开，举个例子：</p>
-
-<pre><code>get*ElementsByClassName
-</code></pre>
-
-<p>按下<code>di,w</code>,则文本变为：</p>
-
-<pre><code>getByClassName
-</code></pre>
-
-<p>非常方便。</p>
-
-<p>2.argtextobj</p>
-
-<p>该插件定义了函数内的参数文本对象。比如：</p>
-
-<pre><code>foo(text, ti*mes, option) {}
-</code></pre>
-
-<p>按下<code>daa</code>,则文本变为：</p>
-
-<pre><code>foo(text, option) {}
-</code></pre>
-
-<p>今天暂时就介绍到这里。都快0点了，赶紧发出来。任何问题都可以回复给我。</p>
-
 
 		
-		
+		<a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html/" class="more-link">继续阅读 </a>
 	</div>
 
 <div class="meta">
