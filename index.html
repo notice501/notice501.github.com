@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 13th, 2014 Tags: vim 今天介绍一个必备的插件——surround.vim,来自Tim Pope大神，很多著名的插件包括pathogen.vim都是出自他手，后面我还会介绍更多他写的插件。 是我最常用的插件之一。 &hellip;">
+	<meta name="description" content="Published on: Apr 14th, 2014 Tags: vim 今天按读者留言的要求，介绍下文本对象。同时还会介绍我在用的几个文本相关的插件，今天是满满的内容啊。 所谓文本对象，简单来说就是以一定标准分隔符来标识一段文本，比如一个单词，一句话，一段话。 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -136,6 +136,144 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html/">
+		
+			每日vim插件&#8211;vim中的文本对象及相关插件</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-14T22:56:00+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p>今天按读者留言的要求，介绍下文本对象。同时还会介绍我在用的几个文本相关的插件，今天是满满的内容啊。</p>
+
+<p>所谓文本对象，简单来说就是以一定标准分隔符来标识一段文本，比如一个单词，一句话，一段话。</p>
+
+<p>使用文本对象后你会发现你在vim中的移动和操作速度提升了不是一点半点。</p>
+
+<p>在vim中编辑命令的结构如下：</p>
+
+<pre><code> &lt;number&gt;&lt;command&gt;&lt;text object or motion&gt;
+</code></pre>
+
+<p>可以看到文本对象和motion的操作是完全一致的，第一个是数字，比如3w，就向前移动三个单词。</p>
+
+<p>文本对象大致有以下几种：</p>
+
+<pre><code>w  s  p '' ""  &lt;&gt;  []  ()  {} &lt;tag&gt;
+</code></pre>
+
+<p>其中w表示word，s表示句子，p表示段落，其他的就是昨天介绍过的包围符号，标签用t表示。</p>
+
+<p>文本对象的操作范围有两种，一种用<code>i</code>表示,是inner的意思，即不包括单词边上的空格符，亦或是<code>&lt;</code>保包围符号本身。一种用<code>a</code>表示，是arround的意思，和i相反，使用a就包括了空格符或者包围符号本身。</p>
+
+<p>文本对象的编辑命令就是vim中的几个常用编辑命令，分别是</p>
+
+<pre><code>`y：复制`，`d：删除`,`c：替换`，`v：选中`
+</code></pre>
+
+<p>说的有点多了，来几个例子相信大家就立刻理解了。（例子中*都是光标所在位置）</p>
+
+<p>比如：</p>
+
+<pre><code>&lt;*h2&gt;Sample Title&lt;/h2&gt;
+</code></pre>
+
+<p>按下<code>cit</code>,文本变为：</p>
+
+<pre><code>&lt;h2&gt;*&lt;/h2&gt;
+</code></pre>
+
+<p>再比如：
+	console.log(“stay hungry,” + “stay *foolish”)</p>
+
+<p>按下<code>da"</code>，文本变为：</p>
+
+<pre><code>console.log("stay hungry," +*)
+</code></pre>
+
+<p>再按下<code>di)</code>，文本变为：</p>
+
+<pre><code>console.log()
+</code></pre>
+
+<p>比如</p>
+
+<pre><code>Hello Worl*d
+</code></pre>
+
+<p>按下<code>diw</code>,文本变为：</p>
+
+<pre><code>Hello
+</code></pre>
+
+<p>很容易理解是不是？有没有发现为什么说文本对象会非常方便了？无论光标在文本的哪个位置，都可以直接操作整个文本。体验箭步如飞的感觉吧。</p>
+
+<p>vim还允许使用脚本来自定义文本对象，这就是我们今天要介绍的插件了，这些插件自定义了一些文本对象。</p>
+
+<p>1.CamelCaseMotion</p>
+
+<p>该插件是把驼峰词语的每个单词分开，举个例子：</p>
+
+<pre><code>get*ElementsByClassName
+</code></pre>
+
+<p>按下<code>di,w</code>,则文本变为：</p>
+
+<pre><code>getByClassName
+</code></pre>
+
+<p>非常方便。</p>
+
+<p>2.argtextobj</p>
+
+<p>该插件定义了函数内的参数文本对象。比如：</p>
+
+<pre><code>foo(text, ti*mes, option) {}
+</code></pre>
+
+<p>按下<code>daa</code>,则文本变为：</p>
+
+<pre><code>foo(text, option) {}
+</code></pre>
+
+<p>今天暂时就介绍到这里。都快0点了，赶紧发出来。任何问题都可以回复给我。</p>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -611,59 +749,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 <div class="meta">
 
   <span class="comments"><a href="/blog/wo-zai-yong-de-macruan-jian-3-xiao-lu-pian.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/zhong-duan-huan-jing-zhi-tmux.html/">
-		
-			终端环境之tmux</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-28T17:09:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/mac/'>mac</a>, <a class='category' href='/blog/categories/shell/'>shell</a>, <a class='category' href='/blog/categories/tmux/'>tmux</a>
-
-
-</div>
-    </div>
-		<h2 id="tmux">今天继续介绍我的终端环境，tmux。</h2>
-
-<p>tmux 是一个优秀的终端复用软件，类似 GNU Screen，但来自于OpenBSD，采用BSD授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机。简单来说，tmux是一个<code>multiplexers</code>,他可以让你同时运行多个终端，在多个终端之间切换。</p>
-
-<h2 id="why-tmux">why tmux?</h2>
-<p>用一个工具的第一问自然还是为什么要用。其实当时使用tmux的原因很简单。工作中经常需要长时间的编译。在想要回家时编译还没结束，可以在计算机休眠的情况下继续编译。简单的寻觅一番之后，就发现了tmux。而且远超预期，就一直用了下来。</p>
-
-<p>其他让我非常喜欢的功能有：</p>
-
-
-		
-		<a href="/blog/zhong-duan-huan-jing-zhi-tmux.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/zhong-duan-huan-jing-zhi-tmux.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>
