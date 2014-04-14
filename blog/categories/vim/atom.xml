@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-13T23:02:09+08:00</updated>
+  <updated>2014-04-14T11:15:21+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -33,8 +33,10 @@
 
 <p>中时按下<code>cs"'</code> ，则会替换双引号为单引号：</p>
 
-<pre><code>'Hello world!' &lt;!--more--&gt;
+<pre><code>'Hello world!'
 </code></pre>
+
+<!--more-->
 
 <p>继续按下<code>cs'&lt;q&gt;</code>，则会替换单引号为<q>标签</q></p>
 
@@ -70,7 +72,9 @@
 <pre><code>"Hello *world!"           cs"'        'Hello world!'
 </code></pre>
 
-<p>3.添加包围符号的命令是<code>ys</code>(ys可以记为you surround)，命令后同样跟两个参数，第一个是一个vim“动作”（motion）或者是一个文本对象。（motion即vim动作，比如说<code>w</code>向后一个单词。文本对象简单的来说主要是来通过一些分隔符来标识一段文本，比如<code>iw</code>就是一个文本对象，即光标下的单词。不理解的朋友可以将光标放置在单词hello的中央，分别试一下<code>ysw</code>和<code>ysiw</code>的区别应该就明白啦。如果大家需要详细介绍motion和文本对象，可以留言或者直接公众账号回复，我看看要不要单独介绍下。）</p>
+<p>3.添加包围符号的命令是<code>ys</code>(ys可以记为you surround)，命令后同样跟两个参数，第一个是一个vim“动作”（motion）或者是一个文本对象。</p>
+
+<p>其中motion即vim动作，比如说<code>w</code>向后一个单词。文本对象简单的来说主要是来通过一些分隔符来标识一段文本，比如<code>iw</code>就是一个文本对象，即光标下的单词。不理解的朋友可以将光标放置在单词hello的中央，分别试一下<code>ysw</code>和<code>ysiw</code>的区别应该就明白啦。如果大家需要详细介绍motion和文本对象，可以留言或者直接公众账号回复，我看看要不要单独介绍下。</p>
 
 <pre><code>  Hello w*orld!             ysiw)       Hello (world)!
 </code></pre>
@@ -78,7 +82,7 @@
 <p>另外：<code>yss</code>命令可以用于整行操作，忽略中间的空格。
 <code>yS</code>和<code>ySS</code>还能让包围内容单独一行并且加上缩进。</p>
 
-<p>4.添加包围符号还有个非常好用的：在可视模式v下，按下<code>S</code>后即可添加想要添加的包围符号了。</p>
+<p>4.添加包围符号还有个非常好用的方式：在可视模式v下，按下<code>S</code>后即可添加想要添加的包围符号了。</p>
 
 <p>再说一个小技巧：在包围符号为括时，输入左括号<code>(或者{</code>,则会留一个空格</p>
 
