@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-15T00:03:11+08:00</updated>
+  <updated>2014-04-15T22:12:03+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--vim 撤销树Gundo.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/"/>
+    <updated>2014-04-15T21:10:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim</id>
+    <content type="html"><![CDATA[<p>今天介绍的插件很有意思，也非常有用，也是我最常用的插件之一——<a href="https://github.com/sjl/gundo.vim">Gundo</a>.</p>
+
+<p>大家都知道按<code>u</code>可以撤销操作，但是一般都不知道输入命令<code>:undolist</code>会显示可撤销列表，如图</p>
+
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efglaef02lj20ki13qthg.jpg" alt="" /></p>
+
+<p>其实这还不是列表，而是整个vim 撤销树的叶子。为什么说是树，而不是列表，举个例子就明白了：</p>
+
+<!--more-->
+
+<p>你在a状态做了一次修改到b，又回退到a，再做了一次修改到c。大多数编辑器比如sublime text，b这个状态就没了，但是vim会用一个树进行保存。</p>
+
+<p>而Gundo这个插件就是一个撤销树浏览器.直接上张图：
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efgmev2lz4j20ok1ci78i.jpg" alt="" /></p>
+
+<p>当前位置以<code>@</code>标注，其他历史以o标注。</p>
+
+<p>按jk上下移动，就可以在下面的窗口看到对应修改之前的改动。这个就是普通的vim窗口，所有的移动操作都是支持的，比如<code>G</code>到底部，<code>C-U</code>上翻页等。</p>
+
+<p>按<code>p</code>可以查看选中状态和当前状态的差异，按回车就会回到选中状态，按<code>P</code>更是可以一步步播放到选中状态，高上大啊……</p>
+
+<p>btw,我习惯将所有的undo记录都保存下来，即使关闭了vim或者buffer也能继续撤销。</p>
+
+<p>只需要稍加配置，就能将撤销树持久化存储下来：</p>
+
+<p><code>vim
+try
+    set undodir=~/.vim/temp_dirs/undodir
+    set undofile
+catch
+endtry
+</code></p>
+
+<p>今天就介绍到这里。有问题直接回复给我。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--vim中的文本对象及相关插件]]></title>
@@ -40,7 +83,7 @@
 
 <p>其中w表示word，s表示句子，p表示段落，其他的就是昨天介绍过的包围符号，标签用t表示。</p>
 
-<p>文本对象的操作范围有两种，一种用<code>i</code>表示,是inner的意思，即不包括单词边上的空格符，亦或是<code>&lt;</code>保包围符号本身。一种用<code>a</code>表示，是arround的意思，和i相反，使用a就包括了空格符或者包围符号本身。</p>
+<p>文本对象的操作范围有两种，一种用<code>i</code>表示,是inner的意思，即不包括单词边上的空格符，亦或是<code>&lt;</code>包围符号本身。一种用<code>a</code>表示，是arround的意思，和i相反，使用a就包括了空格符或者包围符号本身。</p>
 
 <p>文本对象的编辑命令就是vim中的几个常用编辑命令，分别是</p>
 
@@ -112,7 +155,7 @@
 <pre><code>foo(text, option) {}
 </code></pre>
 
-<p>今天暂时就介绍到这里。都快0点了，赶紧发出来。任何问题都可以回复给我。</p>
+<p>今天暂时就介绍到这里。都快0点了，赶紧发出来。任何问题都可以回复给我。	</p>
 
 ]]></content>
   </entry>
@@ -290,69 +333,6 @@ let g:molokai_original = 1
 <p>4月11号更新：
 看到下面评论有晒自己的配色，想起来有个repo，里面收集了非常多的vim 配色。
 这里也贴出来——<a href="https://github.com/flazz/vim-colorschemes">vim-colorschemes</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每天一个vim插件--vim-multiple-cursors]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/"/>
-    <updated>2014-04-09T22:19:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-vim-multiple-cursors</id>
-    <content type="html"><![CDATA[<p>前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累……</p>
-
-<p>今天介绍一款我用的非常多，也非常有用的插件–<a href="">vim-multiple-cursors</a>。</p>
-
-<p>这个插件copy了sublime text的多重光标选取功能，非常强大。</p>
-
-<p>sublime text 官网有几张图来介绍sublime text的多重选取功能，插件作者也实现了一样的效果：
-<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="" /></p>
-
-<!--more-->
-
-<p>上图按键：</p>
-
-<ul>
-  <li>fp跳到p处</li>
-  <li>按下<code>&lt;C-n&gt;</code>选中光标下的单词</li>
-  <li>继续按下<code>&lt;C-n&gt;</code>两次选中另外两个相同的单词</li>
-  <li>按下c进行修改</li>
-  <li>键入修改</li>
-  <li>按下 <code>&lt;Esc&gt;</code> 退出</li>
-</ul>
-
-<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pzm3d13g20sy0900zt.gif" alt="" /></p>
-
-<p>上图按键：</p>
-
-<ul>
-  <li>按下V选中整行</li>
-  <li>按下G到达末行</li>
-  <li>按下<code>&lt;C-n&gt;</code> 在每行的开头加上一个光标并返回普通模式</li>
-  <li>按下I在每行的头部插入</li>
-  <li>键入”, 按下<code>&lt;C-e&gt;</code>到达行末, 键入另一个”和逗号</li>
-  <li>然后将每个光标都下移一行，按下delete	</li>
-</ul>
-
-<p>再也不用羡慕sublime了。</p>
-
-<p>使用也非常简单，几乎0配置。</p>
-
-<p>默认的mapping：</p>
-
-<p><code>
-" Default mapping
-let g:multi_cursor_next_key='&lt;C-n&gt;'
-let g:multi_cursor_prev_key='&lt;C-p&gt;'
-let g:multi_cursor_skip_key='&lt;C-x&gt;'
-let g:multi_cursor_quit_key='&lt;Esc&gt;'
-</code>
-在普通模式下，按下<code>Ctrl-n</code>开始进入可视模式并选中光标下的单词，继续按<code>Ctrl-n</code>选择下一个相同的单词，按下<code>Ctrl-p</code>往回选一个，<code>Ctrl-x</code>则跳过下一个相同单词。</p>
-
-<p>选中后就可以对单词进行批量改动了，比如按下c，就同时修改选中单词。</p>
-
-<p>插件还支持正则匹配，不过要用到正则去匹配的时候我就用%s来替换了。要了解详情可以去插件的github页继续了解。</p>
-
-<p>今天就介绍这个性感无比的插件。</p>
 ]]></content>
   </entry>
   

@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>分类：vim - Code Rush</title>
+	<title>每日vim插件--vim 撤销树Gundo.vim - Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Category: vim">
+	<meta name="description" content="今天介绍的插件很有意思，也非常有用，也是我最常用的插件之一——Gundo. 大家都知道按u可以撤销操作，但是一般都不知道输入命令:undolist会显示可撤销列表，如图 其实这还不是列表，而是整个vim 撤销树的叶子。为什么说是树，而不是列表，举个例子就明白了： 你在a状态做了一次修改到b， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -135,190 +135,82 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 <div id="toload">
 <!-- begin toload --> 
     <div id="content" class="inner">
-        
-	
+        <article class="post">
+	<h2 class="title">每日vim插件--vim 撤销树Gundo.vim</h2>
+	<div class="entry-content"><p>今天介绍的插件很有意思，也非常有用，也是我最常用的插件之一——<a href="https://github.com/sjl/gundo.vim">Gundo</a>.</p>
+
+<p>大家都知道按<code>u</code>可以撤销操作，但是一般都不知道输入命令<code>:undolist</code>会显示可撤销列表，如图</p>
+
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efglaef02lj20ki13qthg.jpg" alt="" /></p>
+
+<p>其实这还不是列表，而是整个vim 撤销树的叶子。为什么说是树，而不是列表，举个例子就明白了：</p>
+
+<!--more-->
+
+<p>你在a状态做了一次修改到b，又回退到a，再做了一次修改到c。大多数编辑器比如sublime text，b这个状态就没了，但是vim会用一个树进行保存。</p>
+
+<p>而Gundo这个插件就是一个撤销树浏览器.直接上张图：
+<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efgmev2lz4j20ok1ci78i.jpg" alt="" /></p>
+
+<p>当前位置以<code>@</code>标注，其他历史以o标注。</p>
+
+<p>按jk上下移动，就可以在下面的窗口看到对应修改之前的改动。这个就是普通的vim窗口，所有的移动操作都是支持的，比如<code>G</code>到底部，<code>C-U</code>上翻页等。</p>
+
+<p>按<code>p</code>可以查看选中状态和当前状态的差异，按回车就会回到选中状态，按<code>P</code>更是可以一步步播放到选中状态，高上大啊……</p>
+
+<p>btw,我习惯将所有的undo记录都保存下来，即使关闭了vim或者buffer也能继续撤销。</p>
+
+<p>只需要稍加配置，就能将撤销树持久化存储下来：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">try</span>
+</span><span class="line">    <span class="k">set</span> <span class="nb">undodir</span><span class="p">=~</span><span class="sr">/.vim/</span>temp_dirs/<span class="nb">undodir</span>
+</span><span class="line">    <span class="k">set</span> <span class="nb">undofile</span>
+</span><span class="line"><span class="k">catch</span>
+</span><span class="line"><span class="k">endtry</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>今天就介绍到这里。有问题直接回复给我。</p>
+
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/#disqus_thread">Comments</a></span>
 
 
-	
-	
-	<section class="archives"><h1 class="year">2014</h1>
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/">每日vim插件--vim 撤销树Gundo.vim</a></h2>
-	<div class="meta">
-		<span class="date">Apr 15</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
+</div>
 </article>
 
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
 	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html/">每日vim插件--vim中的文本对象及相关插件</a></h2>
-	<div class="meta">
-		<span class="date">Apr 14</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
 	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-surround-dot-vim.html/">每日vim插件--surround.vim</a></h2>
-	<div class="meta">
-		<span class="date">Apr 13</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-surround-dot-vim.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
 	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/">每日vim插件--缩进显示vim-indent-guides</a></h2>
-	<div class="meta">
-		<span class="date">Apr 11</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
 	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html/">每天一个vim插件--我的配色 molokai</a></h2>
-	<div class="meta">
-		<span class="date">Apr 10</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html/#disqus_thread">Comments</a></span>
-	    
+	<a class="addthis_counter addthis_pill_style"></a>
 	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/">每天一个vim插件--vim-multiple-cursors</a></h2>
-	<div class="meta">
-		<span class="date">Apr  9</span>
-		<span class="tags">
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
 
 
-	<a class='category' href='/blog/categories/vim/'>vim</a>
 
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-goyo.html/">每天一个vim插件--goyo</a></h2>
-	<div class="meta">
-		<span class="date">Apr  3</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-goyo.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/">每天一个vim插件--有道翻译</a></h2>
-	<div class="meta">
-		<span class="date">Apr  2</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html/">每天一个vim插件--开篇之vundle</a></h2>
-	<div class="meta">
-		<span class="date">Apr  1</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r2.gif&amp;uid=1341920728041342" charset="utf-8"></script>
+<!-- JiaThis Button END -->
 
 
     </div>
@@ -345,7 +237,10 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
       var disqus_shortname = 'notice501';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/';
+        var disqus_url = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
