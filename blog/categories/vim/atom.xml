@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-15T22:33:06+08:00</updated>
+  <updated>2014-04-15T22:36:37+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -30,8 +30,9 @@
 
 <p>你在a状态做了一次修改到b，又回退到a，再做了一次修改到c。大多数编辑器比如sublime text，b这个状态就没了，但是vim会用一个树进行保存。</p>
 
-<p>而Gundo这个插件就是一个撤销树浏览器.直接上张图：
-<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efgmev2lz4j20ok1ci78i.jpg" style="     height: 600px; " /></p>
+<p>而Gundo这个插件就是一个撤销树浏览器.直接上张图：</p>
+
+<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efgmev2lz4j20ok1ci78i.jpg" style="     height: 600px; " /></p>
 
 <p>当前位置以<code>@</code>标注，其他历史以o标注。</p>
 
