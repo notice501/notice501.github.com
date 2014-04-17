@@ -1,0 +1,386 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>每日vim插件--可以重复motion的space.vim - Code Rush</title>
+    <meta name="author" content="foocoder">
+    
+	<meta name="description" content="今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。 vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了space.vim. 他能重复执行motion，比如 *Hello World 按下fo,会将光标移动到第一个o上，再按下空格，就能移动到第二个o了，他会重复执行上一个fo &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Code Rush" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34258052-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        foocoder
+    </div>
+</h1>
+<br>
+
+<div id="weixin" >
+  <p>关注我的微信公众账号</p>
+  <img src="http://ww3.sinaimg.cn/large/69d56e38gw1efbhqnrgj2j20760763z1.jpg" alt="">
+</div>
+<script type="text/javascript">
+  var weixin = (function() {
+    var weixinDiv = document.querySelector("#weixin");
+
+    var browser={
+      versions:function(){
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+               android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+               iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+               iPad: u.indexOf('iPad') > -1, //是否iPad
+               webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+      }(),
+      language:(navigator.browserLanguage || navigator.language).toLowerCase()
+    };
+
+    if (browser.versions.mobile) {
+      console.log("mobile");
+      weixinDiv.style.display = "none";
+    }
+  })();
+</script>
+<ul id="social-links" style="text-align:center">
+  <iframe width="200px" height="72px" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1775595064&verifier=34d9820b&dpc=1"></iframe>
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/notice501" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/118277216932640089008?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">主页</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="/about/">关于</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">每日vim插件--可以重复motion的space.vim</h2>
+	<div class="entry-content"><p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" alt="" /></p>
+
+<p>今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。</p>
+
+<p>vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了<a href="https://github.com/spiiph/vim-space">space.vim</a>.</p>
+
+<p>他能重复执行motion，比如</p>
+
+<pre><code>*Hello World
+</code></pre>
+
+<p>按下<code>fo</code>,会将光标移动到第一个o上，再按下空格，就能移动到第二个o了，他会重复执行上一个<code>fo</code>。按下<code>&lt;Shift-Space&gt;</code>反向执行改操作，也就是光标又会回到第一个<code>o</code>.</p>
+
+<p>除此之外，space.vim还能重复搜索命令，diff移动命令，qucikfix等操作。让空格键变的非常有用.下面是space.vim可以重复的全部命令列表：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Character movements:                                    |left-right-motions|
+</span><span class="line">    |f| |F| |t| |T| |;| |,|
+</span><span class="line">
+</span><span class="line">Search commands:                                           |search-commands|
+</span><span class="line">    |star| |gstar| |#| |g#| |n| |N|
+</span><span class="line">
+</span><span class="line">Jump list jumps:                                              |jump-motions|
+</span><span class="line">    |CTRL-O| |CTRL-I|
+</span><span class="line">
+</span><span class="line">Change list jumps:                                       |change-list-jumps|
+</span><span class="line">    |g;| |g,|
+</span><span class="line">
+</span><span class="line">Diff jumps:                                                   |jumpto-diffs|
+</span><span class="line">    |]c| |[c|
+</span><span class="line">
+</span><span class="line">Parenthesis and bracket jumps:                             |various-motions|
+</span><span class="line">    |])| |[(| |]}| |[{|
+</span><span class="line">
+</span><span class="line">Method jumps:                                              |various-motions|
+</span><span class="line">    |]m| |[m| |]M| |[M|
+</span><span class="line">
+</span><span class="line">Section jumps:                                              |object-motions|
+</span><span class="line">    |]]| |[]| |][| |[[|
+</span><span class="line">
+</span><span class="line">Fold movements:
+</span><span class="line">    |zj| |zk| |]z| |[z|
+</span><span class="line">
+</span><span class="line">Tag movements:                                                |tag-commands|
+</span><span class="line">    |CTRL-]|
+</span><span class="line">    |:tag|
+</span><span class="line">    |:tnext|
+</span><span class="line">    |:tprevious|
+</span><span class="line">    |:tNext|
+</span><span class="line">    |:trewind|
+</span><span class="line">    |:tfirst|
+</span><span class="line">    |:tlast|
+</span><span class="line">
+</span><span class="line">Undolist movements:                                          |undo-branches|
+</span><span class="line">    |g-||g+|
+</span><span class="line">
+</span><span class="line">Quickfix commands:                                                |quickfix|
+</span><span class="line">    |:make|
+</span><span class="line">    |:vimgrep|
+</span><span class="line">    |:grep|
+</span><span class="line">    |:cc|
+</span><span class="line">    |:cnext|
+</span><span class="line">    |:cprevious|
+</span><span class="line">    |:cNext|
+</span><span class="line">    |:cfirst|
+</span><span class="line">    |:clast|
+</span><span class="line">    |:crewind|
+</span><span class="line">    |:cfile|
+</span><span class="line">    |:cnfile|
+</span><span class="line">    |:cpfile|
+</span><span class="line">    |:cNfile|
+</span><span class="line">
+</span><span class="line">Location list commands:                                      |location-list|
+</span><span class="line">    |:lmake|
+</span><span class="line">    |:lvimgrep|
+</span><span class="line">    |:lgrep|
+</span><span class="line">    |:ll|
+</span><span class="line">    |:lcnext|
+</span><span class="line">    |:lcprevious|
+</span><span class="line">    |:lcNext|
+</span><span class="line">    |:lcfirst|
+</span><span class="line">    |:lclast|
+</span><span class="line">    |:lcrewind|
+</span><span class="line">    |:lcfile|
+</span><span class="line">    |:lcnfile|
+</span><span class="line">    |:lcpfile|
+</span><span class="line">    |:lcNfile|</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>今天解介绍到这里。</p>
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r2.gif&amp;uid=1341920728041342" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    foocoder
+
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'notice501';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/';
+        var disqus_url = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

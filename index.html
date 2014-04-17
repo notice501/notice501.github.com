@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 15th, 2014 Tags: vim 今天介绍的插件很有意思，也非常有用，也是我最常用的插件之一——Gundo. 大家都知道按u可以撤销操作，但是一般都不知道输入命令:undolist会显示可撤销列表，如图 其实这还不是列表，而是整个vim 撤销树的叶子。 &hellip;">
+	<meta name="description" content="Published on: Apr 17th, 2014 Tags: vim 今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。 vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了space.vim. 他能重复执行motion，比如 *Hello World 按下fo, &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -136,6 +136,209 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/">
+		
+			每日vim插件&#8211;可以重复motion的space.vim</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-17T21:10:00+08:00" pubdate data-updated="true">Apr 17<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" alt="" /></p>
+
+<p>今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。</p>
+
+<p>vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了<a href="https://github.com/spiiph/vim-space">space.vim</a>.</p>
+
+<p>他能重复执行motion，比如</p>
+
+<pre><code>*Hello World
+</code></pre>
+
+<p>按下<code>fo</code>,会将光标移动到第一个o上，再按下空格，就能移动到第二个o了，他会重复执行上一个<code>fo</code>。按下<code>&lt;Shift-Space&gt;</code>反向执行改操作，也就是光标又会回到第一个<code>o</code>.</p>
+
+<p>除此之外，space.vim还能重复搜索命令，diff移动命令，qucikfix等操作。让空格键变的非常有用.下面是space.vim可以重复的全部命令列表：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Character movements:                                    |left-right-motions|
+</span><span class="line">    |f| |F| |t| |T| |;| |,|
+</span><span class="line">
+</span><span class="line">Search commands:                                           |search-commands|
+</span><span class="line">    |star| |gstar| |#| |g#| |n| |N|
+</span><span class="line">
+</span><span class="line">Jump list jumps:                                              |jump-motions|
+</span><span class="line">    |CTRL-O| |CTRL-I|
+</span><span class="line">
+</span><span class="line">Change list jumps:                                       |change-list-jumps|
+</span><span class="line">    |g;| |g,|
+</span><span class="line">
+</span><span class="line">Diff jumps:                                                   |jumpto-diffs|
+</span><span class="line">    |]c| |[c|
+</span><span class="line">
+</span><span class="line">Parenthesis and bracket jumps:                             |various-motions|
+</span><span class="line">    |])| |[(| |]}| |[{|
+</span><span class="line">
+</span><span class="line">Method jumps:                                              |various-motions|
+</span><span class="line">    |]m| |[m| |]M| |[M|
+</span><span class="line">
+</span><span class="line">Section jumps:                                              |object-motions|
+</span><span class="line">    |]]| |[]| |][| |[[|
+</span><span class="line">
+</span><span class="line">Fold movements:
+</span><span class="line">    |zj| |zk| |]z| |[z|
+</span><span class="line">
+</span><span class="line">Tag movements:                                                |tag-commands|
+</span><span class="line">    |CTRL-]|
+</span><span class="line">    |:tag|
+</span><span class="line">    |:tnext|
+</span><span class="line">    |:tprevious|
+</span><span class="line">    |:tNext|
+</span><span class="line">    |:trewind|
+</span><span class="line">    |:tfirst|
+</span><span class="line">    |:tlast|
+</span><span class="line">
+</span><span class="line">Undolist movements:                                          |undo-branches|
+</span><span class="line">    |g-||g+|
+</span><span class="line">
+</span><span class="line">Quickfix commands:                                                |quickfix|
+</span><span class="line">    |:make|
+</span><span class="line">    |:vimgrep|
+</span><span class="line">    |:grep|
+</span><span class="line">    |:cc|
+</span><span class="line">    |:cnext|
+</span><span class="line">    |:cprevious|
+</span><span class="line">    |:cNext|
+</span><span class="line">    |:cfirst|
+</span><span class="line">    |:clast|
+</span><span class="line">    |:crewind|
+</span><span class="line">    |:cfile|
+</span><span class="line">    |:cnfile|
+</span><span class="line">    |:cpfile|
+</span><span class="line">    |:cNfile|
+</span><span class="line">
+</span><span class="line">Location list commands:                                      |location-list|
+</span><span class="line">    |:lmake|
+</span><span class="line">    |:lvimgrep|
+</span><span class="line">    |:lgrep|
+</span><span class="line">    |:ll|
+</span><span class="line">    |:lcnext|
+</span><span class="line">    |:lcprevious|
+</span><span class="line">    |:lcNext|
+</span><span class="line">    |:lcfirst|
+</span><span class="line">    |:lclast|
+</span><span class="line">    |:lcrewind|
+</span><span class="line">    |:lcfile|
+</span><span class="line">    |:lcnfile|
+</span><span class="line">    |:lcpfile|
+</span><span class="line">    |:lcNfile|</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>今天解介绍到这里。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -624,52 +827,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 <div class="meta">
 
   <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/%3C%3Candroidchuan-gan-qi-gao-ji-bian-cheng-%3E%3E-yi-zhe-xu.html/">
-		
-			《Android传感器高级编程》译者序</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-28T10:55:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2014</time></div>
-      <div class="tags">Tags: 
-
-</div>
-    </div>
-		<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1ecz2n3vnnaj209p09qaas.jpg" alt="" /></p>
-
-<p>翻看手机中的应用，就能发现大多数应用都已经使用了传感器。让微信彻底火起来的“附近的人”和“摇一摇”、碰一碰交换信息的Bump、各种运动记录app、神奇的“磁力探测仪”、火爆的游戏Temple Run……手机设备中的传感器让应用的可玩性大大增加，提供了各种创新的交互方式，以及在PC上很难实现的功能。在我看来，移动设备相对PC来说的主要优势在于随时随地的便携性，还有就是丰富的传感器。用好传感器，已经是手机应用开发的必修课。</p>
-
-<p>可是开始听到本书书名时，对翻译本书并没有什么兴趣。我自己也写过一本Android开发方面的书，觉得介绍传感器编程的话，一个章节足以。可是在看了英文书后，发现本书并不是简单地介绍Android传感器API的调用，而是非常专业细致地介绍了Android传感器。这本书将教会你真正用好Android传感器。</p>
-
-
-		
-		<a href="/blog/%3C%3Candroidchuan-gan-qi-gao-ji-bian-cheng-%3E%3E-yi-zhe-xu.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/%3C%3Candroidchuan-gan-qi-gao-ji-bian-cheng-%3E%3E-yi-zhe-xu.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>

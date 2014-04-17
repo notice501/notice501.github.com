@@ -3,10 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>分类：vim - Code Rush</title>
+	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Category: vim">
+	<meta name="description" content="Published on: Sep 28th, 2012 Tags: sqlite优化, 数据库优化, 数据库索引 要使用索引对数据库的数据操作进行优化，那必须明确几个问题 什么是索引 索引的原理 索引的优缺点 什么时候需要使用索引，如何使用
+围绕这几个问题，来探究索引在数据库操作中所起到的作用 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -136,210 +137,72 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 <!-- begin toload --> 
     <div id="content" class="inner">
         
-	
 
 
-	
-	
-	<section class="archives"><h1 class="year">2014</h1>
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/">每日vim插件--可以重复motion的space.vim</a></h2>
-	<div class="meta">
-		<span class="date">Apr 17</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/">
+		
+			谈数据库索引和Sqlite中索引的使用</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
 
 
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/#disqus_thread">Comments</a></span>
-	    
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-28T19:36:00+08:00" pubdate data-updated="true">Sep 28<span>th</span>, 2012</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/sqlite优化/'>sqlite优化</a>, <a class='category' href='/blog/categories/数据库优化/'>数据库优化</a>, <a class='category' href='/blog/categories/数据库索引/'>数据库索引</a>
+
+
+</div>
+    </div>
+		<p>要使用索引对数据库的数据操作进行优化，那必须明确几个问题</p>
+
+<ol>
+  <li>什么是索引</li>
+  <li>索引的原理</li>
+  <li>索引的优缺点</li>
+  <li>什么时候需要使用索引，如何使用
+围绕这几个问题，来探究索引在数据库操作中所起到的作用。
+
+		
+		<a href="/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html/" class="more-link">继续阅读 </a>
 	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong.html//blog/page/3/index.html#disqus_thread">Comments</a></span>
+
+
+</div>
 </article>
 
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/">每日vim插件--vim 撤销树Gundo.vim</a></h2>
-	<div class="meta">
-		<span class="date">Apr 15</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html/">每日vim插件--vim中的文本对象及相关插件</a></h2>
-	<div class="meta">
-		<span class="date">Apr 14</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-surround-dot-vim.html/">每日vim插件--surround.vim</a></h2>
-	<div class="meta">
-		<span class="date">Apr 13</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-surround-dot-vim.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/">每日vim插件--缩进显示vim-indent-guides</a></h2>
-	<div class="meta">
-		<span class="date">Apr 11</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html/">每天一个vim插件--我的配色 molokai</a></h2>
-	<div class="meta">
-		<span class="date">Apr 10</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/">每天一个vim插件--vim-multiple-cursors</a></h2>
-	<div class="meta">
-		<span class="date">Apr  9</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-goyo.html/">每天一个vim插件--goyo</a></h2>
-	<div class="meta">
-		<span class="date">Apr  3</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-goyo.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/">每天一个vim插件--有道翻译</a></h2>
-	<div class="meta">
-		<span class="date">Apr  2</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html/">每天一个vim插件--开篇之vundle</a></h2>
-	<div class="meta">
-		<span class="date">Apr  1</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
+<nav id="pagenavi">
+    
+        <a href="/blog/page/2/" class="prev">Prev</a>
+    
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+    <!-- JiaThis Button BEGIN -->
+    <script type="text/javascript">
+      var jiathis_config = {data_track_clickback:'true'};
+    </script>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r2.gif&amp;uid=1341920728041342" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+</nav>
 
     </div>
     <footer id="footer">
