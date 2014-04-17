@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-17T21:32:04+08:00</updated>
+  <updated>2014-04-17T21:37:15+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -18,11 +18,13 @@
     <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/"/>
     <updated>2014-04-17T21:10:00+08:00</updated>
     <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim</id>
-    <content type="html"><![CDATA[<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" alt="" /></p>
+    <content type="html"><![CDATA[<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" style="height: 400px;" /></p>
 
 <p>今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。</p>
 
 <p>vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了<a href="https://github.com/spiiph/vim-space">space.vim</a>.</p>
+
+<!--more-->
 
 <p>他能重复执行motion，比如</p>
 

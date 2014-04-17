@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 17th, 2014 Tags: vim 今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。 vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了space.vim. 他能重复执行motion，比如 *Hello World 按下fo, &hellip;">
+	<meta name="description" content=" Published on: Apr 17th, 2014 Tags: vim 今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。 vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了space.vim. 继续阅读 Comments ">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -168,168 +168,15 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 
 </div>
     </div>
-		<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" alt="" /></p>
+		<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" style="height: 400px;" /></p>
 
 <p>今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。</p>
 
 <p>vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了<a href="https://github.com/spiiph/vim-space">space.vim</a>.</p>
 
-<p>他能重复执行motion，比如</p>
-
-<pre><code>*Hello World
-</code></pre>
-
-<p>按下<code>fo</code>,会将光标移动到第一个o上，再按下空格，就能移动到第二个o了，他会重复执行上一个<code>fo</code>。按下<code>&lt;Shift-Space&gt;</code>反向执行改操作，也就是光标又会回到第一个<code>o</code>.</p>
-
-<p>除此之外，space.vim还能重复搜索命令，diff移动命令，qucikfix等操作。让空格键变的非常有用.下面是space.vim可以重复的全部命令列表：</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Character movements:                                    |left-right-motions|
-</span><span class="line">    |f| |F| |t| |T| |;| |,|
-</span><span class="line">
-</span><span class="line">Search commands:                                           |search-commands|
-</span><span class="line">    |star| |gstar| |#| |g#| |n| |N|
-</span><span class="line">
-</span><span class="line">Jump list jumps:                                              |jump-motions|
-</span><span class="line">    |CTRL-O| |CTRL-I|
-</span><span class="line">
-</span><span class="line">Change list jumps:                                       |change-list-jumps|
-</span><span class="line">    |g;| |g,|
-</span><span class="line">
-</span><span class="line">Diff jumps:                                                   |jumpto-diffs|
-</span><span class="line">    |]c| |[c|
-</span><span class="line">
-</span><span class="line">Parenthesis and bracket jumps:                             |various-motions|
-</span><span class="line">    |])| |[(| |]}| |[{|
-</span><span class="line">
-</span><span class="line">Method jumps:                                              |various-motions|
-</span><span class="line">    |]m| |[m| |]M| |[M|
-</span><span class="line">
-</span><span class="line">Section jumps:                                              |object-motions|
-</span><span class="line">    |]]| |[]| |][| |[[|
-</span><span class="line">
-</span><span class="line">Fold movements:
-</span><span class="line">    |zj| |zk| |]z| |[z|
-</span><span class="line">
-</span><span class="line">Tag movements:                                                |tag-commands|
-</span><span class="line">    |CTRL-]|
-</span><span class="line">    |:tag|
-</span><span class="line">    |:tnext|
-</span><span class="line">    |:tprevious|
-</span><span class="line">    |:tNext|
-</span><span class="line">    |:trewind|
-</span><span class="line">    |:tfirst|
-</span><span class="line">    |:tlast|
-</span><span class="line">
-</span><span class="line">Undolist movements:                                          |undo-branches|
-</span><span class="line">    |g-||g+|
-</span><span class="line">
-</span><span class="line">Quickfix commands:                                                |quickfix|
-</span><span class="line">    |:make|
-</span><span class="line">    |:vimgrep|
-</span><span class="line">    |:grep|
-</span><span class="line">    |:cc|
-</span><span class="line">    |:cnext|
-</span><span class="line">    |:cprevious|
-</span><span class="line">    |:cNext|
-</span><span class="line">    |:cfirst|
-</span><span class="line">    |:clast|
-</span><span class="line">    |:crewind|
-</span><span class="line">    |:cfile|
-</span><span class="line">    |:cnfile|
-</span><span class="line">    |:cpfile|
-</span><span class="line">    |:cNfile|
-</span><span class="line">
-</span><span class="line">Location list commands:                                      |location-list|
-</span><span class="line">    |:lmake|
-</span><span class="line">    |:lvimgrep|
-</span><span class="line">    |:lgrep|
-</span><span class="line">    |:ll|
-</span><span class="line">    |:lcnext|
-</span><span class="line">    |:lcprevious|
-</span><span class="line">    |:lcNext|
-</span><span class="line">    |:lcfirst|
-</span><span class="line">    |:lclast|
-</span><span class="line">    |:lcrewind|
-</span><span class="line">    |:lcfile|
-</span><span class="line">    |:lcnfile|
-</span><span class="line">    |:lcpfile|
-</span><span class="line">    |:lcNfile|</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>今天解介绍到这里。</p>
 
 		
-		
+		<a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/" class="more-link">继续阅读 </a>
 	</div>
 
 <div class="meta">
