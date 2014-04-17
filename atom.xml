@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-17T22:33:38+08:00</updated>
+  <updated>2014-04-17T22:44:01+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -476,7 +476,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[每天一个vim插件--我的配色 molokai]]></title>
+    <title type="html"><![CDATA[每日vim插件--我的配色 molokai]]></title>
     <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai.html/"/>
     <updated>2014-04-10T21:24:00+08:00</updated>
     <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai</id>
@@ -515,7 +515,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[每天一个vim插件--vim-multiple-cursors]]></title>
+    <title type="html"><![CDATA[每日vim插件--vim-multiple-cursors]]></title>
     <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-multiple-cursors.html/"/>
     <updated>2014-04-09T22:19:00+08:00</updated>
     <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-multiple-cursors</id>
@@ -581,7 +581,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[每天一个vim插件--goyo]]></title>
+    <title type="html"><![CDATA[每日vim插件--goyo]]></title>
     <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-goyo.html/"/>
     <updated>2014-04-03T21:50:00+08:00</updated>
     <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-goyo</id>
@@ -659,7 +659,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[每天一个vim插件--有道翻译]]></title>
+    <title type="html"><![CDATA[每日vim插件--有道翻译]]></title>
     <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-you-dao-fan-yi.html/"/>
     <updated>2014-04-02T21:34:00+08:00</updated>
     <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-you-dao-fan-yi</id>
@@ -689,7 +689,7 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[每天一个vim插件--开篇之vundle]]></title>
+    <title type="html"><![CDATA[每日vim插件--开篇之vundle]]></title>
     <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle.html/"/>
     <updated>2014-04-01T22:34:00+08:00</updated>
     <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle</id>

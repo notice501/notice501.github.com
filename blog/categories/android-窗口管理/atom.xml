@@ -4,7 +4,7 @@
   <title><![CDATA[分类：android 窗口管理 | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/android-窗口管理/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-17T22:36:02+08:00</updated>
+  <updated>2014-04-17T22:44:01+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -34,7 +34,7 @@
 <!--more-->
 <p>在这里，窗口的概念其实可以说由三部分构成，一部分是用来描述窗口信息的，由WindowState对象表示。一个WindowState对象对应一个窗口，它拥有绘制窗口所需要的信息。但是真正去绘制窗口需要另一部分内容Surface来完成，最终会通过surfaceflinger完成绘图。还有一部分就是对消息的处理，windowmanagerService把窗口信息传递给InputManager，这样InputDispatcher就能根据当前窗口的状态进行消息处理。
 我们先看下整体的架构图，然后再来看这两种窗口的创建。WindowManager和其他很多android的服务一样，采用C/S的架构。其中windowManagerService跑在System_server进程，作为服务端，客户端通过ipc调用和它进行交互。
-{% img http://foocoder.com/images/androidWIndow.png ‘窗口管理框架图’%}</p>
+<img src="http://foocoder.com/images/androidWIndow.png" title="‘窗口管理框架图’" ></p>
 
 <p>我们通过完整的应用程序窗口创建流程来了解这个结构和整个过程。我们不去纠结其中代码的一些细枝末节的东西，不去贴一堆代码，通过整体和重要的东西来看。</p>
 
