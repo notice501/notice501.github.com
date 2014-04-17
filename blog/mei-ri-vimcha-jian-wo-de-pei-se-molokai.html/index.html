@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>每天一个vim插件--vim-multiple-cursors - Code Rush</title>
+	<title>每天一个vim插件--我的配色 molokai - Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累…… 今天介绍一款我用的非常多，也非常有用的插件–vim-multiple-cursors。 这个插件copy了sublime text的多重光标选取功能，非常强大。 sublime text 官网有几张图来介绍sublime &hellip;">
+	<meta name="description" content="今天其实不介绍插件。因为有一些朋友问，所以今天单独介绍下我的配色和字体。 配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个molokai配色插件。之所以叫molokai，因为这个配色是monokai的修改版，将monokai的背景色改为了深色。我想要一个深色背景的molokai. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -136,70 +136,43 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
 <!-- begin toload --> 
     <div id="content" class="inner">
         <article class="post">
-	<h2 class="title">每天一个vim插件--vim-multiple-cursors</h2>
-	<div class="entry-content"><p>前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累……</p>
+	<h2 class="title">每天一个vim插件--我的配色 Molokai</h2>
+	<div class="entry-content"><p>今天其实不介绍插件。因为有一些朋友问，所以今天单独介绍下我的配色和字体。</p>
 
-<p>今天介绍一款我用的非常多，也非常有用的插件–<a href="">vim-multiple-cursors</a>。</p>
+<p>配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个<a href="https://github.com/tomasr/molokai">molokai</a>配色插件。之所以叫molokai，因为这个配色是monokai的修改版，将monokai的背景色改为了深色。我想要一个深色背景的molokai.正和我意啊。</p>
 
-<p>这个插件copy了sublime text的多重光标选取功能，非常强大。</p>
+<p>下面是两张作者的原图：
+<!--more--></p>
 
-<p>sublime text 官网有几张图来介绍sublime text的多重选取功能，插件作者也实现了一样的效果：
-<img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pr4t1i2g20k406ojtw.gif" alt="" /></p>
+<p><img src="http://www.winterdom.com/weblog/content/binary/WindowsLiveWriter/MolokaiforVim_8602/molokai_normal_small_3.png" alt="" /></p>
 
-<!--more-->
+<p><img src="http://www.winterdom.com/weblog/content/binary/WindowsLiveWriter/MolokaiforVim_8602/molokai_original_small_3.png" alt="" /></p>
 
-<p>上图按键：</p>
-
-<ul>
-  <li>fp跳到p处</li>
-  <li>按下<code>&lt;C-n&gt;</code>选中光标下的单词</li>
-  <li>继续按下<code>&lt;C-n&gt;</code>两次选中另外两个相同的单词</li>
-  <li>按下c进行修改</li>
-  <li>键入修改</li>
-  <li>按下 <code>&lt;Esc&gt;</code> 退出</li>
-</ul>
-
-<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1ef9pzm3d13g20sy0900zt.gif" alt="" /></p>
-
-<p>上图按键：</p>
-
-<ul>
-  <li>按下V选中整行</li>
-  <li>按下G到达末行</li>
-  <li>按下<code>&lt;C-n&gt;</code> 在每行的开头加上一个光标并返回普通模式</li>
-  <li>按下I在每行的头部插入</li>
-  <li>键入”, 按下<code>&lt;C-e&gt;</code>到达行末, 键入另一个”和逗号</li>
-  <li>然后将每个光标都下移一行，按下delete	</li>
-</ul>
-
-<p>再也不用羡慕sublime了。</p>
-
-<p>使用也非常简单，几乎0配置。</p>
-
-<p>默认的mapping：</p>
+<p>如果要使用monokai原始的背景色，加上配置：</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">" Default mapping
-</span><span class="line">let g:multi_cursor_next_key='&lt;C-n&gt;'
-</span><span class="line">let g:multi_cursor_prev_key='&lt;C-p&gt;'
-</span><span class="line">let g:multi_cursor_skip_key='&lt;C-x&gt;'
-</span><span class="line">let g:multi_cursor_quit_key='&lt;Esc&gt;'</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>在普通模式下，按下<code>Ctrl-n</code>开始进入可视模式并选中光标下的单词，继续按<code>Ctrl-n</code>选择下一个相同的单词，按下<code>Ctrl-p</code>往回选一个，<code>Ctrl-x</code>则跳过下一个相同单词。</p>
+</pre></td><td class="code"><pre><code class=""><span class="line">let g:molokai_original = 1</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>选中后就可以对单词进行批量改动了，比如按下c，就同时修改选中单词。</p>
+<p>下面再放上一张我自己的图：
+<img src="http://ww1.sinaimg.cn/large/69d56e38gw1efatpzm085j21kw0zrdnu.jpg" alt="" /></p>
 
-<p>插件还支持正则匹配，不过要用到正则去匹配的时候我就用%s来替换了。要了解详情可以去插件的github页继续了解。</p>
+<p>两者的差别除了缩进显示之外就是字体了。</p>
 
-<p>今天就介绍这个性感无比的插件。</p>
+<p>字体也是我非常喜欢，精挑细选的字体<a href="https://github.com/adobe/source-code-pro">Source code pro</a></p>
+
+<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efatye9ls3j20lw0haacp.jpg" alt="" /></p>
+
+<p>链接里有下载和安装方法，喜欢就试试吧。</p>
+
+<hr />
+<p>4月11号更新：
+看到下面评论有晒自己的配色，想起来有个repo，里面收集了非常多的vim 配色。
+这里也贴出来——<a href="https://github.com/flazz/vim-colorschemes">vim-colorschemes</a></p>
 </div>
 
 <div class="meta">
 
-  <span class="comments"><a href="/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/#disqus_thread">Comments</a></span>
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai.html/#disqus_thread">Comments</a></span>
 
 
 </div>
@@ -257,8 +230,8 @@ ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/';
-        var disqus_url = 'http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/';
+        var disqus_identifier = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai.html/';
+        var disqus_url = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai.html/';
         var disqus_script = 'embed.js';
       
     (function () {

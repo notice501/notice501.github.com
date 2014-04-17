@@ -4,7 +4,7 @@
   <title><![CDATA[分类：html5 | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/html5/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-17T21:37:15+08:00</updated>
+  <updated>2014-04-17T22:36:02+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -28,17 +28,13 @@
 <p>正如之前所提到的，本地缓存可以指定要缓存的内容，这同过配置manifest来实现。可以为整个app配置manifest，也可以为单独某个页面来配置。</p>
 
 <p>简单的manifest格式如下：
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>CACHE MANIFEST
-</span><span class='line'>index.html
-</span><span class='line'>stylesheet.css
-</span><span class='line'>images/logo.png
-</span><span class='line'>scripts/main.js
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+{% codeblock lang:html %}
+CACHE MANIFEST
+index.html
+stylesheet.css
+images/logo.png
+scripts/main.js
+{% endcodeblock %}</p>
 
 <p>文件的第一行必须是CACHE MANIFEST。</p>
 
@@ -46,49 +42,29 @@
 
 <p>再看一个比较复杂的manifest文件：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>CACHE MANIFEST
-</span><span class='line'># 指定一个版本号
-</span><span class='line'># version 1
-</span><span class='line'># 该类别指定要缓存的资源文件
-</span><span class='line'>CACHE:
-</span><span class='line'>/favicon.ico
-</span><span class='line'>index.html
-</span><span class='line'>stylesheet.css
-</span><span class='line'>images/logo.png
-</span><span class='line'>scripts/main.js<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">&quot;section&quot;</span><span class="nt">&gt;</span>指定不进行缓存的资源文件<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>NETWORK:
-</span><span class='line'>login.php
-</span><span class='line'>http://foocoder.com<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">&quot;section-1&quot;</span><span class="nt">&gt;</span>每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>FALLBACK:
-</span><span class='line'>/main.py /static.html
-</span><span class='line'>images/large/ images/offline.jpg
-</span><span class='line'>*.html /offline.html
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:html %}
+CACHE MANIFEST
+# 指定一个版本号
+# version 1
+# 该类别指定要缓存的资源文件
+CACHE:
+/favicon.ico
+index.html
+stylesheet.css
+images/logo.png
+scripts/main.js</p>
+
+<h1 id="section">指定不进行缓存的资源文件</h1>
+<p>NETWORK:
+login.php
+http://foocoder.com</p>
+
+<h1 id="section-1">每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源</h1>
+<p>FALLBACK:
+/main.py /static.html
+images/large/ images/offline.jpg
+*.html /offline.html
+{% endcodeblock %}</p>
 
 <p>其中#号开头的为注释。因为只有在manifest文件发生改变时才会更新，所以我们可以加个版本号方便控制。</p>
 
@@ -102,13 +78,11 @@
 
 <p>配置好manifest文件之后，我们只需要在页面上引用即可。如下，在html 标签的manifest属性下指定manifest文件的地址：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="ni">&amp;lt;</span>html manifest=&quot;app.manifest&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>…
-</span><span class='line'><span class="ni">&amp;lt;</span>/html<span class="ni">&amp;gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:html %}
+&lt;html manifest="app.manifest"&gt;
+…
+&lt;/html&gt;
+{% endcodeblock %}</p>
 
 <p>该地址可以是绝对地址也可以是相对地址，但是该文件的吗MIME 类型必须是text/cache-manifest，所以需要在服务器做相应配置对该类型添加支持，例如吗，对于apache服务器，需要在配置mime.types中添加如下内容：</p>
 
@@ -131,113 +105,67 @@
 
 <p>window.applicationCache下有个status属性。可以通过其知道当前的缓存状态</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">appCache</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="k">switch</span> <span class="p">(</span><span class="nx">appCache</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">UNCACHED</span><span class="o">:</span> <span class="c1">// UNCACHED == 0 </span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">UNCACHED</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">IDLE</span><span class="o">:</span> <span class="c1">// IDLE == 1 </span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">IDLE</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">CHECKING</span><span class="o">:</span> <span class="c1">// CHECKING == 2 </span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">CHECKING</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">DOWNLOADING</span><span class="o">:</span> <span class="c1">// DOWNLOADING == 3 </span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">DOWNLOADING</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">UPDATEREADY</span><span class="o">:</span>  <span class="c1">// UPDATEREADY == 4 </span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">UPDATEREADY</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="nx">appCache</span><span class="p">.</span><span class="nx">OBSOLETE</span><span class="o">:</span> <span class="c1">// OBSOLETE == 5 </span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">OBSOLETE</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>    <span class="k">return</span> <span class="err">‘</span><span class="nx">UKNOWN</span> <span class="nx">CACHE</span> <span class="nx">STATUS</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:js %}
+var appCache = window.applicationCache; </p>
+
+<p>switch (appCache.status) { 
+  case appCache.UNCACHED: // UNCACHED == 0 
+    return ‘UNCACHED’; 
+    break; 
+  case appCache.IDLE: // IDLE == 1 
+    return ‘IDLE’; 
+    break; 
+  case appCache.CHECKING: // CHECKING == 2 
+    return ‘CHECKING’; 
+    break; 
+  case appCache.DOWNLOADING: // DOWNLOADING == 3 
+    return ‘DOWNLOADING’; 
+    break; 
+  case appCache.UPDATEREADY:  // UPDATEREADY == 4 
+    return ‘UPDATEREADY’; 
+    break; 
+  case appCache.OBSOLETE: // OBSOLETE == 5 
+    return ‘OBSOLETE’; 
+    break; 
+  default: 
+    return ‘UKNOWN CACHE STATUS’; 
+    break; 
+};
+{% endcodeblock %}</p>
 
 <p>既然可以获得状态，我们只需要请求更新，随后在状态为appCache.UPDATEREADY时更新缓存时即可。</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span><span class="err">方法会尝试更新用户缓存，而</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">swapCache</span><span class="p">()</span><span class="err">方法会对本地缓存进行更新：</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">appCache</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">appCache</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span> <span class="c1">// 开始更新&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="nx">appCache</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">UPDATEREADY</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">appCache</span><span class="p">.</span><span class="nx">swapCache</span><span class="p">();</span>  <span class="c1">// 更新缓存</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:js %}
+applicationCache.update()方法会尝试更新用户缓存，而applicationCache.swapCache()方法会对本地缓存进行更新：</p>
+
+<p>var appCache = window.applicationCache;</p>
+
+<p>appCache.update(); // 开始更新</p>
+
+<p>if (appCache.status == window.applicationCache.UPDATEREADY) {
+  appCache.swapCache();  // 更新缓存
+}
+{% endcodeblock %}</p>
 
 <p>正如之前所说的，即使更新了缓存，还是需要重新加载才能使用最新的资源，此时可以提示用户更新。只需要监听onUpdateReady事件，该事件在缓存被下载到本地后出发，从而可以在此时提示用户：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="err">‘</span><span class="nx">load</span><span class="err">’</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="err">‘</span><span class="nx">updateready</span><span class="err">’</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">UPDATEREADY</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>     <span class="c1">//更新本地缓存</span>
-</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">.</span><span class="nx">swapCache</span><span class="p">();</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">confirm</span><span class="p">(</span><span class="err">‘已经有新的版本，是否立刻切换到最新版</span><span class="o">?</span><span class="err">’</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="p">}</span>   <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:js %}
+window.addEventListener(‘load’, function(e) {</p>
+
+<p>window.applicationCache.addEventListener(‘updateready’, function(e) {
+    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+     //更新本地缓存
+      window.applicationCache.swapCache();
+      if (confirm(‘已经有新的版本，是否立刻切换到最新版?’)) {
+        window.location.reload();
+      }
+    } else {</p>
+
+<pre><code>}   }, false);
+</code></pre>
+
+<p>}, false);
+{% endcodeblock %}</p>
 
 <p>applicationCache对象还提供了其他事件，分别为：</p>
 
@@ -245,21 +173,15 @@
 
 <p>在整个浏览器与服务端交互的过程中，所有的错误都会出发error事件，我们可以通过监听error事件进行处理：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">appCache</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">applicationCache</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">appCache</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="err">‘</span><span class="nx">error</span><span class="err">’</span><span class="p">,</span> <span class="nx">handleCacheError</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">function</span> <span class="nx">handleCacheError</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">alert</span><span class="p">(</span><span class="err">‘</span><span class="nb">Error</span><span class="o">:</span> <span class="nx">Cache</span> <span class="nx">failed</span> <span class="nx">to</span> <span class="nx">update</span><span class="o">!</span><span class="err">’</span><span class="p">);</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:js %}
+var appCache = window.applicationCache;</p>
+
+<p>appCache.addEventListener(‘error’, handleCacheError, false);</p>
+
+<p>function handleCacheError(e) {
+  alert(‘Error: Cache failed to update!’);
+};
+{% endcodeblock %}</p>
 
 <p>欢迎留言交流。</p>
 ]]></content>

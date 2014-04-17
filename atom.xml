@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-17T21:37:15+08:00</updated>
+  <updated>2014-04-17T22:33:38+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -477,9 +477,9 @@
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--我的配色 molokai]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-wo-de-pei-se-molokai.html/"/>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai.html/"/>
     <updated>2014-04-10T21:24:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-wo-de-pei-se-molokai</id>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-wo-de-pei-se-molokai</id>
     <content type="html"><![CDATA[<p>今天其实不介绍插件。因为有一些朋友问，所以今天单独介绍下我的配色和字体。</p>
 
 <p>配色使用的是我钟爱的monokai，但是换了深色配色，使用了一个<a href="https://github.com/tomasr/molokai">molokai</a>配色插件。之所以叫molokai，因为这个配色是monokai的修改版，将monokai的背景色改为了深色。我想要一个深色背景的molokai.正和我意啊。</p>
@@ -516,9 +516,9 @@
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--vim-multiple-cursors]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-vim-multiple-cursors.html/"/>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-multiple-cursors.html/"/>
     <updated>2014-04-09T22:19:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-vim-multiple-cursors</id>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-multiple-cursors</id>
     <content type="html"><![CDATA[<p>前几天清明休假了。每日插件也就休息了几天。不过休假搞的比上班还累……</p>
 
 <p>今天介绍一款我用的非常多，也非常有用的插件–<a href="">vim-multiple-cursors</a>。</p>
@@ -582,9 +582,9 @@
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--goyo]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-goyo.html/"/>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-goyo.html/"/>
     <updated>2014-04-03T21:50:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-goyo</id>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-goyo</id>
     <content type="html"><![CDATA[<p>一如既往很忙……所以今天还是分享一个可以一句话说明白的插件，也是我非常常用的–<a href="https://github.com/junegunn/goyo.vim">goyo</a></p>
 
 <p>一直非常喜欢写作软件iawriter，goyo让我可以用同样的方式来写代码，当然goyo还免费开源，这比iawriter好。用作者的描述就是：Distraction-free writing in Vim. 不会被任何的其他元素打扰。
@@ -660,9 +660,9 @@
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--有道翻译]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-you-dao-fan-yi.html/"/>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-you-dao-fan-yi.html/"/>
     <updated>2014-04-02T21:34:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-you-dao-fan-yi</id>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-you-dao-fan-yi</id>
     <content type="html"><![CDATA[<p>今天头疼。简短介绍一个实用又好用的插件，在vim中直接进行有道翻译,<a href="https://github.com/ianva/vim-youdao-translater">vim-youdao-translater</a>，来自ianva.我非常喜欢的一个插件,在这里再次感谢作者ianva。</p>
 
 <p>安装就不介绍了，不知道怎么安装看上一篇博客。</p>
@@ -690,9 +690,9 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
   
   <entry>
     <title type="html"><![CDATA[每天一个vim插件--开篇之vundle]]></title>
-    <link href="http://notice501.github.com/blog/mei-tian-%5B%3F%5D-ge-vimcha-jian-kai-pian-zhi-vundle.html/"/>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle.html/"/>
     <updated>2014-04-01T22:34:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-tian-[?]-ge-vimcha-jian-kai-pian-zhi-vundle</id>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle</id>
     <content type="html"><![CDATA[<p>一直想写一篇博客介绍我的vim配置和插件，但是这篇博客却难产了快半年……
 工作太忙，写博客变成了奢侈的事情。那何不每天写一点点呢？于是决定每天介绍一个vim插件或者一个技巧。</p>
 
