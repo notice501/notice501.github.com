@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-18T16:42:05+08:00</updated>
+  <updated>2014-04-18T20:36:29+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--快速选择文本对象wildfile.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim.html/"/>
+    <updated>2014-04-18T20:06:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim</id>
+    <content type="html"><![CDATA[<p>之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。</p>
+
+<p>这个插件就是–<a href="https://github.com/Shougo/wildfire.vim">wildfire</a>（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）</p>
+
+<p>插件默认定义的候选文本对象为：</p>
+
+<pre><code> `i'`, `i"`, `i)`, `i]`, `i}`, `ip` and `it`
+</code></pre>
+
+<p>来一张官方图</p>
+
+<!--more-->
+
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efk07xfk7kg20jv087myy.gif" alt="" /></p>
+
+<p>有图应该大家能理解这个插件的作用了。</p>
+
+<p>使用方式也非常简单，按<code>enter</code>选择最近一个文本对象，再按下<code>enter</code>在刚刚的选择之上再选择最近的文本对象。按下<code>&lt;BS&gt;</code>就能回退到上一个选择。</p>
+
+<p>当然，你可以自定义快捷键：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="c">&quot; This selects the next closest text object.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:wildfire_fuel_map <span class="p">=</span> <span class="s2">&quot;&lt;ENTER&gt;&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; This selects the previous closest text object.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:wildfire_water_map <span class="p">=</span> <span class="s2">&quot;&lt;BS&gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>候选的文本对象也是可以配置的：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:wildfire_objects <span class="p">=</span> [<span class="s2">&quot;i&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;i&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;i)&quot;</span><span class="p">,</span> <span class="s2">&quot;i]&quot;</span><span class="p">,</span> <span class="s2">&quot;i}&quot;</span><span class="p">,</span> <span class="s2">&quot;ip&quot;</span><span class="p">,</span> <span class="s2">&quot;it&quot;</span>]
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>插件还支持对文件类型分别定义，比如要在html中只处理tag，忽略其他文本对象，只需要配置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="c">&quot; use &#39;*&#39; to mean &#39;all other filetypes&#39;</span>
+</span><span class="line"><span class="c">&quot; in this example, html and xml share the same text objects</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:wildfire_objects <span class="p">=</span> {
+</span><span class="line">    \ <span class="s2">&quot;*&quot;</span> : [<span class="s2">&quot;i&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;i&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;i)&quot;</span><span class="p">,</span> <span class="s2">&quot;i]&quot;</span><span class="p">,</span> <span class="s2">&quot;i}&quot;</span><span class="p">,</span> <span class="s2">&quot;ip&quot;</span>]<span class="p">,</span>
+</span><span class="line">    \ <span class="s2">&quot;html,xml&quot;</span> : [<span class="s2">&quot;at&quot;</span>]<span class="p">,</span>
+</span><span class="line">\ }
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>与之类似的一个用的相当广泛的插件还有<a href="https://github.com/terryma/vim-expand-region">vim-expand-region</a>。大家可以自己选择。有问题欢迎留言或回复交流。也希望大家推荐自己在用，自己写的插件给我。今天看到一个朋友微信回复我的一个他自己写的插件，我已经立刻用上了，卖个关子，下次介绍。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--可以重复motion的space.vim]]></title>
@@ -2533,77 +2598,6 @@ AIDL（android interface definition language）对Binder的使用进行了封装
 <p><img src="http://foocoder.com/images/aidl2.png" /></p>
 
 <p>是不是很明了了？我想大家看完以后手动写一个远程调用而不使用aidl也是可以完成了。不得不说，android设计的非常好，也用aidl让需要用到ipc的时候对开发者非常友好。android中ipc通信的使用和过程大致如此。欢迎转载，请注明出处，http://foocoder.com  谢谢了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[android窗口管理框架解析]]></title>
-    <link href="http://notice501.github.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi.html/"/>
-    <updated>2012-10-25T16:17:00+08:00</updated>
-    <id>http://notice501.github.com/blog/androidchuang-kou-guan-li-kuang-jia-jie-xi</id>
-    <content type="html"><![CDATA[<p>窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。</p>
-
-<p>窗口可以分为两类：</p>
-
-<ul>
-  <li>
-    <p>一种是应用窗口，即由具体应用创建的窗口，其实其中还可以细分出父窗口和子窗口。窗口一般都会对应一个activity。</p>
-  </li>
-  <li>
-    <p>一种是系统窗口，如状态栏，这类窗口由系统直接通过windowManager来创建，和activity无关。</p>
-  </li>
-</ul>
-
-<!--more-->
-<p>在这里，窗口的概念其实可以说由三部分构成，一部分是用来描述窗口信息的，由WindowState对象表示。一个WindowState对象对应一个窗口，它拥有绘制窗口所需要的信息。但是真正去绘制窗口需要另一部分内容Surface来完成，最终会通过surfaceflinger完成绘图。还有一部分就是对消息的处理，windowmanagerService把窗口信息传递给InputManager，这样InputDispatcher就能根据当前窗口的状态进行消息处理。
-我们先看下整体的架构图，然后再来看这两种窗口的创建。WindowManager和其他很多android的服务一样，采用C/S的架构。其中windowManagerService跑在System_server进程，作为服务端，客户端通过ipc调用和它进行交互。
-<img src="http://foocoder.com/images/androidWIndow.png" title="'窗口管理框架图'" /></p>
-
-<p>我们通过完整的应用程序窗口创建流程来了解这个结构和整个过程。我们不去纠结其中代码的一些细枝末节的东西，不去贴一堆代码，通过整体和重要的东西来看。</p>
-
-<h5 id="section">一.客户端部分</h5>
-
-<p>在客户端，在应用启动的时候，ActivityThread会调用performLaunchActivity方法，去实例化一个activity，同时调用attach方法，并传递很多和activity相关的参数信息。</p>
-
-<p>其中有个比较重要的东西是一个IBinder对象token，这个token成为activity的标识，windowmanagerService可以通过这个token获得activity当前的运行状态。在WindowManager中会通过该token生成一个WindowToken对象，一个父窗口对应一个WindowToken，而具有相同token的所有其子窗口都会被归到一个WindowToken中。即如果token相同，表示他们都会在一个窗口中。还有个用来标识窗口的类AppWindowToken，继承自WindowToken，它由activity传过来的token生成，和Activity一一对应。通过token，就能找到activity和window的对应关系了。</p>
-
-<p>继续往下看，attach方法会通过代码mWindow = PolicyManager.makeNewWindow(this)实例化一个phoneWindow对象，但是这个对象还是比较抽象的东西。在activity开始oncreate调用时，会调用setContentView方法。会去获得之前那个phoneWIndow对象对应的DecorView，最后通过层层窗口修饰（状态栏等）后调用activity的makeVisible方法，在方法中通过addiew方法完成窗口的添加。</p>
-
-<p>windowManager只是提供接口，用了桥接模式，真正实现是WindowManagerImpl类。而调用addiew方法的对象来自另一个类LocalWindowManager，它会做一些简单检查，再通过WindowManagerImp类的addview完成窗口添加。addview大概分三步执行：</p>
-
-<ol>
-  <li>校验该窗口是否已经添加过了。</li>
-  <li>判断窗口类型如果是子窗口，则找到它附属的父窗口</li>
-  <li>new一个ViewRootImpl对象，最后调用该对象的setView方法。</li>
-</ol>
-
-<p>setView 方法会最终会通过ipc调用IwindowSession的add方法。Session类实现了该方法，并最终给WindowManagerService处理。客户端的工作至此就完成了。
-这里说明一下ViewRootImpl类，这其实是个handler。自然的，它一部分功能就是对消息进行处理，将用户的一些操作分发到view中。它也是view和WindowManagerService的桥梁。可以看到它通过一个会话将信息传递到了WindowManagerService。而WIndowManagerService也会通过IWindow接口将指令通过消息的方式发送到ViewRootImpl，ViewRootImpl处理这些消息。</p>
-
-<h5 id="section-1">二.服务端</h5>
-
-<p>WindowManagerService的addWindow方法主要做三部分的处理。</p>
-
-<ol>
-  <li>做一些合法性校验</li>
-  <li>完成窗口数据的构建</li>
-  <li>完成窗口创建后需要作出的一些调整</li>
-</ol>
-
-<p>我们只看第二部分。首先会new一个WindowState类，该类表示一个窗口。结合WindowToken和AppWindowToken，完整的定义了一个窗口内容。接着创建一个管道，用于处理消息输入。再然后调用attach方法，创建和Surface相关的内容，用于和surfaceFlinger交互。这样，整个窗口就搭建完成了。有了WindowState类对窗口属性的保存以及token对窗口归属的标识，之后就可以通过SurfaceFlinger绘制在屏幕上了。之后通过InputManager，也能处理消息和WindowManagerService之间的传递。保证窗口显示内容和用户操作保持一致性。
-当然，WindowManagerService靠近10000行的代码完成了很多功能，因为这篇文章只会了解窗口管理的整个架构，这里不一一详解，以后有时间可能会把一些比较有意思的内容再看下：</p>
-
-<ol>
-  <li>窗口的创建和删除</li>
-  <li>窗口的显示和隐藏控制</li>
-  <li>Z-order顺序管理</li>
-  <li>焦点窗口管理</li>
-  <li>输入法窗口管理和墙纸窗口管理</li>
-  <li>切换动画</li>
-  <li>系统消息收集和分发</li>
-</ol>
-
-<p>现在，再来看开始的架构图，应该就比较清晰了。</p>
 ]]></content>
   </entry>
   

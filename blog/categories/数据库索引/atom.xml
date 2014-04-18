@@ -4,7 +4,7 @@
   <title><![CDATA[分类：数据库索引 | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/数据库索引/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-18T16:44:42+08:00</updated>
+  <updated>2014-04-18T20:36:29+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -60,16 +60,16 @@
 
 <p>如下图所示</p>
 
-<p>{% img http://foocoder.com/images/index1.jpg %}</p>
+<p><img src="http://foocoder.com/images/index1.jpg"></p>
 
 <p>每个索引都包含两部分内容，一部分是索引本身的值，第二部分即指向数据页或者另一个索引也的指针。每个节点即为一个索引页，包含了多个索引。
 当你为一个空表建立一个索引，数据库会分配一个空的索引页，这个索引页即代表根节点，在你插入数据之前，这个索引页都是空的。每当你插入数据，数据库就会在根节点创建索引条目，。当根节点插满的时候，再插入数据时，根节点就会分裂。举个例子，根节点插入了如图所示的数据。（超过4个就分裂），这时候插入H，就会分裂成2个节点，移动G到新的根节点，把H和N放在新的右孩子节点中。</p>
 
 <p>如图所示：</p>
 
-<p>{% img http://foocoder.com/images/index2.png ‘根节点插满4个节点’%}  </p>
+<p><img src="http://foocoder.com/images/index2.png" title="‘根节点插满4个节点’" >  </p>
 
-<p>{% img http://foocoder.com/images/index3.png ‘插入H，进行分裂’%}</p>
+<p><img src="http://foocoder.com/images/index3.png" title="‘插入H，进行分裂’" ></p>
 
 <p>大致的分裂步骤如下：
 1）	创建两个儿子节点
@@ -145,31 +145,27 @@
   </li>
 </ol>
 
-<p>{% codeblock %}
-CREATE INDEX idx_ex1 ON ex1(a,b,c,d,e,…,y,z);
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE INDEX idx_ex1 ON ex1(a,b,c,d,e,…,y,z);</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这里是一个查询语句</p>
 
-<p>{% codeblock %}
-…WHERE a=5 AND b IN (1,2,3) AND c IS NULL AND d=’hello’
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>…WHERE a=5 AND b IN (1,2,3) AND c IS NULL AND d=’hello’</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这显然对于abcd四列都是有效的，因为只有等于和in操作，并且是前导列。</p>
 
 <p>再看一个查询语句</p>
 
-<p>{% codeblock %}
-… WHERE a=5 AND b IN (1,2,3) AND c&gt;12 AND d=’hello’
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>… WHERE a=5 AND b IN (1,2,3) AND c&gt;12 AND d=’hello’</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>那这里只有a，b和c的索引会是有效的，d列的索引会失效，因为它在c列的右边，而c列使用了不等式，根据使用不等式的限制，c列已经属于最右边。</p>
 
 <p>最后再看一条：</p>
 
-<p>{% codeblock %}
-    … WHERE b IN (1,2,3) AND c NOT NULL AND d=’hello’
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>… WHERE b IN (1,2,3) AND c NOT NULL AND d=’hello’</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>索引将不会被使用，因为没有使用前导列，这个查询会是一个全表查询。</p>
 
@@ -178,10 +174,10 @@ CREATE INDEX idx_ex1 ON ex1(a,b,c,d,e,…,y,z);
 <p>最后在android上使用sqlite写一个简单的例子，看下索引对数据库操作的影响。</p>
 
 <p>创建如下表和索引：
-{% codeblock %}
-db.execSQL(“create table if not exists t1(a,b)”); 
-db.execSQL(“create index if not exists ia on t1(a,b)”);
-{% endcodeblock %}</p>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db.execSQL(“create table if not exists t1(a,b)”); 
+</span><span class='line'>db.execSQL(“create index if not exists ia on t1(a,b)”);</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>插入10万条数据，分别对表进行如下操作：</p>
 

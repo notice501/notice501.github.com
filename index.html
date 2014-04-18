@@ -6,7 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content=" Published on: Apr 17th, 2014 Tags: vim 今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。 vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了space.vim. 继续阅读 Comments ">
+	<meta name="description" content="Published on: Apr 18th, 2014 Tags: vim 之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。 这个插件就是–wildfire（ &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -127,6 +127,61 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim.html/">
+		
+			每日vim插件&#8211;快速选择文本对象wildfile.vim</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-18T20:06:00+08:00" pubdate data-updated="true">Apr 18<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p>之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。</p>
+
+<p>这个插件就是–<a href="https://github.com/Shougo/wildfire.vim">wildfire</a>（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）</p>
+
+<p>插件默认定义的候选文本对象为：</p>
+
+<pre><code> `i'`, `i"`, `i)`, `i]`, `i}`, `ip` and `it`
+</code></pre>
+
+<p>来一张官方图</p>
+
+
+		
+		<a href="/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim.html/" class="more-link">继续阅读 </a>
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -613,58 +668,6 @@ noremap &lt;leader&gt;yd :Yde&lt;CR&gt;
 <div class="meta">
 
   <span class="comments"><a href="/blog/mei-ri-vimcha-jian-you-dao-fan-yi.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle.html/">
-		
-			每日vim插件&#8211;开篇之vundle</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-01T22:34:00+08:00" pubdate data-updated="true">Apr 1<span>st</span>, 2014</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</div>
-    </div>
-		<p>一直想写一篇博客介绍我的vim配置和插件，但是这篇博客却难产了快半年……
-工作太忙，写博客变成了奢侈的事情。那何不每天写一点点呢？于是决定每天介绍一个vim插件或者一个技巧。</p>
-
-<p>大致看了一下自己的<a href="https://github.com/notice501/dotfiles">vim配置</a>，竟然都快有100个插件之多了……</p>
-
-<p>但是我从来都没有感觉到插件管理有多麻烦，我可以经常更新，删除和安装想用的插件。所以第一个介绍的插件必须是用来管理插件的神器–<a href="https://github.com/gmarik/Vundle.vim">Vundle</a></p>
-
-<p>在使用vundle之前，我使用Pathogen与git submodule来管理Vim插件，而vundle更为强大，不需要再手动操作git了。Vundle会自动去对应的插件git库获取最新的插件。
-
-		
-		<a href="/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-kai-pian-zhi-vundle.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>

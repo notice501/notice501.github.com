@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-18T16:44:42+08:00</updated>
+  <updated>2014-04-18T20:36:29+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--快速选择文本对象wildfile.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim.html/"/>
+    <updated>2014-04-18T20:06:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim</id>
+    <content type="html"><![CDATA[<p>之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。</p>
+
+<p>这个插件就是–<a href="https://github.com/Shougo/wildfire.vim">wildfire</a>（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）</p>
+
+<p>插件默认定义的候选文本对象为：</p>
+
+<pre><code> `i'`, `i"`, `i)`, `i]`, `i}`, `ip` and `it`
+</code></pre>
+
+<p>来一张官方图</p>
+
+<!--more-->
+
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efk07xfk7kg20jv087myy.gif" alt="" /></p>
+
+<p>有图应该大家能理解这个插件的作用了。</p>
+
+<p>使用方式也非常简单，按<code>enter</code>选择最近一个文本对象，再按下<code>enter</code>在刚刚的选择之上再选择最近的文本对象。按下<code>&lt;BS&gt;</code>就能回退到上一个选择。</p>
+
+<p>当然，你可以自定义快捷键：</p>
+
+<p>```vim
+“ This selects the next closest text object.
+let g:wildfire_fuel_map = “<enter>"</enter></p>
+
+<p>” This selects the previous closest text object.
+let g:wildfire_water_map = “<bs>"
+```</bs></p>
+
+<p>候选的文本对象也是可以配置的：</p>
+
+<p><code>vim
+let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
+</code></p>
+
+<p>插件还支持对文件类型分别定义，比如要在html中只处理tag，忽略其他文本对象，只需要配置：</p>
+
+<p><code>vim
+" use '*' to mean 'all other filetypes'
+" in this example, html and xml share the same text objects
+let g:wildfire_objects = {
+    \ "*" : ["i'", 'i"', "i)", "i]", "i}", "ip"],
+    \ "html,xml" : ["at"],
+\ }
+</code></p>
+
+<p>与之类似的一个用的相当广泛的插件还有<a href="https://github.com/terryma/vim-expand-region">vim-expand-region</a>。大家可以自己选择。有问题欢迎留言或回复交流。也希望大家推荐自己在用，自己写的插件给我。今天看到一个朋友微信回复我的一个他自己写的插件，我已经立刻用上了，卖个关子，下次介绍。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--可以重复motion的space.vim]]></title>
@@ -572,60 +628,6 @@ endtry
 <p>而右括号则不留空格，也是非常好用，看编码风格使用。</p>
 
 <p>今天就介绍到这里，欢迎关注我的公众账号，最新的文章都会第一时间推送到。有问题可以直接回复。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每日vim插件--缩进显示vim-indent-guides]]></title>
-    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/"/>
-    <updated>2014-04-11T17:49:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides</id>
-    <content type="html"><![CDATA[<p>今天有朋友留言问昨天晒配色的图中缩进用的什么插件，那今天就介绍这个缩进插件——<a href="https://github.com/nathanaelkane/vim-indent-guides">vim-indent-guides</a></p>
-
-<p>选择这个插件主要有几个理由：</p>
-
-<ol>
-  <li>插件对tab和空格的支持都很好。</li>
-  <li>比较美观。</li>
-  <li>能够自动适配当前使用的colorscheme来选择缩进颜色（只能是gvim，macvim下适配的不错）</li>
-</ol>
-
-<!--more-->
-<p>默认的快捷键是<code>&lt;Leader&gt;ig</code>,开关插件。我一般都默认启动就开启,只要设置：</p>
-
-<p><code>vim
-let g:indent_guides_enable_on_vim_startup = 1
-</code></p>
-
-<p>前面说了缩进的颜色是自动选择的，非常方便，但是想要自定义颜色也是支持的：</p>
-
-<p><code>vim
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-</code></p>
-
-<p>在终端中该插件就不支持颜色自动选择了。只取决于<code>background</code>设置为<code>dark</code>还是<code>light</code>,如果设置了<code>dark</code>,就相当于配置了</p>
-
-<p><code>vim
-hi IndentGuidesOdd  ctermbg=black
-hi IndentGuidesEven ctermbg=darkgrey
-</code>
-来几张图，图上标注了相应的配置：</p>
-
-<p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1efbth8m9aij20cg0cgta5.jpg" alt="" />
-<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtngrerjj20cg0cg3zt.jpg" alt="" />
-<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efbtqa6k47j20cg0cgjsq.jpg" alt="" /></p>
-
-<p>这个插件并不能很好的标记出tab和空格混用的情况，只能显示当前缩进。所以我在我的vimrc中加了一行：
-<code>
-" highlight tabs and trailing spaces
-set list
-set listchars=tab:&gt;-,trail:-,extends:&gt;,precedes:&lt;
-</code>
-这样tab会被显示为&gt;-，而尾部空格被显示为-，这样写出来的代码就不会再有杂乱符号啦。</p>
-
-<p>今天就介绍到这里。我开通了一个微信公众账号，以后每天的文章会通过微信公众账号推送，欢迎关注。</p>
 ]]></content>
   </entry>
   
