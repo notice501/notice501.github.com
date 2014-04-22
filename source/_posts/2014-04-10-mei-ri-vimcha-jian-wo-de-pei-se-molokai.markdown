@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "每天一个vim插件--我的配色 molokai"
+title: "每日vim插件--我的配色 molokai"
 date: 2014-04-10 21:24
 comments: true
 categories: [vim]

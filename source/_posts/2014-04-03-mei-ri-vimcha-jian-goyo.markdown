@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "每天一个vim插件--goyo"
+title: "每日vim插件--goyo"
 date: 2014-04-03 21:50
 comments: true
 categories: [vim]

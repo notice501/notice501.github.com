@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "每天一个vim插件--开篇之vundle"
+title: "每日vim插件--开篇之vundle"
 date: 2014-04-01 22:34
 comments: true
 categories: [vim]

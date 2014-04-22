@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "每天一个vim插件--vim-multiple-cursors"
+title: "每日vim插件--vim-multiple-cursors"
 date: 2014-04-09 22:19
 comments: true
 categories: [vim]

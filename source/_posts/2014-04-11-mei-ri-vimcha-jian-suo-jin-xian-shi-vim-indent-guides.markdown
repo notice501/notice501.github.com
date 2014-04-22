@@ -13,6 +13,7 @@ categories: [vim]
 2. 比较美观。
 3. 能够自动适配当前使用的colorscheme来选择缩进颜色（只能是gvim，macvim下适配的不错）
 
+<!--more-->
 默认的快捷键是`<Leader>ig`,开关插件。我一般都默认启动就开启,只要设置：
 
 ```vim
