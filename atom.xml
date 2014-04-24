@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-24T22:40:27+08:00</updated>
+  <updated>2014-04-24T22:57:12+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -32,6 +32,8 @@
   <li>速度很快。</li>
   <li>最重要的是相对grep是一个文本搜索工具，ack就是一个代码搜索工具。你只会搜索到你的js文件，php文件，而不会搜到一些意外的文件类型。</li>
 </ol>
+
+<!--more-->
 
 <p>再也不用这样输入：</p>
 

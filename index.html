@@ -174,69 +174,9 @@
   <li>最重要的是相对grep是一个文本搜索工具，ack就是一个代码搜索工具。你只会搜索到你的js文件，php文件，而不会搜到一些意外的文件类型。</li>
 </ol>
 
-<p>再也不用这样输入：</p>
-
-<pre><code>grep foo $(find . -name '*.pm' | grep -v .svn)
-</code></pre>
-
-<p>ack的使用很简单，命令输入：</p>
-
-<pre><code>ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
-</code></pre>
-
-<p>如果不输入文件或者文件夹，则默认在当前目录及子目录下搜索。</p>
-
-<p>ack大致有如下几类OPTION，</p>
-
-<ol>
-  <li>搜索选项，例如-i, –ignore-case ，忽略pattern的大小写</li>
-  <li>搜索结果处理选项，例如 -l，只打印有匹配的文件名。</li>
-  <li>搜索输出展现选项，例如–heading，在头部输出匹配文件的文件名</li>
-  <li>文件搜索，是的，他还是find。例如 <code>Ack -f servicemodel</code> 查找servicemodel相匹配的文件。</li>
-  <li>文件过滤。例如 –[no]ignore-dir=name  从待搜索目录中添加或删除目录。</li>
-</ol>
-
-<p>具体的option可以查看ack文档.</p>
-
-<p>这些option都可以直接配置到.ackrc中，作为默认配置。全局的ackrc放置于<code>/etc/ackrc</code>,用户的放在<code>$HOME/.ackrc</code>,仅仅用于某项目的就放在项目根目录中。</p>
-
-<p>ack搜索结果如图所示：</p>
-
-<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efr1w9s9i8j21kw0ghafr.jpg" alt="" /></p>
-
-<p>会打开Quickfix窗口。显示文件名，对于的行列和该行内容。按<code>t</code>可以在新标签打开，按回车直接打开，按v分隔垂直窗口打开等等。和前天介绍的NERD Tree等大多数插件的操作类似。</p>
-
-<h1 id="agvim">ag.vim</h1>
-
-<p>ack的用法就介绍到这里，这里还要介绍的是<a href="https://github.com/ggreer/the_silver_searcher">ag</a>.和ack没什么区别，只是更快。</p>
-
-<p>OS X下安装：</p>
-
-<pre><code>brew install the_silver_searcher
-</code></pre>
-
-<p>在vim中进行配置：</p>
-
-<pre><code>let g:ackprg = 'ag --nogroup --nocolor --column'
-</code></pre>
-
-<p>也可以直接安装<a href="https://github.com/rking/ag.vim">ag.vim</a>.ack 的 Silver Searcher fork版本。</p>
-
-<h1 id="ctrlsfvim">ctrlsf.vim</h1>
-
-<p>作者原图：</p>
-
-<p><img src="https://camo.githubusercontent.com/fae368edf534ce2228eda41418cb55ee68e19c20/687474703a2f2f692e696d6775722e636f6d2f6d6c576a336d7a2e676966" alt="" /></p>
-
-<p>在安装了ack或者ag的基础上再安装该插件即可。正如它的名字，它提供了和sublime text 2中Ctrl-Shift-F 一样的搜索效果。和ack或者ag不同的是，不再是显示一行，而是显示整个上下文。非常好用。</p>
-
-<p>除此之外，可以按下<code>p</code>进行预览，运行<code>:CtrlSFOpen</code>重新打开搜索结果窗口(默认选择后关闭搜索窗口)。这个插件也是来自国内的朋友。</p>
-
-<p>今天就介绍到这。</p>
-
 
 		
-		
+		<a href="/blog/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim.html/" class="more-link">继续阅读 </a>
 	</div>
 
 <div class="meta">
