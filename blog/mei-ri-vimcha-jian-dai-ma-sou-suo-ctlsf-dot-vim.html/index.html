@@ -1,0 +1,293 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>每日vim插件--代码搜索ack.vim/ag/ctlsf.vim - Code Rush</title>
+    <meta name="author" content="foocoder">
+    
+	<meta name="description" content="ack.vim ack.vim。应该是大多数vimer的必装插件。 在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。 ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Code Rush" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34258052-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        foocoder
+    </div>
+</h1>
+<br>
+
+<div id="weixin" >
+  <p>关注我的微信公众账号</p>
+  <img src="http://ww3.sinaimg.cn/large/69d56e38gw1efbhqnrgj2j20760763z1.jpg" alt="">
+</div>
+<script type="text/javascript">
+  (function(window){
+    var check = false;
+    if('DeviceOrientationEvent' in window || 'orientation' in window){
+      check = true;
+    }
+    if (/Windows NT|Macintosh|Mac OS X|Linux/i.test(window.navigator.userAgent)){
+      check = false;
+    }
+    if (/alcatel|android|au-mic|audiovox|avantgo|blackberry|blazer|bolt|cldc-|danger|dream|epoc|ericsson|ericy|htc|ipad|ipaq|iphone|ipod|j2me|kindle|lg-|lge|meego|midp-|mobile|mot|netfront|nintendo|nitro|nokia|opera mini|palm|palmsource|panasonic|philips|playstation|pocketpc|portalmmm|rover|samsung|sanyo|series60|sharp|sie-|smartphone|sony|symbian|teleca|up.browser|up.link|vnd.wap.xhtml+xml|vodafone|wap1|wap2|webos|windows ce|windows phone/i.test(window.navigator.userAgent)){
+      check = true;
+    }
+
+    if(check) {
+      var weixinDiv = document.querySelector("#weixin");
+      weixinDiv.style.display = "none";
+    }
+
+  })(window);
+</script>
+<ul id="social-links" style="text-align:center">
+  <iframe width="200px" height="72px" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1775595064&verifier=34d9820b&dpc=1"></iframe>
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/notice501" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/118277216932640089008?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">主页</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">存档</a></li>
+	<li id="ajax"><a href="/about/">关于</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">每日vim插件--代码搜索ack.vim/ag/ctlsf.vim</h2>
+	<div class="entry-content"><h1 id="ackvim">ack.vim</h1>
+
+<p><a href="https://github.com/petdance/ack">ack.vim</a>。应该是大多数vimer的必装插件。</p>
+
+<p>在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。</p>
+
+<p>ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。为什么用ack而不是直接用grep？ack号称超越了grep。我基本认同。</p>
+
+<ol>
+  <li>ack会显示搜索到的行号列号。</li>
+  <li>会自动忽略.git这样的文件类型。</li>
+  <li>速度很快。</li>
+  <li>最重要的是相对grep是一个文本搜索工具，ack就是一个代码搜索工具。你只会搜索到你的js文件，php文件，而不会搜到一些意外的文件类型。</li>
+</ol>
+
+<p>再也不用这样输入：</p>
+
+<pre><code>grep foo $(find . -name '*.pm' | grep -v .svn)
+</code></pre>
+
+<p>ack的使用很简单，命令输入：</p>
+
+<pre><code>ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
+</code></pre>
+
+<p>如果不输入文件或者文件夹，则默认在当前目录及子目录下搜索。</p>
+
+<p>ack大致有如下几类OPTION，</p>
+
+<ol>
+  <li>搜索选项，例如-i, –ignore-case ，忽略pattern的大小写</li>
+  <li>搜索结果处理选项，例如 -l，只打印有匹配的文件名。</li>
+  <li>搜索输出展现选项，例如–heading，在头部输出匹配文件的文件名</li>
+  <li>文件搜索，是的，他还是find。例如 <code>Ack -f servicemodel</code> 查找servicemodel相匹配的文件。</li>
+  <li>文件过滤。例如 –[no]ignore-dir=name  从待搜索目录中添加或删除目录。</li>
+</ol>
+
+<p>具体的option可以查看ack文档.</p>
+
+<p>这些option都可以直接配置到.ackrc中，作为默认配置。全局的ackrc放置于<code>/etc/ackrc</code>,用户的放在<code>$HOME/.ackrc</code>,仅仅用于某项目的就放在项目根目录中。</p>
+
+<p>ack搜索结果如图所示：</p>
+
+<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efr1w9s9i8j21kw0ghafr.jpg" alt="" /></p>
+
+<p>会打开Quickfix窗口。显示文件名，对于的行列和该行内容。按<code>t</code>可以在新标签打开，按回车直接打开，按v分隔垂直窗口打开等等。和前天介绍的NERD Tree等大多数插件的操作类似。</p>
+
+<h1 id="agvim">ag.vim</h1>
+
+<p>ack的用法就介绍到这里，这里还要介绍的是<a href="https://github.com/ggreer/the_silver_searcher">ag</a>.和ack没什么区别，只是更快。</p>
+
+<p>OS X下安装：</p>
+
+<pre><code>brew install the_silver_searcher
+</code></pre>
+
+<p>在vim中进行配置：</p>
+
+<pre><code>let g:ackprg = 'ag --nogroup --nocolor --column'
+</code></pre>
+
+<p>也可以直接安装<a href="https://github.com/rking/ag.vim">ag.vim</a>.ack 的 Silver Searcher fork版本。</p>
+
+<h1 id="ctrlsfvim">ctrlsf.vim</h1>
+
+<p>作者原图：</p>
+
+<p><img src="https://camo.githubusercontent.com/fae368edf534ce2228eda41418cb55ee68e19c20/687474703a2f2f692e696d6775722e636f6d2f6d6c576a336d7a2e676966" alt="" /></p>
+
+<p>在安装了ack或者ag的基础上再安装该插件即可。正如它的名字，它提供了和sublime text 2中Ctrl-Shift-F 一样的搜索效果。和ack或者ag不同的是，不再是显示一行，而是显示整个上下文。非常好用。</p>
+
+<p>除此之外，可以按下<code>p</code>进行预览，运行<code>:CtrlSFOpen</code>重新打开搜索结果窗口(默认选择后关闭搜索窗口)。这个插件也是来自国内的朋友。</p>
+
+<p>今天就介绍到这。</p>
+
+</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim.html/#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r2.gif&amp;uid=1341920728041342" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    foocoder
+
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'notice501';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim.html/';
+        var disqus_url = 'http://notice501.github.com/blog/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim.html/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

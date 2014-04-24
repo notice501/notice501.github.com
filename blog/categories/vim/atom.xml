@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-23T22:07:48+08:00</updated>
+  <updated>2014-04-24T22:40:27+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--代码搜索ack.vim/ag/ctlsf.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim.html/"/>
+    <updated>2014-04-24T19:11:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim</id>
+    <content type="html"><![CDATA[<h1 id="ackvim">ack.vim</h1>
+
+<p><a href="https://github.com/petdance/ack">ack.vim</a>。应该是大多数vimer的必装插件。</p>
+
+<p>在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。</p>
+
+<p>ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。为什么用ack而不是直接用grep？ack号称超越了grep。我基本认同。</p>
+
+<ol>
+  <li>ack会显示搜索到的行号列号。</li>
+  <li>会自动忽略.git这样的文件类型。</li>
+  <li>速度很快。</li>
+  <li>最重要的是相对grep是一个文本搜索工具，ack就是一个代码搜索工具。你只会搜索到你的js文件，php文件，而不会搜到一些意外的文件类型。</li>
+</ol>
+
+<p>再也不用这样输入：</p>
+
+<pre><code>grep foo $(find . -name '*.pm' | grep -v .svn)
+</code></pre>
+
+<p>ack的使用很简单，命令输入：</p>
+
+<pre><code>ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
+</code></pre>
+
+<p>如果不输入文件或者文件夹，则默认在当前目录及子目录下搜索。</p>
+
+<p>ack大致有如下几类OPTION，</p>
+
+<ol>
+  <li>搜索选项，例如-i, –ignore-case ，忽略pattern的大小写</li>
+  <li>搜索结果处理选项，例如 -l，只打印有匹配的文件名。</li>
+  <li>搜索输出展现选项，例如–heading，在头部输出匹配文件的文件名</li>
+  <li>文件搜索，是的，他还是find。例如 <code>Ack -f servicemodel</code> 查找servicemodel相匹配的文件。</li>
+  <li>文件过滤。例如 –[no]ignore-dir=name  从待搜索目录中添加或删除目录。</li>
+</ol>
+
+<p>具体的option可以查看ack文档.</p>
+
+<p>这些option都可以直接配置到.ackrc中，作为默认配置。全局的ackrc放置于<code>/etc/ackrc</code>,用户的放在<code>$HOME/.ackrc</code>,仅仅用于某项目的就放在项目根目录中。</p>
+
+<p>ack搜索结果如图所示：</p>
+
+<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efr1w9s9i8j21kw0ghafr.jpg" alt="" /></p>
+
+<p>会打开Quickfix窗口。显示文件名，对于的行列和该行内容。按<code>t</code>可以在新标签打开，按回车直接打开，按v分隔垂直窗口打开等等。和前天介绍的NERD Tree等大多数插件的操作类似。</p>
+
+<h1 id="agvim">ag.vim</h1>
+
+<p>ack的用法就介绍到这里，这里还要介绍的是<a href="https://github.com/ggreer/the_silver_searcher">ag</a>.和ack没什么区别，只是更快。</p>
+
+<p>OS X下安装：</p>
+
+<pre><code>brew install the_silver_searcher
+</code></pre>
+
+<p>在vim中进行配置：</p>
+
+<pre><code>let g:ackprg = 'ag --nogroup --nocolor --column'
+</code></pre>
+
+<p>也可以直接安装<a href="https://github.com/rking/ag.vim">ag.vim</a>.ack 的 Silver Searcher fork版本。</p>
+
+<h1 id="ctrlsfvim">ctrlsf.vim</h1>
+
+<p>作者原图：</p>
+
+<p><img src="https://camo.githubusercontent.com/fae368edf534ce2228eda41418cb55ee68e19c20/687474703a2f2f692e696d6775722e636f6d2f6d6c576a336d7a2e676966" alt="" /></p>
+
+<p>在安装了ack或者ag的基础上再安装该插件即可。正如它的名字，它提供了和sublime text 2中Ctrl-Shift-F 一样的搜索效果。和ack或者ag不同的是，不再是显示一行，而是显示整个上下文。非常好用。</p>
+
+<p>除此之外，可以按下<code>p</code>进行预览，运行<code>:CtrlSFOpen</code>重新打开搜索结果窗口(默认选择后关闭搜索窗口)。这个插件也是来自国内的朋友。</p>
+
+<p>今天就介绍到这。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--命令行补全cmdline-completion]]></title>
@@ -465,50 +548,6 @@ Character movements:                                    |left-right-motions|
 ```</p>
 
 <p>今天解介绍到这里。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每日vim插件--vim 撤销树Gundo.vim]]></title>
-    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/"/>
-    <updated>2014-04-15T21:10:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim</id>
-    <content type="html"><![CDATA[<p>今天介绍的插件很有意思，也非常有用，也是我最常用的插件之一——<a href="https://github.com/sjl/gundo.vim">Gundo</a>.</p>
-
-<p>大家都知道按<code>u</code>可以撤销操作，但是一般都不知道输入命令<code>:undolist</code>会显示可撤销列表，如图</p>
-
-<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efglaef02lj20ki13qthg.jpg" style="     height: 600px; " /> </p>
-
-<p>其实这还不是列表，而是整个vim 撤销树的叶子。为什么说是树，而不是列表，举个例子就明白了：</p>
-
-<!--more-->
-
-<p>你在a状态做了一次修改到b，又回退到a，再做了一次修改到c。大多数编辑器比如sublime text，b这个状态就没了，但是vim会用一个树进行保存。</p>
-
-<p>而Gundo这个插件就是一个撤销树浏览器.直接上张图：</p>
-
-<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efgmev2lz4j20ok1ci78i.jpg" style="     height: 600px; " /></p>
-
-<p>当前位置以<code>@</code>标注，其他历史以o标注。</p>
-
-<p>按jk上下移动，就可以在下面的窗口看到对应修改之前的改动。这个就是普通的vim窗口，所有的移动操作都是支持的，比如<code>G</code>到底部，<code>C-U</code>上翻页等。</p>
-
-<p>按<code>p</code>可以查看选中状态和当前状态的差异，按回车就会回到选中状态，按<code>P</code>更是可以一步步播放到选中状态，高上大啊……</p>
-
-<p>btw,我习惯将所有的undo记录都保存下来，即使关闭了vim或者buffer也能继续撤销。</p>
-
-<p>只需要稍加配置，就能将撤销树持久化存储下来：</p>
-
-<p><code>vim
-try
-    set undodir=~/.vim/temp_dirs/undodir
-    set undofile
-catch
-endtry
-</code></p>
-
-<p>今天就介绍到这里。有问题直接回复给我。</p>
-
 ]]></content>
   </entry>
   
