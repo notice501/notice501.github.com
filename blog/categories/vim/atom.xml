@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-24T22:57:12+08:00</updated>
+  <updated>2014-04-25T22:01:06+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--Gist.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-gist-dot-vim.html/"/>
+    <updated>2014-04-25T19:58:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-gist-dot-vim</id>
+    <content type="html"><![CDATA[<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efs6kvu5zpj20m80go3z0.jpg" alt="" />
+今天介绍的插件<a href="https://github.com/mattn/gist-vim">Gist.vim</a>能够在vim中方便的创建和查看gist。</p>
+
+<p>gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看<a href="http://www.worldhello.net/gotgithub/06-side-projects/gist.html">这个教程</a></p>
+
+<p>要使用这个插件需要安装ygie依赖插件：</p>
+
+<p><code>vim
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+</code></p>
+
+<p>确保在git的global配置中设置的是github用户名：</p>
+
+<pre><code>$ git config --global github.user &lt;username&gt;
+</code></pre>
+
+<p>该插件在首次使用时会需要你输入github密码来获取token，并将其保存在<code>~/.gist-vim</code>.</p>
+
+<!--more-->
+
+<p>使用非常的简单，输入命令</p>
+
+<p><code>
+:Gist
+</code></p>
+
+<p>就会将该整个文件创建一个Gist，创建成功后会显示Gist地址，如图：
+<img src="http://ww3.sinaimg.cn/large/69d56e38gw1efs60clnedj20my040gm2.jpg" alt="" /></p>
+
+<p>也可以选中一段代码创建Gist：</p>
+
+<p><code>
+ :'&lt;,'&gt;Gist
+</code></p>
+
+<p>还提供了一些参数</p>
+
+<p>例如<code>-a</code>,表示匿名创建，<code>-p</code>创建pravite 的gist，<code>-P</code>创建public的gist。<code>-m</code>为所有打开的buffer创建Gist。</p>
+
+<p>除此之外，还可以编辑Gist(已打开了一个gist buffer的情况下)</p>
+
+<p><code>
+:Gist -e
+</code>
+加上描述</p>
+
+<p><code>
+:Gist -s something
+</code></p>
+
+<p>删除：</p>
+
+<p><code>
+:Gist -d
+</code></p>
+
+<p>fork:</p>
+
+<p><code>
+:Gist -f
+</code></p>
+
+<p>star:</p>
+
+<p><code>
+:Gist +1
+</code></p>
+
+<p>unstar:</p>
+
+<p><code>
+:Gist -1
+</code></p>
+
+<p>还可以直接取得Gist：</p>
+
+<p><code>
+:Gist XXXXX
+</code></p>
+
+<p>一般你不记得gist号码，没关系，还可以列出所有的Gist,</p>
+
+<p><code>
+:Gist -l
+</code></p>
+
+<p>这样会打开一个新的分隔窗口显示你已有的gist列表，按回车就可以直接去取这个gist并在vim中查看了。</p>
+
+<p>还提供了一些非常有用的配置，比如：</p>
+
+<p>如果你想要在创建了gist后立刻打开浏览器查看：</p>
+
+<p><code>vim
+let g:gist_open_browser_after_post = 1
+</code></p>
+
+<p>如果想要默认创建的gist不是public而是private：</p>
+
+<p><code>vim
+let g:gist_post_private = 1
+</code></p>
+
+<p>有了这个插件，玩转gist是不是非常easy啦。这个插件唯一的不足在于在创建gist或者请求gist时会阻塞界面，这个有点糟糕。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--代码搜索ack.vim/ag/ctlsf.vim]]></title>
@@ -218,338 +330,6 @@ let g:wildfire_objects = {
 
 <p>与之类似的一个用的相当广泛的插件还有<a href="https://github.com/terryma/vim-expand-region">vim-expand-region</a>。大家可以自己选择。有问题欢迎留言或回复交流。也希望大家推荐自己在用，自己写的插件给我。今天看到一个朋友微信回复我的一个他自己写的插件，我已经立刻用上了，卖个关子，下次介绍。</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每日vim插件--可以重复motion的space.vim]]></title>
-    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html/"/>
-    <updated>2014-04-17T21:10:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim</id>
-    <content type="html"><![CDATA[<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efiwusn0uhj20m80godg5.jpg" style="height: 400px;" /></p>
-
-<p>今天头疼的厉害。不过昨天没更新，今天必须有了。介绍个简单点的。</p>
-
-<p>vim中在普通模式下，空格这么大一按键不用有点浪费，所以有了<a href="https://github.com/spiiph/vim-space">space.vim</a>.</p>
-
-<!--more-->
-
-<p>他能重复执行motion，比如</p>
-
-<pre><code>*Hello World
-</code></pre>
-
-<p>按下<code>fo</code>,会将光标移动到第一个o上，再按下空格，就能移动到第二个o了，他会重复执行上一个<code>fo</code>。按下<code>&lt;Shift-Space&gt;</code>反向执行改操作，也就是光标又会回到第一个<code>o</code>.</p>
-
-<p>除此之外，space.vim还能重复搜索命令，diff移动命令，qucikfix等操作。让空格键变的非常有用.下面是space.vim可以重复的全部命令列表：</p>
-
-<p>```
-Character movements:                                    |left-right-motions|
-    |f| |F| |t| |T| |;| |,|</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Search commands:</td>
-      <td>search-commands</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>star</td>
-      <td> </td>
-      <td>gstar</td>
-      <td> </td>
-      <td>#</td>
-      <td> </td>
-      <td>g#</td>
-      <td> </td>
-      <td>n</td>
-      <td> </td>
-      <td>N</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Jump list jumps:</td>
-      <td>jump-motions</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>CTRL-O</td>
-      <td> </td>
-      <td>CTRL-I</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Change list jumps:</td>
-      <td>change-list-jumps</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>g;</td>
-      <td> </td>
-      <td>g,</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Diff jumps:</td>
-      <td>jumpto-diffs</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>]c</td>
-      <td> </td>
-      <td>[c</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Parenthesis and bracket jumps:</td>
-      <td>various-motions</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>])</td>
-      <td> </td>
-      <td>[(</td>
-      <td> </td>
-      <td>]}</td>
-      <td> </td>
-      <td>[{</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Method jumps:</td>
-      <td>various-motions</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>]m</td>
-      <td> </td>
-      <td>[m</td>
-      <td> </td>
-      <td>]M</td>
-      <td> </td>
-      <td>[M</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Section jumps:</td>
-      <td>object-motions</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>]]</td>
-      <td> </td>
-      <td>[]</td>
-      <td> </td>
-      <td>][</td>
-      <td> </td>
-      <td>[[</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Fold movements:
-    |zj| |zk| |]z| |[z|</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Tag movements:</td>
-      <td>tag-commands</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>CTRL-]</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:tag</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:tnext</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:tprevious</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:tNext</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:trewind</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:tfirst</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:tlast</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Undolist movements:</td>
-      <td>undo-branches</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>g-</td>
-      <td> </td>
-      <td>g+</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Quickfix commands:</td>
-      <td>quickfix</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:make</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:vimgrep</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:grep</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cc</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cnext</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cprevious</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cNext</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cfirst</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:clast</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:crewind</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cfile</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cnfile</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cpfile</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>:cNfile</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Location list commands:                                      |location-list|
-    |:lmake|
-    |:lvimgrep|
-    |:lgrep|
-    |:ll|
-    |:lcnext|
-    |:lcprevious|
-    |:lcNext|
-    |:lcfirst|
-    |:lclast|
-    |:lcrewind|
-    |:lcfile|
-    |:lcnfile|
-    |:lcpfile|
-    |:lcNfile|
-```</p>
-
-<p>今天解介绍到这里。</p>
 ]]></content>
   </entry>
   

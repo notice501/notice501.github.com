@@ -6,7 +6,8 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 24th, 2014 Tags: vim ack.vim ack.vim。应该是大多数vimer的必装插件。 在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。 &hellip;">
+	<meta name="description" content="Published on: Apr 25th, 2014 Tags: vim 今天介绍的插件Gist.vim能够在vim中方便的创建和查看gist。 gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看这个教程 要使用这个插件需要安装ygie依赖插件： 1
+2 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -127,6 +128,70 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mei-ri-vimcha-jian-gist-dot-vim.html/">
+		
+			每日vim插件&#8211;Gist.vim</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-25T19:58:00+08:00" pubdate data-updated="true">Apr 25<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+    </div>
+		<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efs6kvu5zpj20m80go3z0.jpg" alt="" />
+今天介绍的插件<a href="https://github.com/mattn/gist-vim">Gist.vim</a>能够在vim中方便的创建和查看gist。</p>
+
+<p>gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看<a href="http://www.worldhello.net/gotgithub/06-side-projects/gist.html">这个教程</a></p>
+
+<p>要使用这个插件需要安装ygie依赖插件：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line">Bundle <span class="s1">&#39;mattn/webapi-vim&#39;</span>
+</span><span class="line">Bundle <span class="s1">&#39;mattn/gist-vim&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>确保在git的global配置中设置的是github用户名：</p>
+
+<pre><code>$ git config --global github.user &lt;username&gt;
+</code></pre>
+
+<p>该插件在首次使用时会需要你输入github密码来获取token，并将其保存在<code>~/.gist-vim</code>.</p>
+
+
+		
+		<a href="/blog/mei-ri-vimcha-jian-gist-dot-vim.html/" class="more-link">继续阅读 </a>
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-gist-dot-vim.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -611,60 +676,6 @@
 <div class="meta">
 
   <span class="comments"><a href="/blog/mei-ri-vimcha-jian-surround-dot-vim.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/">
-		
-			每日vim插件&#8211;缩进显示vim-indent-guides</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-11T17:49:00+08:00" pubdate data-updated="true">Apr 11<span>th</span>, 2014</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</div>
-    </div>
-		<p>今天有朋友留言问昨天晒配色的图中缩进用的什么插件，那今天就介绍这个缩进插件——<a href="https://github.com/nathanaelkane/vim-indent-guides">vim-indent-guides</a></p>
-
-<p>选择这个插件主要有几个理由：</p>
-
-<ol>
-  <li>插件对tab和空格的支持都很好。</li>
-  <li>比较美观。</li>
-  <li>能够自动适配当前使用的colorscheme来选择缩进颜色（只能是gvim，macvim下适配的不错）</li>
-</ol>
-
-
-		
-		<a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-suo-jin-xian-shi-vim-indent-guides.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>

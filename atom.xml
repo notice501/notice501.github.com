@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-24T22:57:12+08:00</updated>
+  <updated>2014-04-25T22:01:06+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--Gist.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-gist-dot-vim.html/"/>
+    <updated>2014-04-25T19:58:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-gist-dot-vim</id>
+    <content type="html"><![CDATA[<p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efs6kvu5zpj20m80go3z0.jpg" alt="" />
+今天介绍的插件<a href="https://github.com/mattn/gist-vim">Gist.vim</a>能够在vim中方便的创建和查看gist。</p>
+
+<p>gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看<a href="http://www.worldhello.net/gotgithub/06-side-projects/gist.html">这个教程</a></p>
+
+<p>要使用这个插件需要安装ygie依赖插件：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line">Bundle <span class="s1">&#39;mattn/webapi-vim&#39;</span>
+</span><span class="line">Bundle <span class="s1">&#39;mattn/gist-vim&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>确保在git的global配置中设置的是github用户名：</p>
+
+<pre><code>$ git config --global github.user &lt;username&gt;
+</code></pre>
+
+<p>该插件在首次使用时会需要你输入github密码来获取token，并将其保存在<code>~/.gist-vim</code>.</p>
+
+<!--more-->
+
+<p>使用非常的简单，输入命令</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>就会将该整个文件创建一个Gist，创建成功后会显示Gist地址，如图：
+<img src="http://ww3.sinaimg.cn/large/69d56e38gw1efs60clnedj20my040gm2.jpg" alt="" /></p>
+
+<p>也可以选中一段代码创建Gist：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"> :<span class="s1">&#39;&lt;,&#39;</span><span class="p">&gt;</span>Gist
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>还提供了一些参数</p>
+
+<p>例如<code>-a</code>,表示匿名创建，<code>-p</code>创建pravite 的gist，<code>-P</code>创建public的gist。<code>-m</code>为所有打开的buffer创建Gist。</p>
+
+<p>除此之外，还可以编辑Gist(已打开了一个gist buffer的情况下)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="p">-</span><span class="k">e</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>加上描述</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="p">-</span><span class="k">s</span> something
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>删除：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="p">-</span><span class="k">d</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>fork:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="p">-</span><span class="k">f</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>star:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="p">+</span><span class="m">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>unstar:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="m">-1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>还可以直接取得Gist：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist XXXXX
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>一般你不记得gist号码，没关系，还可以列出所有的Gist,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span>Gist <span class="p">-</span><span class="k">l</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这样会打开一个新的分隔窗口显示你已有的gist列表，按回车就可以直接去取这个gist并在vim中查看了。</p>
+
+<p>还提供了一些非常有用的配置，比如：</p>
+
+<p>如果你想要在创建了gist后立刻打开浏览器查看：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:gist_open_browser_after_post <span class="p">=</span> <span class="m">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果想要默认创建的gist不是public而是private：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="k">let</span> <span class="k">g</span>:gist_post_private <span class="p">=</span> <span class="m">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>有了这个插件，玩转gist是不是非常easy啦。这个插件唯一的不足在于在创建gist或者请求gist时会阻塞界面，这个有点糟糕。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--代码搜索ack.vim/ag/ctlsf.vim]]></title>
@@ -1561,77 +1674,6 @@ Plugin 'file///path/from/root/to/plugin'
 </pre></td><td class="code"><pre><code class=""><span class="line">brew install autojump</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>有问题和分享欢迎留言交流。也欢迎关注我的<a href="http://weibo.com/notice520">微博</a>。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我在用的mac软件(1)--终端环境之iTerm2]]></title>
-    <link href="http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian.html/"/>
-    <updated>2013-07-14T20:42:00+08:00</updated>
-    <id>http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian</id>
-    <content type="html"><![CDATA[<p>之前一直有朋友要我分享下在用的mac软件，今天有空就来写一下，可能不止于软件，会有一些配置或者工具，或者叫环境更合适。有些可能一句话带过，有些会详细介绍。也不分类了，想到哪个就写出来。如果已经写的足够长了，就会分几篇来写。</p>
-
-<h3 id="iterm2zshtmux">iTerm2+zsh+tmux的终端环境</h3>
-
-<h5 id="iterm2">iTerm2</h5>
-
-<p>其实现在os x的terminal已经做的很好了，但是iTerm2的功能依然要更强大一些。简述下优点和常用功能：</p>
-
-<ul>
-  <li>
-    <p>开源免费。 </p>
-  </li>
-  <li>兼容性比默认Terminal更好。
-    <ul>
-      <li>对于经常要远程使用的情况下，默认的Terminal在使用vi时经常出现不兼容的问题，而iTerm2在这方面显然做的更好。</li>
-    </ul>
-  </li>
-  <li>快捷键丰富。
-    <ul>
-      <li><code>⌘ + 数字</code>:  切换标签页。 <code>⌘ + 方向键</code> 按方向切换标签页。</li>
-      <li><code>⌘ + enter</code>: 切换全屏
-<!--more--></li>
-      <li><code>⌘ + f</code>: 查找。支持正则。其中查找的内容会被自动复制。省去了再去⌘+c的步骤。同样，鼠标去选中的内容也会自动复制，也可以鼠标中键直接粘贴。一般在使用时，键入搜索关键词，然后用<code>shift-tab</code>或者<code>tab</code>左右自动补全，<code>option + enter</code>则自动将搜索结果键入，并且复制到剪贴板。</li>
-      <li><code>⌘ + d</code>: 垂直分屏，<code>⌘ + shift + d</code>: 水平分屏。使用<code>⌘ + ]</code>和<code>⌘ + [</code>在最近使用的分屏直接切换.而<code>⌘ + opt + 方向键</code>切换到指定位置的分屏。</li>
-      <li><code>⌘ + t</code> :新的标签页</li>
-      <li><code>⌘ + w</code> :关闭当前标签页</li>
-      <li><code>⌘ + ；</code>:自动补全历史命令。如图:<img src="http://foocoder.com/images/mac/autocom.png" alt="自动补全" /></li>
-      <li><code>⌘ + shift + h</code>: 剪贴板历史，如图：<img src="http://foocoder.com/images/mac/history.png" alt="剪贴板历史" /></li>
-      <li><code>ctrl + u</code>: 清空当前行。这里要注意，mac默认的ctrl+u为清楚当前光标至行首的内容，在iTerm2中则直接清除本行。iTerm2 也支持其他常用的操作命令，这里顺带讲下，因为这些命令都是mac下非常常用也很好用的：
-        <ul>
-          <li><code>ctrl + a</code>: 到行首	</li>
-          <li><code>ctrl + e</code>: 行末</li>
-          <li><code>ctrl + f/b</code>: 前进后退，相当于左右方向键，但是显然比移开手按方向键更快 		</li>
-          <li><code>ctrl + p</code>: 上一条命令，相当于方向键上</li>
-          <li><code>ctrl + r</code>: 搜索命令历史，这个大家都应该很熟悉了</li>
-          <li><code>ctrl + d</code>: 删除当前字符</li>
-          <li><code>ctrl + h</code>: 删除之前的字符</li>
-          <li><code>ctrl + w</code>: 删除光标前的单词</li>
-          <li><code>ctrl + k</code>: 删除到文本末尾</li>
-          <li><code>ctrl + t</code>: 交换光标处文本</li>
-        </ul>
-      </li>
-      <li><code>⌘ + —/+/0</code>: 调整字体大小</li>
-      <li><code>⌘ + r</code>:清屏，其实是滚到新的一屏，并没有清空。ctrl + l 也可以做到。</li>
-    </ul>
-  </li>
-  <li>更多实用功能。
-    <ul>
-      <li>Exposé 标签 按<code>⌘ + opt + e </code>打开Exposé，并支持搜索。如图：<img src="http://foocoder.com/images/mac/expose.png" alt="Exposé" /></li>
-      <li>全局呼出快捷键。如图：
-<img src="http://foocoder.com/images/mac/hotkeys.png" alt="呼出快捷键" /></li>
-      <li><code>⌘ + /</code>: 找到当前光标位置，有时会很有用。</li>
-      <li><code>shift + ⌘ + s</code>: 保存当前窗口快照。</li>
-      <li><code>⌘ + opt + b</code>: 快照回放。很有意思的功能，你可以对你的操作根据时间轴进行回放。可以拖动下方的时间轴，也可以按左右方向键。如图：<img src="http://foocoder.com/images/mac/replay.png" alt="快照回放" /></li>
-    </ul>
-  </li>
-  <li>支持256色。方便配置vi配色。但是在某些远超服务器上不支持256色，则只要在Prefences-&gt;Profiles-&gt;Terminal里设置为xterm。</li>
-</ul>
-
-<hr />
-
-<p>光写个iTerm2没想到就写了这么多，稍微打了下腹稿，后面zsh + tmux 肯定比这里还要多。下篇继续吧。</p>
 
 ]]></content>
   </entry>
