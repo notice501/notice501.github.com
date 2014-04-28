@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-25T22:01:06+08:00</updated>
+  <updated>2014-04-28T21:49:12+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,164 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--强大的自动补全neocomplete.vim和supertab]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim.html/"/>
+    <updated>2014-04-28T21:02:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim</id>
+    <content type="html"><![CDATA[<h2 id="neocompletevim">neocomplete.vim</h2>
+
+<p>今天介绍两个个必备的vim插件，自动补全插件——<a href="https://github.com/Shougo/neocomplete.vim">neocomplete.vim</a>和superTab。</p>
+
+<p>neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。</p>
+
+<p>该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要<a href="http://vimdoc.sourceforge.net/htmldoc/if_lua.html">if_lua</a>的支持。</p>
+
+<p>mac下安装：</p>
+
+<pre><code>brew install macvim --with-cscope --with-lua --HEAD
+</code></pre>
+
+<p>或者不用macvim（真的不用么？赶紧试试吧）：</p>
+
+<pre><code>brew install vim --with-lua
+</code></pre>
+
+<p>不需要过多的介绍,看作者给的图：</p>
+
+<h3 id="section">文件补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png" alt="Original filename completion." />
+<img src="https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png" alt="Include filename completion." /></p>
+
+<h3 id="omni-">Omni 补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622456/fb2cc0bc-cf42-11e2-94e8-403cdcf5427e.png" alt="Omni completion." /></p>
+
+<h3 id="vimshellhttpgithubcomshougovimshell"><a href="http://github.com/Shougo/vimshell">vimshell</a>补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png" alt="Completion with vimshell(http://github.com/Shougo/vimshell)." /></p>
+
+<h3 id="vim-">Vim 补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png" alt="Vim completion." />
+<img src="https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif" alt="Vim completion with animation." /></p>
+
+<p>作者还给出了推荐配置，每个配置都有对应的英文注释，我就不一一翻译了：</p>
+
+<p>```vim
+“Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+“ Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+“ Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+“ Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+“ Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = ‘*ku*’</p>
+
+<p>” Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ ‘default’ : ‘’,
+    \ ‘vimshell’ : $HOME.’/.vimshell_hist’,
+    \ ‘scheme’ : $HOME.’/.gosh_completions’
+        \ }</p>
+
+<p>” Define keyword.
+if !exists(‘g:neocomplete#keyword_patterns’)
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns[‘default’] = ‘\h\w*’</p>
+
+<p>” Plugin key-mappings.
+inoremap <expr><c-g>     neocomplete#undo_completion()
+inoremap <expr><c-l>     neocomplete#complete_common_string()</c-l></expr></c-g></expr></p>
+
+<p>” Recommended key-mappings.
+“ <cr>: close popup and save indent.
+inoremap <silent> <cr> <c-r>=<sid>my_cr_function()<cr>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<cr>"
+  " For no inserting <cr> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<cr>"
+endfunction
+" <tab>: completion.
+inoremap <expr><tab>  pumvisible() ? "\<c-n>" : "\<tab>"
+" <c-h>, <bs>: close popup and delete backword char.
+inoremap <expr><c-h> neocomplete#smart_close_popup()."\<c-h>"
+inoremap <expr><bs> neocomplete#smart_close_popup()."\<c-h>"
+inoremap <expr><c-y>  neocomplete#close_popup()
+inoremap <expr><c-e>  neocomplete#cancel_popup()
+" Close popup by <space>.
+"inoremap <expr><space> pumvisible() ? neocomplete#close_popup() : "\<space>"</space></space></expr></space></c-e></expr></c-y></expr></c-h></bs></expr></c-h></c-h></expr></bs></c-h></tab></c-n></tab></expr></tab></cr></cr></cr></cr></sid></c-r></cr></silent></cr></p>
+
+<p>” For cursor moving in insert mode(Not recommended)
+“inoremap <expr><left>  neocomplete#close_popup() . "\<left>"
+"inoremap <expr><right> neocomplete#close_popup() . "\<right>"
+"inoremap <expr><up>    neocomplete#close_popup() . "\<up>"
+"inoremap <expr><down>  neocomplete#close_popup() . "\<down>"
+" Or set this.
+"let g:neocomplete#enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplete#enable_insert_char_pre = 1</down></down></expr></up></up></expr></right></right></expr></left></left></expr></p>
+
+<p>” AutoComplPop like behavior.
+“let g:neocomplete#enable_auto_select = 1</p>
+
+<p>” Shell like behavior(not recommended).
+“set completeopt+=longest
+“let g:neocomplete#enable_auto_select = 1
+“let g:neocomplete#disable_auto_complete = 1
+“inoremap <expr><tab>  pumvisible() ? "\<down>" : "\<c-x>\<c-u>"</c-u></c-x></down></tab></expr></p>
+
+<p>” Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags</p>
+
+<p>” Enable heavy omni completion.
+if !exists(‘g:neocomplete#sources#omni#input_patterns’)
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+“let g:neocomplete#sources#omni#input_patterns.php = ‘[^. \t]-&gt;\h\w<em>|\h\w</em>::’
+“let g:neocomplete#sources#omni#input_patterns.c = ‘[^.[:digit:] <em>\t]\%(.|-&gt;)’
+“let g:neocomplete#sources#omni#input_patterns.cpp = ‘[^.[:digit:] *\t]\%(.|-&gt;)|\h\w</em>::’</p>
+
+<p>” For perlomni.vim setting.
+“ https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = ‘\h\w<em>-&gt;\h\w</em>|\h\w*::’
+```</p>
+
+<p>没有特殊需求，直接copy就用即可。没有复杂的配置，用起来还是非常简单的。</p>
+
+<p>还有一个比较出名的补全插件是<a href="https://github.com/Valloric/YouCompleteMe">YouCompleteMe</a>.大家也可以去看下，应该是现在用的最广泛的补全插件了。我很早就试用过，还是neocomplete要更顺手更快些，总感觉neocomplete要更智能些。</p>
+
+<h2 id="supertab">superTab</h2>
+
+<p>说到补全还有个不得不说，那就是tab键，必须用tab来进行补全那才是补全啊。其实neocomplete的推荐配置已经配置成了自动提示补全文字，并且支持tab选择，但是还是无法<code>shift-tab</code>回退选择。superTab就是为增强tab而生，当然可以做到这点。</p>
+
+<p>superTab 和neocomplete一样，几乎不用自己折腾什么配置，也不用过多的介绍，一句话就可以说完它的功能。</p>
+
+<pre><code>bar
+baz
+b*&lt;Tab&gt; (*为光标所在位置) 
+</code></pre>
+
+<p>按示例在光标处按下tab，就会展开推荐补全bar和baz，按tab即可进行循环选择。</p>
+
+<p>可以配置supertab的默认补全类型（对vim补全不了解的同学自己补下omni补全相关知识，需要我介绍可以回复下）：</p>
+
+<pre><code>let g:SuperTabDefaultCompletionType = "&lt;c-x&gt;&lt;c-u&gt;"
+</code></pre>
+
+<p>示例把supertab修改为了用户补全，默认是<code>&lt;c-p&gt;</code>.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--Gist.vim]]></title>
@@ -273,62 +431,6 @@ let g:gist_post_private = 1
 <p>同时还支持和gitgutter一样的快捷键在各个有状态的文件之间跳转<code>[c</code>,<code>]c</code>.我只能说太棒了，再次感谢@Xuyuanp。</p>
 
 <p>今天就介绍到这里，任何问题都可以直接回复。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每日vim插件--快速选择文本对象wildfile.vim]]></title>
-    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim.html/"/>
-    <updated>2014-04-18T20:06:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim</id>
-    <content type="html"><![CDATA[<p>之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。</p>
-
-<p>这个插件就是–<a href="https://github.com/Shougo/wildfire.vim">wildfire</a>（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）</p>
-
-<p>插件默认定义的候选文本对象为：</p>
-
-<pre><code> `i'`, `i"`, `i)`, `i]`, `i}`, `ip` and `it`
-</code></pre>
-
-<p>来一张官方图</p>
-
-<!--more-->
-
-<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efk07xfk7kg20jv087myy.gif" alt="" /></p>
-
-<p>有图应该大家能理解这个插件的作用了。</p>
-
-<p>使用方式也非常简单，按<code>enter</code>选择最近一个文本对象，再按下<code>enter</code>在刚刚的选择之上再选择最近的文本对象。按下<code>&lt;BS&gt;</code>就能回退到上一个选择。</p>
-
-<p>当然，你可以自定义快捷键：</p>
-
-<p>```vim
-“ This selects the next closest text object.
-let g:wildfire_fuel_map = “<enter>"</enter></p>
-
-<p>” This selects the previous closest text object.
-let g:wildfire_water_map = “<bs>"
-```</bs></p>
-
-<p>候选的文本对象也是可以配置的：</p>
-
-<p><code>vim
-let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
-</code></p>
-
-<p>插件还支持对文件类型分别定义，比如要在html中只处理tag，忽略其他文本对象，只需要配置：</p>
-
-<p><code>vim
-" use '*' to mean 'all other filetypes'
-" in this example, html and xml share the same text objects
-let g:wildfire_objects = {
-    \ "*" : ["i'", 'i"', "i)", "i]", "i}", "ip"],
-    \ "html,xml" : ["at"],
-\ }
-</code></p>
-
-<p>与之类似的一个用的相当广泛的插件还有<a href="https://github.com/terryma/vim-expand-region">vim-expand-region</a>。大家可以自己选择。有问题欢迎留言或回复交流。也希望大家推荐自己在用，自己写的插件给我。今天看到一个朋友微信回复我的一个他自己写的插件，我已经立刻用上了，卖个关子，下次介绍。</p>
 
 ]]></content>
   </entry>

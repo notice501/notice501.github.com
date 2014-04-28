@@ -4,7 +4,7 @@
   <title><![CDATA[Code Rush]]></title>
   <link href="http://notice501.github.com/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-25T22:01:06+08:00</updated>
+  <updated>2014-04-28T21:49:12+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,246 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--强大的自动补全neocomplete.vim和supertab]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim.html/"/>
+    <updated>2014-04-28T21:02:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim</id>
+    <content type="html"><![CDATA[<h2 id="neocompletevim">neocomplete.vim</h2>
+
+<p>今天介绍两个个必备的vim插件，自动补全插件——<a href="https://github.com/Shougo/neocomplete.vim">neocomplete.vim</a>和superTab。</p>
+
+<p>neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。</p>
+
+<p>该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要<a href="http://vimdoc.sourceforge.net/htmldoc/if_lua.html">if_lua</a>的支持。</p>
+
+<p>mac下安装：</p>
+
+<pre><code>brew install macvim --with-cscope --with-lua --HEAD
+</code></pre>
+
+<p>或者不用macvim（真的不用么？赶紧试试吧）：</p>
+
+<pre><code>brew install vim --with-lua
+</code></pre>
+
+<p>不需要过多的介绍,看作者给的图：</p>
+
+<h3 id="section">文件补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png" alt="Original filename completion." />
+<img src="https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png" alt="Include filename completion." /></p>
+
+<h3 id="omni-">Omni 补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622456/fb2cc0bc-cf42-11e2-94e8-403cdcf5427e.png" alt="Omni completion." /></p>
+
+<h3 id="vimshellhttpgithubcomshougovimshell"><a href="http://github.com/Shougo/vimshell">vimshell</a>补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png" alt="Completion with vimshell(http://github.com/Shougo/vimshell)." /></p>
+
+<h3 id="vim-">Vim 补全</h3>
+
+<p><img src="https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png" alt="Vim completion." />
+<img src="https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif" alt="Vim completion with animation." /></p>
+
+<p>作者还给出了推荐配置，每个配置都有对应的英文注释，我就不一一翻译了：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="c">&quot;Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!</span>
+</span><span class="line"><span class="c">&quot; Disable AutoComplPop.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:acp_enableAtStartup <span class="p">=</span> <span class="m">0</span>
+</span><span class="line"><span class="c">&quot; Use neocomplete.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#enable_at_startup <span class="p">=</span> <span class="m">1</span>
+</span><span class="line"><span class="c">&quot; Use smartcase.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#enable_smart_case <span class="p">=</span> <span class="m">1</span>
+</span><span class="line"><span class="c">&quot; Set minimum syntax keyword length.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#sources#<span class="nb">syntax</span>#min_keyword_length <span class="p">=</span> <span class="m">3</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#lock_buffer_name_pattern <span class="p">=</span> <span class="s1">&#39;\*ku\*&#39;</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Define dictionary.</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#sources#<span class="nb">dictionary</span>#dictionaries <span class="p">=</span> {
+</span><span class="line">    \ <span class="s1">&#39;default&#39;</span> : <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class="line">    \ <span class="s1">&#39;vimshell&#39;</span> : $HOME.<span class="s1">&#39;/.vimshell_hist&#39;</span><span class="p">,</span>
+</span><span class="line">    \ <span class="s1">&#39;scheme&#39;</span> : $HOME.<span class="s1">&#39;/.gosh_completions&#39;</span>
+</span><span class="line">        \ }
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Define keyword.</span>
+</span><span class="line"><span class="k">if</span> <span class="p">!</span>exists<span class="p">(</span><span class="s1">&#39;g:neocomplete#keyword_patterns&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="k">let</span> <span class="k">g</span>:neocomplete#keyword_patterns <span class="p">=</span> {}
+</span><span class="line"><span class="k">endif</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#keyword_patterns[<span class="s1">&#39;default&#39;</span>] <span class="p">=</span> <span class="s1">&#39;\h\w*&#39;</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Plugin key-mappings.</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>C<span class="p">-</span><span class="k">g</span><span class="p">&gt;</span>     neocomplete#undo_completion<span class="p">()</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>C<span class="p">-</span><span class="k">l</span><span class="p">&gt;</span>     neocomplete#complete_common_string<span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Recommended key-mappings.</span>
+</span><span class="line"><span class="c">&quot; &lt;CR&gt;: close popup and save indent.</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>CR<span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">r</span><span class="p">&gt;=&lt;</span>SID<span class="p">&gt;</span>my_cr_function<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+</span><span class="line"><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:my_cr_function<span class="p">()</span>
+</span><span class="line">  <span class="k">return</span> neocomplete#close_popup<span class="p">()</span> . <span class="s2">&quot;\&lt;CR&gt;&quot;</span>
+</span><span class="line"><span class="c">  &quot; For no inserting &lt;CR&gt; key.</span>
+</span><span class="line"><span class="c">  &quot;return pumvisible() ? neocomplete#close_popup() : &quot;\&lt;CR&gt;&quot;</span>
+</span><span class="line"><span class="k">endfunction</span>
+</span><span class="line"><span class="c">&quot; &lt;TAB&gt;: completion.</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>TAB<span class="p">&gt;</span>  pumvisible<span class="p">()</span> ? <span class="s2">&quot;\&lt;C-n&gt;&quot;</span> : <span class="s2">&quot;\&lt;TAB&gt;&quot;</span>
+</span><span class="line"><span class="c">&quot; &lt;C-h&gt;, &lt;BS&gt;: close popup and delete backword char.</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>C<span class="p">-</span><span class="k">h</span><span class="p">&gt;</span> neocomplete#smart_close_popup<span class="p">()</span>.<span class="s2">&quot;\&lt;C-h&gt;&quot;</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>BS<span class="p">&gt;</span> neocomplete#smart_close_popup<span class="p">()</span>.<span class="s2">&quot;\&lt;C-h&gt;&quot;</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>C<span class="p">-</span><span class="k">y</span><span class="p">&gt;</span>  neocomplete#close_popup<span class="p">()</span>
+</span><span class="line"><span class="nb">inoremap</span> <span class="p">&lt;</span>expr<span class="p">&gt;&lt;</span>C<span class="p">-</span><span class="k">e</span><span class="p">&gt;</span>  neocomplete#cancel_popup<span class="p">()</span>
+</span><span class="line"><span class="c">&quot; Close popup by &lt;Space&gt;.</span>
+</span><span class="line"><span class="c">&quot;inoremap &lt;expr&gt;&lt;Space&gt; pumvisible() ? neocomplete#close_popup() : &quot;\&lt;Space&gt;&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; For cursor moving in insert mode(Not recommended)</span>
+</span><span class="line"><span class="c">&quot;inoremap &lt;expr&gt;&lt;Left&gt;  neocomplete#close_popup() . &quot;\&lt;Left&gt;&quot;</span>
+</span><span class="line"><span class="c">&quot;inoremap &lt;expr&gt;&lt;Right&gt; neocomplete#close_popup() . &quot;\&lt;Right&gt;&quot;</span>
+</span><span class="line"><span class="c">&quot;inoremap &lt;expr&gt;&lt;Up&gt;    neocomplete#close_popup() . &quot;\&lt;Up&gt;&quot;</span>
+</span><span class="line"><span class="c">&quot;inoremap &lt;expr&gt;&lt;Down&gt;  neocomplete#close_popup() . &quot;\&lt;Down&gt;&quot;</span>
+</span><span class="line"><span class="c">&quot; Or set this.</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#enable_cursor_hold_i = 1</span>
+</span><span class="line"><span class="c">&quot; Or set this.</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#enable_insert_char_pre = 1</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; AutoComplPop like behavior.</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#enable_auto_select = 1</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Shell like behavior(not recommended).</span>
+</span><span class="line"><span class="c">&quot;set completeopt+=longest</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#enable_auto_select = 1</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#disable_auto_complete = 1</span>
+</span><span class="line"><span class="c">&quot;inoremap &lt;expr&gt;&lt;TAB&gt;  pumvisible() ? &quot;\&lt;Down&gt;&quot; : &quot;\&lt;C-x&gt;\&lt;C-u&gt;&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Enable omni completion.</span>
+</span><span class="line">autocmd <span class="nb">FileType</span> css <span class="k">setlocal</span> <span class="nb">omnifunc</span><span class="p">=</span>csscomplete#CompleteCSS
+</span><span class="line">autocmd <span class="nb">FileType</span> html<span class="p">,</span>markdown <span class="k">setlocal</span> <span class="nb">omnifunc</span><span class="p">=</span>htmlcomplete#CompleteTags
+</span><span class="line">autocmd <span class="nb">FileType</span> javascript <span class="k">setlocal</span> <span class="nb">omnifunc</span><span class="p">=</span>javascriptcomplete#CompleteJS
+</span><span class="line">autocmd <span class="nb">FileType</span> python <span class="k">setlocal</span> <span class="nb">omnifunc</span><span class="p">=</span>pythoncomplete#Complete
+</span><span class="line">autocmd <span class="nb">FileType</span> xml <span class="k">setlocal</span> <span class="nb">omnifunc</span><span class="p">=</span>xmlcomplete#CompleteTags
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; Enable heavy omni completion.</span>
+</span><span class="line"><span class="k">if</span> <span class="p">!</span>exists<span class="p">(</span><span class="s1">&#39;g:neocomplete#sources#omni#input_patterns&#39;</span><span class="p">)</span>
+</span><span class="line">  <span class="k">let</span> <span class="k">g</span>:neocomplete#sources#omni#input_patterns <span class="p">=</span> {}
+</span><span class="line"><span class="k">endif</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#sources#omni#input_patterns.php = &#39;[^. \t]-&gt;\h\w*\|\h\w*::&#39;</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#sources#omni#input_patterns.c = &#39;[^.[:digit:] *\t]\%(\.\|-&gt;\)&#39;</span>
+</span><span class="line"><span class="c">&quot;let g:neocomplete#sources#omni#input_patterns.cpp = &#39;[^.[:digit:] *\t]\%(\.\|-&gt;\)\|\h\w*::&#39;</span>
+</span><span class="line">
+</span><span class="line"><span class="c">&quot; For perlomni.vim setting.</span>
+</span><span class="line"><span class="c">&quot; https://github.com/c9s/perlomni.vim</span>
+</span><span class="line"><span class="k">let</span> <span class="k">g</span>:neocomplete#sources#omni#input_patterns.perl <span class="p">=</span> <span class="s1">&#39;\h\w*-&gt;\h\w*\|\h\w*::&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>没有特殊需求，直接copy就用即可。没有复杂的配置，用起来还是非常简单的。</p>
+
+<p>还有一个比较出名的补全插件是<a href="https://github.com/Valloric/YouCompleteMe">YouCompleteMe</a>.大家也可以去看下，应该是现在用的最广泛的补全插件了。我很早就试用过，还是neocomplete要更顺手更快些，总感觉neocomplete要更智能些。</p>
+
+<h2 id="supertab">superTab</h2>
+
+<p>说到补全还有个不得不说，那就是tab键，必须用tab来进行补全那才是补全啊。其实neocomplete的推荐配置已经配置成了自动提示补全文字，并且支持tab选择，但是还是无法<code>shift-tab</code>回退选择。superTab就是为增强tab而生，当然可以做到这点。</p>
+
+<p>superTab 和neocomplete一样，几乎不用自己折腾什么配置，也不用过多的介绍，一句话就可以说完它的功能。</p>
+
+<pre><code>bar
+baz
+b*&lt;Tab&gt; (*为光标所在位置) 
+</code></pre>
+
+<p>按示例在光标处按下tab，就会展开推荐补全bar和baz，按tab即可进行循环选择。</p>
+
+<p>可以配置supertab的默认补全类型（对vim补全不了解的同学自己补下omni补全相关知识，需要我介绍可以回复下）：</p>
+
+<pre><code>let g:SuperTabDefaultCompletionType = "&lt;c-x&gt;&lt;c-u&gt;"
+</code></pre>
+
+<p>示例把supertab修改为了用户补全，默认是<code>&lt;c-p&gt;</code>.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--Gist.vim]]></title>
@@ -1572,108 +1812,6 @@ Plugin 'file///path/from/root/to/plugin'
 <p>最后提供我的整个配置文件，可以在我的<a href="https://github.com/notice501/dotfiles">dotfiles</a>的tmux目录下找到。</p>
 
 <p>欢迎留言交流。也可以关注我的微博<strong><a href="http://weibo.com/notice520">foocoder</a></strong>。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我在用的mac软件(2)-终端环境之zsh和z(*nix都适用)]]></title>
-    <link href="http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian-2.html/"/>
-    <updated>2013-07-18T20:53:00+08:00</updated>
-    <id>http://notice501.github.com/blog/wo-zai-yong-de-macruan-jian-2</id>
-    <content type="html"><![CDATA[<p>继续上篇介绍我的终端环境。这篇介绍zsh和z，其实这不局限于os x，在所有的*nix系统中都是可用的。</p>
-
-<h1 id="zsh">zsh</h1>
-
-<p>zsh作为bash的替代品，自然很多人要问：why zsh？
- 在<a href="http://www.acm.uiuc.edu/workshops/zsh/why.html">Zsh Workshop</a> 有个长长的功能列表，用来回答这个问题。这里讲下我选择zsh的原因，当然，也是介绍zsh强大的功能。</p>
-
-<ol>
-  <li>兼容bash。这使得切换到zsh没有任何成本。</li>
-  <li>OS X默认的bash版本实在是太老了啊……</li>
-  <li>拼写纠正。你总会不小心打错命令。这时，zsh会进行自动拼写纠正，如图：<img src="http://foocoder.com/images/mac/cerrect.png" alt="" /></li>
-  <li>更强大的补全。
- <!--more-->
-    <ul>
-      <li>连按两次tab会列出所有的补全列表并直接开始选择。如图：<img src="http://foocoder.com/images/mac/tabcd.png" alt="" />
- 	并且可以用方向键来选择，但是对我这种很少用方向键的人来说只能猛敲tab了么，不是，zsh支持使用<code>&lt;ctrl-n/p/f/b&gt;</code>来选择，perfect!</li>
-      <li>命令选项补全。有多少人依然记不住tar的命令选项？中枪的去抄20遍……在zsh中只需要键入<code>tar - &lt;tab&gt;</code>就会列出所有的选项和帮助说明。用了zsh之后<code>man</code>少用了好多……</li>
-      <li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="" />这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示:<img src="http://foocoder.com/images/mac/kill1.png" alt="" />自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
-    </ul>
-  </li>
-  <li>更智能的历史命令。在用<code>&lt;ctrl-p&gt;</code>或者<code>方向上键</code>查找历史命令时，zsh支持限制查找。比如，输入<code>ls </code>然后再按方向上键,则只会查找用过的ls命令。而此时使用<code>&lt;ctrl-p&gt;</code>则会仍然按之前的方式查找，忽略<code>ls</code>。</li>
-  <li>多个终端会话共享历史记录。经常有多个窗口，tab，tmux的多个session，panel。这些命令历史不能共享实在是很糟糕的回忆。但是有了zsh之后，这些确实成了回忆了,所有的命令历史都可以共享。</li>
-  <li>更智能的<code>cd</code>。首先你甚至不需要再输入cd了，直接输入路径即可。第二，在你知道路径的情况下，比如<code>/usr/local/bin</code>你可以输入<code>cd /u/l/b</code>然后按<code>&lt;Tab&gt;</code>进行补全快速输入。这显然不够，zsh还支持路径替换，如果你其实想进入的是<code>/usr/local/bin</code>，不再需要<code>../</code> 了，直接在当前输入<code>cd bin share</code>即可，则<code>bin</code>会替换为<code>share</code>。在之后我会介绍z和autojumper，目录跳转会更方便。 </li>
-  <li>更强大的alias。zsh不仅支持普通的alias，例如：<code>alias ls ='ls --color=auto'</code>。zsh还支持后缀alias,即以什么命令打开特定的后缀名文件。例如<code>alias -s js=mvim</code>,输入<code>hello.js</code>，会以vim打开该文件,而不在需要<code>vim hello.js</code>。</li>
-  <li>通配符搜索。这也是我最爱的功能之一。之前讲过由于命令补全少用了很多<code>man</code>命令，而这个功能让我少用了很多<code>find</code>命令。	一般的通配符搜索无非是<code>ls -l *.log</code>,如图:<img src="http://foocoder.com/images/mac/ls1.png" alt="" />在zsh中可以做到递归的通配符搜索。使用<code>**/</code>来递归搜索，如图<img src="http://foocoder.com/images/mac/ls2.png" alt="" />是不是在很多场景下可以取代<code>find</code>？</li>
-</ol>
-
-<p>以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问<a href="http://zsh.sourceforge.net/Guide/zshguide.html">A User’s Guide to the Z-Shell</a>。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是<a href="https://github.com/robbyrussell/oh-my-zsh?source=c">oh-my-zsh</a>,oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题<code>robbyrussell</code>，如图<img src="http://foocoder.com/images/mac/gitoh.png" alt="" />可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。</p>
-
-<p>当然zsh也不是完美无缺。在我使用过程中有两点不是很舒服：
-1. 自动纠正并不总是那么智能。如图：<img src="http://foocoder.com/images/mac/zhuanyi.png" alt="" />
-	但是可以对这些命令使用alias 加上<code>nocorrect</code>前缀，如：</p>
-
-<p><code>alias rake deploy='nocorrect rake deploy'</code></p>
-
-<ol>
-  <li>一些符号是zsh中保留的，使用需要转义，如图：<img src="http://foocoder.com/images/mac/wrongcorrect.png" alt="" /></li>
-</ol>
-
-<hr />
-
-<p>下面讲下zsh和oh-my-zsh的安装。</p>
-
-<p><strong>使用brew来安装zsh</strong></p>
-
-<p><code>
-  brew install zsh
-</code></p>
-
-<p><strong>设置zsh为默认</strong></p>
-
-<p>在<code>/etc/shells</code>文件末尾添加</p>
-
-<p><code>
- /usr/local/bin/zsh
-</code>	</p>
-
-<p>执行：</p>
-
-<p><code>
- chsh -s /usr/local/bin/zsh
-</code></p>
-
-<p>最后记得将<code>~/.bash_prorile</code>或者<code>~/.profile</code>等配置拷贝到~/.zshrc中。</p>
-
-<p><strong>安装oh-my-zsh</strong></p>
-
-<p>自动安装:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>可以选择自己喜欢的<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes">主题</a>。只需要修改<code>~/.zshrc</code>文件中的<code>ZSH_THEME</code>即可。</p>
-
-<h1 id="zautojump">z和autojump</h1>
-
-<p><a href="https://github.com/rupa/z">z</a>和<a href="https://github.com/joelthelion/autojump">autojump</a>的功能类似，前者是简单的shell脚本实现，后者由python实现，功能都是可以方便自动匹配到你最多使用的目录并跳转。我在用的是z，如图<img src="http://foocoder.com/images/mac/zjump.png" alt="" />，我在根目录输入<code>z github</code>可以自动跳转到我常用的<code>notice501.github.com</code>这个目录，也就是本博客的工程目录。超级方便的工具。autojump用法类似，命令为<code>j</code>而不是<code>z</code>两者的安装方式：</p>
-
-<p><strong>z</strong></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">git clone git@github.com:rupa/z.git</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>而后将z.sh放入环境变量即可。</p>
-
-<p><strong>autojump</strong></p>
-
-<p>autojump可以直接使用brew安装</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">brew install autojump</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>有问题和分享欢迎留言交流。也欢迎关注我的<a href="http://weibo.com/notice520">微博</a>。</p>
 
 ]]></content>
   </entry>
