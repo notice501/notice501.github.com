@@ -4,7 +4,7 @@
   <title><![CDATA[分类：vim | Code Rush]]></title>
   <link href="http://notice501.github.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://notice501.github.com/"/>
-  <updated>2014-04-28T22:08:26+08:00</updated>
+  <updated>2014-04-29T22:28:18+08:00</updated>
   <id>http://notice501.github.com/</id>
   <author>
     <name><![CDATA[foocoder]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[每日vim插件--平滑滚动accelerated-smooth-scroll.vim]]></title>
+    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim.html/"/>
+    <updated>2014-04-29T22:11:00+08:00</updated>
+    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim</id>
+    <content type="html"><![CDATA[<p>今天介绍一个简单的插件：<a href="https://github.com/yonchu/accelerated-smooth-scroll">accelerated-smooth-scroll.</a>
+很简单，就是让<code>&lt;C-D&gt;/&lt;C-U&gt;</code>和<code>&lt;C-F&gt;/&lt;C-B&gt;</code>不再突然出现，而是出现滚动效果。同时，在连续滚动时，还有加速效果。
+做了个gif图，真实效果比图片要更流畅一些，如图所示：</p>
+
+<p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1efwtsjauuag20qj0ivkjm.gif" alt="" /></p>
+
+<p>今天就介绍它啦。几乎是用的最多的插件……</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[每日vim插件--强大的自动补全neocomplete.vim和supertab]]></title>
@@ -392,50 +407,6 @@ let g:gist_post_private = 1
 </code></p>
 
 <p>今天的介绍非常简短，希望大家喜欢。有问题可以回复给我。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[每日vim插件--文件浏览器NERD Tree以及git-nerdtree,vim-nerdtree-tabs]]></title>
-    <link href="http://notice501.github.com/blog/mei-ri-vimcha-jian-wen-jian-liu-lan-qi-nerd-treeyi-ji-git-nerdtree-vim-nerdtree-tabs.html/"/>
-    <updated>2014-04-22T19:43:00+08:00</updated>
-    <id>http://notice501.github.com/blog/mei-ri-vimcha-jian-wen-jian-liu-lan-qi-nerd-treeyi-ji-git-nerdtree-vim-nerdtree-tabs</id>
-    <content type="html"><![CDATA[<p>今天介绍一个必备插件——<a href="https://github.com/scrooloose/nerdtree">NERD Tree</a>。这个插件基本用vim的都会知道吧。看图就知道了：
-<img src="http://ww2.sinaimg.cn/large/69d56e38gw1efoqvqpramj21gu12i46s.jpg" alt="" /></p>
-
-<p>用它可以让vim像其他大多数编辑器或者IDE一样，打开一个分割窗口显示文件树，在这个文件树上可以通过<code>j</code>,<code>k</code>上下浏览以及其他一些快捷键进行快速文件导航。按回车就直接打开该文件，当然还可以通过<code>i</code>,<code>s</code>,<code>t</code>在分隔窗口或者在新标签页打开.</p>
-
-<!--more-->
-
-<p>NERD Tree还支持书签。所谓书签，就是标记该文件或文件夹会优先显示在最上方。如前面图中的_posts文件夹。只要光标在该文件上输入命令<code>:Bookmark &lt;name&gt;</code>.非常方便</p>
-
-<p>NERD Tree不想介绍过多，使用非常简单。在NerdTree窗口按下问号就会有帮助信息介绍所有的操作和对应的快捷键，常用下很快就很熟了。</p>
-
-<p>NERD Tree有个问题在于和大多数IDE或者编辑器不同的是，在新的Tab中，NERD Tree默认是不打开的。不同的tab不能共享一个NERD Tree窗口，有人对这种方式可能就比较别扭。这时候就诞生了<a href="https://github.com/jistr/vim-nerdtree-tabs">vim-nerdtree-tabs</a>.该插件就解决了这个问题，它让每个tab都有相同的NERD Tree，看起来就像NERD Tree固定在最左一样。按下<code>:NERDTreeTabsToggle</code>就可以打开或关闭所有窗口。关闭文件窗口的时候，对于tab的NERD Tree窗口也会自动关闭。</p>
-
-<p>接下来介绍的<a href="https://github.com/Xuyuanp/git-nerdtree">git-nerdtree</a>是来自@Xuyuanp的作品,通过微信公众号介绍给我。也是对NERD Tree的增强修改，增加了文件的git状态显示，和昨天的gitgutter类似，Gitgutter显示文件内的git diff，而git-nerdtree为NERD Tree增加了文件git状态的显示：</p>
-
-<p><img src="https://camo.githubusercontent.com/3fe0388df11cb787f36e1fa108398fd3f757eef4/687474703a2f2f692e696d6775722e636f6d2f6a534377476a552e6769663f31" alt="" /></p>
-
-<p>相对应的标识如下：</p>
-
-<ul>
-  <li><code>✭</code> / <code>*</code> : Untracked</li>
-  <li><code>✹</code> / <code>~</code> : Modified in the working tree</li>
-  <li><code>✚</code> / <code>+</code> : Staged in the index (Exclude Renamed status)</li>
-  <li><code>➜</code> / <code>»</code> : Renamed</li>
-  <li><code>═</code> / <code>=</code> : Unmerged</li>
-  <li><code>✖</code> / <code>-</code> : Deleted (This indicator can’t be shown, as NERDTree doesn’t display deleted files. I have no prefect idea to solve this problem currently.)</li>
-  <li><code>✗</code> / <code>×</code> : Dirty (Only for directory)</li>
-  <li><code>✔</code> / <code>ø</code> : Clean (Only for directory)</li>
-</ul>
-
-<p>标识方式和我之前介绍的zsh配置对git库状态的处理类似（可以查看我之前的博客）。</p>
-
-<p>同时还支持和gitgutter一样的快捷键在各个有状态的文件之间跳转<code>[c</code>,<code>]c</code>.我只能说太棒了，再次感谢@Xuyuanp。</p>
-
-<p>今天就介绍到这里，任何问题都可以直接回复。</p>
-
 ]]></content>
   </entry>
   
