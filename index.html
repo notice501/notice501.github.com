@@ -6,8 +6,7 @@
 	<title>Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="Published on: Apr 29th, 2014 Tags: vim 今天介绍一个简单的插件：accelerated-smooth-scroll.
-很简单，就是让&lt;C-D&gt;/&lt;C-U&gt;和&lt;C-F&gt;/&lt;C-B&gt;不再突然出现，而是出现滚动效果。 &hellip;">
+	<meta name="description" content="Published on: May 6th, 2014 Tags: 之前介绍过可以重复motion的插件space.vim，有朋友留言说.不是也可以？其实.确实可以重复很多动作，但是无法重复motion。其实;和,倒是可以重复motion。不过space.vim可以重复更多操作， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -128,6 +127,54 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html/">
+		
+			Vim 重复操作的利器&#8211;点命令</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-06T20:18:00+08:00" pubdate data-updated="true">May 6<span>th</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+</div>
+    </div>
+		<p>之前介绍过可以重复motion的插件space.vim，有朋友留言说<code>.</code>不是也可以？其实<code>.</code>确实可以重复很多动作，但是无法重复motion。其实<code>;</code>和<code>,</code>倒是可以重复motion。不过space.vim可以重复更多操作，之前的博客有全部列出来。</p>
+
+<p>今天主要就介绍<code>.</code>命令。</p>
+
+<p>这个命令就用来重复上一次的操作。比如:<code>dw</code>,再按<code>.</code>就会再删除一个单词。他可以重复的命令非常多，比如插入操作<code>a</code>,<code>i</code>，比如替换删除操作<code>c</code>,<code>s</code>, <code>r</code>还有<code>J</code>,<code>~</code>等常用的操作。但是我却很难概括他到底可以重复哪些操作，我基本归纳为重复对当前buffer造成改变的操作，虽然并不准确.</p>
+
+<p>了解了基本的用途，来看看使用场景吧。我说说我一般的用法:</p>
+
+
+		
+		<a href="/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html/" class="more-link">继续阅读 </a>
+	</div>
+
+<div class="meta">
+
+  <span class="comments"><a href="/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html//index.html#disqus_thread">Comments</a></span>
+
+
+</div>
+</article>
 
 
     <article class="post">
@@ -620,58 +667,6 @@
 <div class="meta">
 
   <span class="comments"><a href="/blog/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim.html//index.html#disqus_thread">Comments</a></span>
-
-
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/">
-		
-			每日vim插件&#8211;vim 撤销树Gundo.vim</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-15T21:10:00+08:00" pubdate data-updated="true">Apr 15<span>th</span>, 2014</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</div>
-    </div>
-		<p>今天介绍的插件很有意思，也非常有用，也是我最常用的插件之一——<a href="https://github.com/sjl/gundo.vim">Gundo</a>.</p>
-
-<p>大家都知道按<code>u</code>可以撤销操作，但是一般都不知道输入命令<code>:undolist</code>会显示可撤销列表，如图</p>
-
-<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efglaef02lj20ki13qthg.jpg" style="     height: 600px; " /> </p>
-
-<p>其实这还不是列表，而是整个vim 撤销树的叶子。为什么说是树，而不是列表，举个例子就明白了：</p>
-
-
-		
-		<a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html/" class="more-link">继续阅读 </a>
-	</div>
-
-<div class="meta">
-
-  <span class="comments"><a href="/blog/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim.html//index.html#disqus_thread">Comments</a></span>
 
 
 </div>
