@@ -154,7 +154,11 @@
         <loc>
             http://notice501.github.com/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html/
         </loc>
-        <lastmod>2014-05-06T21:15:24+08:00</lastmod>
+        <lastmod>2014-05-06T21:35:51+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://notice501.github.com/blog/vimzhong-de-yu-fa-jian-cha-syntastic.html/</loc>
+        <lastmod>2014-05-13T20:20:44+08:00</lastmod>
     </url>
     <url>
         <loc>http://notice501.github.com/about/</loc>
@@ -162,11 +166,11 @@
     </url>
     <url>
         <loc>http://notice501.github.com/blog/archives/</loc>
-        <lastmod>2014-05-06T21:15:24+08:00</lastmod>
+        <lastmod>2014-05-13T20:20:44+08:00</lastmod>
     </url>
     <url>
         <loc>http://notice501.github.com/</loc>
-        <lastmod>2014-05-06T21:15:24+08:00</lastmod>
+        <lastmod>2014-05-13T20:20:44+08:00</lastmod>
     </url>
     <url>
         <loc>http://notice501.github.com/search.html</loc>

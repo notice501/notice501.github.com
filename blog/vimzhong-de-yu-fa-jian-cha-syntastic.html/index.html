@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>vim 重复操作的利器--点命令 - Code Rush</title>
+	<title>vim中的语法检查-syntastic - Code Rush</title>
     <meta name="author" content="foocoder">
     
-	<meta name="description" content="之前介绍过可以重复motion的插件space.vim，有朋友留言说.不是也可以？其实.确实可以重复很多动作，但是无法重复motion。其实;和,倒是可以重复motion。不过space.vim可以重复更多操作，之前的博客有全部列出来。 今天主要就介绍.命令。 这个命令就用来重复上一次的操作。 &hellip;">
+	<meta name="description" content="最近比较忙，有几天没更新了。今天有个同事问我一个语法插件的问题，向他介绍了Sytanstic.vim。那今天就来介绍下这个必备的插件吧。 很多人喜欢IDE就是因为他的语法检查，有了Sytanstic.vim,这个问题就不复存在了。（当然，仅仅是语法检查） 功能 上一张官方图： &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -127,45 +127,81 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         <article class="post">
-	<h2 class="title">Vim 重复操作的利器--点命令</h2>
-	<div class="entry-content"><p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1eg4vqmtvzsj20b408cdgf.jpg" alt="" /></p>
+	<h2 class="title">Vim中的语法检查-syntastic</h2>
+	<div class="entry-content"><p>最近比较忙，有几天没更新了。今天有个同事问我一个语法插件的问题，向他介绍了Sytanstic.vim。那今天就来介绍下这个必备的插件吧。</p>
 
-<p>之前介绍过可以重复motion的插件space.vim，有朋友留言说<code>.</code>不是也可以？其实<code>.</code>确实可以重复很多动作，但是无法重复motion。其实<code>;</code>和<code>,</code>倒是可以重复motion。不过space.vim可以重复更多操作，之前的博客有全部列出来。</p>
+<p>很多人喜欢IDE就是因为他的语法检查，有了<a href="https://github.com/scrooloose/syntastic">Sytanstic.vim</a>,这个问题就不复存在了。（当然，仅仅是语法检查）</p>
 
-<p>今天主要就介绍<code>.</code>命令。</p>
+<h2 id="section">功能</h2>
 
-<p>这个命令就用来重复上一次的操作。比如:<code>dw</code>,再按<code>.</code>就会再删除一个单词。他可以重复的命令非常多，比如插入操作<code>a</code>,<code>i</code>，比如替换删除操作<code>c</code>,<code>s</code>, <code>r</code>还有<code>J</code>,<code>~</code>等常用的操作。但是我却很难概括他到底可以重复哪些操作，我基本归纳为重复对当前buffer造成改变的操作，虽然并不准确.</p>
+<p>上一张官方图：</p>
 
-<p>了解了基本的用途，来看看使用场景吧。我说说我一般的用法:</p>
+<p><img src="http://foocoder.qiniudn.com/blog/syntasticsyntastic.png?token=hYfsyKwhHPe-Ga-1Hypx5F8CwimEywvTI8XdNpEm:z6zQYbdezgOYcKfzok7LEkuRDkg=:eyJTIjoiZm9vY29kZXIucWluaXVkbi5jb20vYmxvZy9zeW50YXN0aWNzeW50YXN0aWMucG5nIiwiRSI6MTQwMDA2ODU2N30=" alt="" /></p>
 
 <!--more-->
 
+<p>图片很清楚的介绍了插件功能：</p>
+
 <ol>
-  <li><code>ciw</code>替换文本，然后在另一个也需要替换相同文本的单词处按下<code>.</code>，就可以执行相同的替换操作。</li>
-  <li><code>dd</code>,<code>dw</code>,然后按下<code>.</code>就会再次删除一句或一个单词。我觉得连续输入<code>.</code>比数几秒有几个或几行比打<code>3dw/3dd</code>要更自然和更快，当然你觉得<code>3dw</code>更快也很正常.</li>
+  <li>用location list 列出所有错误。</li>
+  <li>命令行窗口显示当前错误。</li>
+  <li>错误标记，有警告和错误。</li>
+  <li>鼠标悬停可以出现错误提示框</li>
+  <li>状态栏标记。</li>
 </ol>
 
-<p>这两个是我用的最多的，每天必用。大家有其他好用的欢迎补充。</p>
+<h2 id="section-1">安装</h2>
+<p>Sytanstic目前支持了大多数常用语言，但是并不都打包在插件当中，而是可以按需安装相关的语法检查工具。在<a href="https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers">wiki</a>页面可以看到所有的语法检查包。</p>
 
-<p>今天还要介绍一个插件，叫做<a href="https://github.com/tpope/vim-repeat">repeat.vim</a>,和之前介绍过的surround.vim一样，来自tpope。repeat.vim做的事情很简单，重复一个插件操作，其中当然就支持surround.vim。这非常有用，比如给一个单词加了双引号，再按下<code>.</code>就可以也为另一个单词加上了。</p>
+<p>以javascript为例。在安装完syntastic之后（推荐使用vundle），我选择使用jshint来作为js的语法检查工具。</p>
 
-<p>repeat.vim还支持：</p>
+<p>首先安装：</p>
 
-<ul>
-  <li><a href="https://github.com/tpope/vim-speeddating">speeddating.vim</a></li>
-  <li><a href="https://github.com/tpope/vim-abolish">abolish.vim</a></li>
-  <li><a href="https://github.com/tpope/vim-unimpaired">unimpaired.vim</a></li>
-  <li><a href="https://github.com/tpope/vim-commentary">commentary.vim</a></li>
-</ul>
+<pre><code>npm install jshint -g
+</code></pre>
 
-<p>其中unimpaired.vim我也在用，下次可以介绍下。</p>
+<p>注意安装后jshint需要在系统环境变量中，否则需要指定path：</p>
+
+<pre><code>g:syntastic_jshint_exec
+</code></pre>
+
+<p>指定jshint的配置文件目录：</p>
+
+<pre><code>g:syntastic_javascript_jshint_conf
+</code></pre>
+
+<p>jshint的配置这里就不说了，参看<a href="http://jshint.com/docs/">文档</a></p>
+
+<p>这样js语法检查就可以工作了。</p>
+
+<h2 id="section-2">配置</h2>
+
+<p>当然也可以做一些简单的配置，比如设置为每次打开buffer就执行语法检查，而不只是在保存时：</p>
+
+<pre><code>    let g:syntastic_check_on_open = 1
+</code></pre>
+
+<p>如果想使用多个检查器，可以这样写：</p>
+
+<pre><code>let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+</code></pre>
+
+<h2 id="section-3">错误跳转</h2>
+<p>syntastic使用location list来显示所有的错误，location list和quificfix 类似，包含了位置信息。</p>
+
+<p>调起这个location list</p>
+
+<pre><code>:Errors 或者 :lopen
+</code></pre>
+
+<p>使用<code>:lne[xt]</code>和<code>:lp[revious]</code>就可以在错误间跳转。当然，如果用的多，可以做个mapping。</p>
 
 <p>今天就介绍到这里。</p>
 </div>
 
 <div class="meta">
 
-  <span class="comments"><a href="/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html/#disqus_thread">Comments</a></span>
+  <span class="comments"><a href="/blog/vimzhong-de-yu-fa-jian-cha-syntastic.html/#disqus_thread">Comments</a></span>
 
 
 </div>
@@ -223,8 +259,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://notice501.github.com/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html/';
-        var disqus_url = 'http://notice501.github.com/blog/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling.html/';
+        var disqus_identifier = 'http://notice501.github.com/blog/vimzhong-de-yu-fa-jian-cha-syntastic.html/';
+        var disqus_url = 'http://notice501.github.com/blog/vimzhong-de-yu-fa-jian-cha-syntastic.html/';
         var disqus_script = 'embed.js';
       
     (function () {
