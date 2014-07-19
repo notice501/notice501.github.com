@@ -5,7 +5,7 @@ date: 2014-04-22 19:43
 comments: true
 categories: [vim]
 ---
-今天介绍一个必备插件——[NERD Tree]()。这个插件基本用vim的都会知道吧。看图就知道了：
+今天介绍一个必备插件——[NERD Tree](https://github.com/scrooloose/nerdtree)。这个插件基本用vim的都会知道吧。看图就知道了：
 ![](http://ww2.sinaimg.cn/large/69d56e38gw1efoqvqpramj21gu12i46s.jpg)
 
 用它可以让vim像其他大多数编辑器或者IDE一样，打开一个分割窗口显示文件树，在这个文件树上可以通过`j`,`k`上下浏览以及其他一些快捷键进行快速文件导航。按回车就直接打开该文件，当然还可以通过`i`,`s`,`t`在分隔窗口或者在新标签页打开.
