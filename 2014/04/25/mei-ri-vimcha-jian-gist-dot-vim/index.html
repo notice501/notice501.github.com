@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>每日vim插件--Gist.vim | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天介绍的插件Gist.vim能够在vim中方便的创建和查看gist。
+gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看这个教程
+要使用这个插件需要安装ygie依赖插件：
+12Bundle &apos;mattn/webapi-vim&apos;Bundle &apos;mattn/gist-vim&apos;
+确保在git的global配置中设置的是github用户名：
+$ git config">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--Gist.vim">
+<meta property="og:url" content="http://foocoder.com/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="今天介绍的插件Gist.vim能够在vim中方便的创建和查看gist。
+gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看这个教程
+要使用这个插件需要安装ygie依赖插件：
+12Bundle &apos;mattn/webapi-vim&apos;Bundle &apos;mattn/gist-vim&apos;
+确保在git的global配置中设置的是github用户名：
+$ git config">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/69d56e38gw1efs6kvu5zpj20m80go3z0.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/69d56e38gw1efs60clnedj20my040gm2.jpg">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--Gist.vim">
+<meta name="twitter:description" content="今天介绍的插件Gist.vim能够在vim中方便的创建和查看gist。
+gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看这个教程
+要使用这个插件需要安装ygie依赖插件：
+12Bundle &apos;mattn/webapi-vim&apos;Bundle &apos;mattn/gist-vim&apos;
+确保在git的global配置中设置的是github用户名：
+$ git config">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/69d56e38gw1efs6kvu5zpj20m80go3z0.jpg">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mei-ri-vimcha-jian-gist-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      每日vim插件--Gist.vim
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/">
+      <time datetime="2014-04-25T11:58:00.000Z" itemprop="datePublished">2014-04-25</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/vim/">vim</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1efs6kvu5zpj20m80go3z0.jpg" alt=""><br>今天介绍的插件<a href="https://github.com/mattn/gist-vim" target="_blank" rel="external">Gist.vim</a>能够在vim中方便的创建和查看gist。</p>
+<p>gist我就不过多介绍了，github提供的一个代码片段托管服务。不太了解的同学可以看看<a href="http://www.worldhello.net/gotgithub/06-side-projects/gist.html" target="_blank" rel="external">这个教程</a></p>
+<p>要使用这个插件需要安装ygie依赖插件：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Bundle <span class="string">'mattn/webapi-vim'</span></span><br><span class="line">Bundle <span class="string">'mattn/gist-vim'</span></span><br></pre></td></tr></table></figure>
+<p>确保在git的global配置中设置的是github用户名：</p>
+<pre><code>$ git config --global github.user &lt;username&gt;
+</code></pre><p>该插件在首次使用时会需要你输入github密码来获取token，并将其保存在<code>~/.gist-vim</code>.</p>
+<a id="more"></a>
+<p>使用非常的简单，输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist</span><br></pre></td></tr></table></figure>
+<p>就会将该整个文件创建一个Gist，创建成功后会显示Gist地址，如图：<br><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efs60clnedj20my040gm2.jpg" alt=""></p>
+<p>也可以选中一段代码创建Gist：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:&apos;&lt;,&apos;&gt;Gist</span><br></pre></td></tr></table></figure>
+<p>还提供了一些参数</p>
+<p>例如<code>-a</code>,表示匿名创建，<code>-p</code>创建pravite 的gist，<code>-P</code>创建public的gist。<code>-m</code>为所有打开的buffer创建Gist。</p>
+<p>除此之外，还可以编辑Gist(已打开了一个gist buffer的情况下)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist -e</span><br></pre></td></tr></table></figure>
+<p>加上描述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist -s something</span><br></pre></td></tr></table></figure>
+<p>删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist -d</span><br></pre></td></tr></table></figure>
+<p>fork:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist -f</span><br></pre></td></tr></table></figure>
+<p>star:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist +1</span><br></pre></td></tr></table></figure>
+<p>unstar:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist -1</span><br></pre></td></tr></table></figure>
+<p>还可以直接取得Gist：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist XXXXX</span><br></pre></td></tr></table></figure>
+<p>一般你不记得gist号码，没关系，还可以列出所有的Gist,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:Gist -l</span><br></pre></td></tr></table></figure>
+<p>这样会打开一个新的分隔窗口显示你已有的gist列表，按回车就可以直接去取这个gist并在vim中查看了。</p>
+<p>还提供了一些非常有用的配置，比如：</p>
+<p>如果你想要在创建了gist后立刻打开浏览器查看：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">g:gist_open_browser_after_post</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>如果想要默认创建的gist不是public而是private：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">g:gist_post_private</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>有了这个插件，玩转gist是不是非常easy啦。这个插件唯一的不足在于在创建gist或者请求gist时会阻塞界面，这个有点糟糕。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/" data-id="cije88mm2000eqc1vaex0p066" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          每日vim插件--强大的自动补全neocomplete.vim和supertab
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/24/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">每日vim插件--代码搜索ack.vim/ag/ctlsf.vim</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

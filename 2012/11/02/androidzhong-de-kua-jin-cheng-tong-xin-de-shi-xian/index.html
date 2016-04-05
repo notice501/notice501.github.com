@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android中的跨进程通信的实现（一）——远程调用过程和aidl | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android中的跨进程通信的实现（一）——远程调用过程和aidl">
+<meta property="og:url" content="http://foocoder.com/2012/11/02/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和">
+<meta property="og:image" content="http://foocoder.com/images/aidl1.png">
+<meta property="og:image" content="http://foocoder.com/images/aidl2.png">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android中的跨进程通信的实现（一）——远程调用过程和aidl">
+<meta name="twitter:description" content="android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和">
+<meta name="twitter:image" content="http://foocoder.com/images/aidl1.png">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android中的跨进程通信的实现（一）——远程调用过程和aidl
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2012/11/02/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian/">
+      <time datetime="2012-11-02T02:44:00.000Z" itemprop="datePublished">2012-11-02</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>android在设计理念上强调组件化，组件之间的依赖性很小。我们往往发一个intent请求就可以启动另一个应用的activity，或者一个你不知道在哪个进程的service，或者可以注册一个广播，只要有这个事件发生你都可以收到，又或者你可以查询一个contentProvider获得你想要的数据，这其实都需要跨进程通信的支持。只是android将其封装的如此简单，应用开发者甚至完全不用关注它是不是和我在一个进程里。</p>
+<a id="more"></a>
+<p>我们有没有想过安全性问题，如此简单就可以跨进程的访问，安全性问题怎么保证。本来每个进程都是一个孤岛，而通过ipc，这个孤岛却可以和世界通信了。这里简单介绍下android中的安全机制。</p>
+<p>android的安全机制分为三层。最基础的一层，android将数据分为system和data两个区。其中system是只读的，data用来存放应用自己的数据，这保证了系统数据不会被随意改写。第二层用来使应用之间的数据相互独立。每个应用都会有一个user id和group id，只有相同的user id并且来自同一个作者，才能访问它们的数据。作者通过对apk签名来标识自己。签名和uid构成了双重的保证。第三个层次就是权限体系，这个就不用多说了。</p>
+<p>拉回正题，那么android是如何实现ipc的呢？答案是binder。我打算用两篇来介绍android的binder机制，这一篇着重如何使用，介绍跨进程调用的过程和aidl。另一篇着重binder实现机制。<br>Binder并不是android最早开始使用，它发源于Be和Palm之前的OpenBinder，由Dianne Hackborn领导开发。Hackborn现在就在google，是android framework的工程师，我们可以从<a href="https://lkml.org/lkml/2009/6/25/3" target="_blank" rel="external">https://lkml.org/lkml/2009/6/25/3</a> 看一下，Hackborn如何描述binder。一句话总结：</p>
+<pre><code>In the Android platform, the binder is used for nearly everything that happens across processes in the core platform. 
+</code></pre><p>可是android将binder几乎封装的不可见，我们看下层次结构是怎么样的。</p>
+<img src="http://foocoder.com/images/aidl1.png">
+<p>最底层的是android的ashmen（Anonymous shared memoryy）机制，它负责辅助实现内存的分配，以及跨进程所需要的内存共享。<br>AIDL（android interface definition language）对Binder的使用进行了封装，可以让开发者方便的进行方法的远程调用，后面会详细介绍。</p>
+<p>Intent是最高一层的抽象，方便开发者进行常用的跨进程调用。</p>
+<p>关于如何使用intent去跨进程的启动一个activity或者service等，这里就不再介绍了，是android中非常基础的内容。</p>
+<p>这里讲如何实现远程的方法调用。在android中对方法的远程调用无处不在，随便打开framework/base中的包，都会发现很多aidl文件。AIDL是android为了方便开发者进行远程方法调用，定义的一种语言。使用aidl完成一个远程方法调用只需要三个步骤：</p>
+<ol>
+<li>用aidl定义需要被调用方法接口。</li>
+<li>实现这些方法。</li>
+<li>调用这些方法。</li>
+</ol>
+<p>我们拿ApiDemo中的例子来学习。在app包下面有一个ISecondary.aidl</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ISecondary</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Request the PID of this service, to do evil things with it.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getPid</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * This demonstrates the basic types that you can use as parameters</span><br><span class="line">     * and return values in AIDL.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">basicTypes</span><span class="params">(<span class="keyword">int</span> anInt, <span class="keyword">long</span> aLong, <span class="keyword">boolean</span> aBoolean, <span class="keyword">float</span> aFloat,</span><br><span class="line">            <span class="keyword">double</span> aDouble, String aString)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看起来和java没有什么区别。可以看到它定义个了两个接口方法。从这里我们可以知道AIDL（android接口定义语言的由来）。android会将该aidl生成一个java文件（如果你使用eclipse，会自动生成。在gen目录下。），生成的代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * This file is auto-generated.  DO NOT MODIFY.</span><br><span class="line"> * Original file: /home/dd/workspace/ApiDemos/src/com/example/android/apis/app/ISecondary.aidl</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">package</span> com.example.android.apis.app;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Example of a secondary interface associated with a service.  (Note that</span><br><span class="line"> * the interface itself doesn't impact, it is just a matter of how you</span><br><span class="line"> * retrieve it from the service.)</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ISecondary</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">IInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">/** Local-side IPC implementation stub class. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">example</span>.<span class="title">android</span>.<span class="title">apis</span>.<span class="title">app</span>.<span class="title">ISecondary</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> java.lang.String DESCRIPTOR = <span class="string">"com.example.android.apis.app.ISecondary"</span>;</span><br><span class="line"><span class="comment">/** Construct the stub at attach it to the interface. */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Stub</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">this</span>.attachInterface(<span class="keyword">this</span>, DESCRIPTOR);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Cast an IBinder object into an com.example.android.apis.app.ISecondary interface,</span><br><span class="line"> * generating a proxy if needed.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> com.example.android.apis.app.<span class="function">ISecondary <span class="title">asInterface</span><span class="params">(android.os.IBinder obj)</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> ((obj==<span class="keyword">null</span>)) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line">android.os.IInterface iin = (android.os.IInterface)obj.queryLocalInterface(DESCRIPTOR);</span><br><span class="line"><span class="keyword">if</span> (((iin!=<span class="keyword">null</span>)&amp;&amp;(iin <span class="keyword">instanceof</span> com.example.android.apis.app.ISecondary))) &#123;</span><br><span class="line"><span class="keyword">return</span> ((com.example.android.apis.app.ISecondary)iin);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> com.example.android.apis.app.ISecondary.Stub.Proxy(obj);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> android.os.<span class="function">IBinder <span class="title">asBinder</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">switch</span> (code)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> INTERFACE_TRANSACTION:</span><br><span class="line">&#123;</span><br><span class="line">reply.writeString(DESCRIPTOR);</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">case</span> TRANSACTION_getPid:</span><br><span class="line">&#123;</span><br><span class="line">data.enforceInterface(DESCRIPTOR);</span><br><span class="line"><span class="keyword">int</span> _result = <span class="keyword">this</span>.getPid();</span><br><span class="line">reply.writeNoException();</span><br><span class="line">reply.writeInt(_result);</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">case</span> TRANSACTION_basicTypes:</span><br><span class="line">&#123;</span><br><span class="line">data.enforceInterface(DESCRIPTOR);</span><br><span class="line"><span class="keyword">int</span> _arg0;</span><br><span class="line">_arg0 = data.readInt();</span><br><span class="line"><span class="keyword">long</span> _arg1;</span><br><span class="line">_arg1 = data.readLong();</span><br><span class="line"><span class="keyword">boolean</span> _arg2;</span><br><span class="line">_arg2 = (<span class="number">0</span>!=data.readInt());</span><br><span class="line"><span class="keyword">float</span> _arg3;</span><br><span class="line">_arg3 = data.readFloat();</span><br><span class="line"><span class="keyword">double</span> _arg4;</span><br><span class="line">_arg4 = data.readDouble();</span><br><span class="line">java.lang.String _arg5;</span><br><span class="line">_arg5 = data.readString();</span><br><span class="line"><span class="keyword">this</span>.basicTypes(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);</span><br><span class="line">reply.writeNoException();</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Proxy</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">example</span>.<span class="title">android</span>.<span class="title">apis</span>.<span class="title">app</span>.<span class="title">ISecondary</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">private</span> android.os.IBinder mRemote;</span><br><span class="line">Proxy(android.os.IBinder remote)</span><br><span class="line">&#123;</span><br><span class="line">mRemote = remote;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> android.os.<span class="function">IBinder <span class="title">asBinder</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">return</span> mRemote;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> java.lang.<span class="function">String <span class="title">getInterfaceDescriptor</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">return</span> DESCRIPTOR;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">     * Request the PID of this service, to do evil things with it.</span><br><span class="line">     */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPid</span><span class="params">()</span> <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line"></span>&#123;</span><br><span class="line">android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line"><span class="keyword">int</span> _result;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">_data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">mRemote.transact(Stub.TRANSACTION_getPid, _data, _reply, <span class="number">0</span>);</span><br><span class="line">_reply.readException();</span><br><span class="line">_result = _reply.readInt();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span> &#123;</span><br><span class="line">_reply.recycle();</span><br><span class="line">_data.recycle();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> _result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">     * This demonstrates the basic types that you can use as parameters</span><br><span class="line">     * and return values in AIDL.</span><br><span class="line">     */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">basicTypes</span><span class="params">(<span class="keyword">int</span> anInt, <span class="keyword">long</span> aLong, <span class="keyword">boolean</span> aBoolean, <span class="keyword">float</span> aFloat, <span class="keyword">double</span> aDouble, java.lang.String aString)</span> <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line"></span>&#123;</span><br><span class="line">android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">_data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">_data.writeInt(anInt);</span><br><span class="line">_data.writeLong(aLong);</span><br><span class="line">_data.writeInt(((aBoolean)?(<span class="number">1</span>):(<span class="number">0</span>)));</span><br><span class="line">_data.writeFloat(aFloat);</span><br><span class="line">_data.writeDouble(aDouble);</span><br><span class="line">_data.writeString(aString);</span><br><span class="line">mRemote.transact(Stub.TRANSACTION_basicTypes, _data, _reply, <span class="number">0</span>);</span><br><span class="line">_reply.readException();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span> &#123;</span><br><span class="line">_reply.recycle();</span><br><span class="line">_data.recycle();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TRANSACTION_getPid = (android.os.IBinder.FIRST_CALL_TRANSACTION + <span class="number">0</span>);</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TRANSACTION_basicTypes = (android.os.IBinder.FIRST_CALL_TRANSACTION + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">     * Request the PID of this service, to do evil things with it.</span><br><span class="line">     */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPid</span><span class="params">()</span> <span class="keyword">throws</span> android.os.RemoteException</span>;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">     * This demonstrates the basic types that you can use as parameters</span><br><span class="line">     * and return values in AIDL.</span><br><span class="line">     */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">basicTypes</span><span class="params">(<span class="keyword">int</span> anInt, <span class="keyword">long</span> aLong, <span class="keyword">boolean</span> aBoolean, <span class="keyword">float</span> aFloat, <span class="keyword">double</span> aDouble, java.lang.String aString)</span> <span class="keyword">throws</span> android.os.RemoteException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 我们分析下，android工具将我们写的aidl文件生成了怎样的一个文件，它都做哪些工作。</p>
+<p>首先这个接口继承了android.os.IInterface.它是所有由aidl文件生成的基类。接口里有一个内部类Stub，它继承自Binder并实现了这个生成的java接口ISecondary。但是它并没有实现我们定义的接口方法。而这些接口方法其实就是留给我们去实现的。在ApiDemo中，RemoteService类实现了这些方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ISecondary.Stub mSecondaryBinder = <span class="keyword">new</span> ISecondary.Stub() &#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> Process.myPid();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">basicTypes</span><span class="params">(<span class="keyword">int</span> anInt, <span class="keyword">long</span> aLong, <span class="keyword">boolean</span> aBoolean,</span><br><span class="line">               <span class="keyword">float</span> aFloat, <span class="keyword">double</span> aDouble, String aString)</span> </span>&#123;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+<p>这就是我们要做的第二部操作，实现这些方法 ,这里第二个方法apidemo没有实现。</p>
+<p>继续看这个接口类。在stub中实现了一个很重要的方法asInterface(android.os.IBinder obj)。该方法中会去查询是否有一个ISecondary的实例，这其实是去查询是不是在同一个应用里去调用它，那我们就不用实行远程调用，直接本地调用就可以了。如果不是本地接口，这时候会返回一个Proxy对象。Proxy类是Stub的一个内部类，也同样实现了ISecondary接口。但是它却已经实现了这些接口方法。这就意味着如果要进行远程调用，必须获取一个Proxy类的实例，自然是通过stub类的asInterface方法获得。看下ApiDemo里如何获取该实例。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ServiceConnection mSecondaryConnection = <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName className,</span><br><span class="line">                    IBinder service)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// Connecting to a secondary interface is the same as any</span></span><br><span class="line">                <span class="comment">// other interface.</span></span><br><span class="line">                mSecondaryService = ISecondary.Stub.asInterface(service);</span><br><span class="line">                mKillButton.setEnabled(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName className)</span> </span>&#123;</span><br><span class="line">                mSecondaryService = <span class="keyword">null</span>;</span><br><span class="line">                mKillButton.setEnabled(<span class="keyword">false</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到是在onServiceConnected里获得了这个远程实例，具体如何得到？ServiceConnection对象其实是在更早之前用来绑定service而调用的bindService方法的参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bindService(<span class="keyword">new</span> Intent(ISecondary.class.getName()),</span><br><span class="line">                        mSecondaryConnection, Context.BIND_AUTO_CREATE);</span><br></pre></td></tr></table></figure>
+<p>ActivityManagerService在bindService时，会调用ActivityThread的方法，并会传递一个Binder引用，而ActivityThread会回调ServiceConnection中的OnServiceConnected方法，并将这个Binder对象传入，也就是anInterface方法中的这个service。这样整个流程走完就获得了远程实例，我们一般会把它保存到一个全局变量中，供以后调用远程方法。</p>
+<p>这时候我们就可以执行第三步了，进行方法调用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> pid = mSecondaryService.getPid(); </span><br></pre></td></tr></table></figure></p>
+<p>其实这时候我们已经完成了远程调用，获取了pid的值。</p>
+<p>不过我们不妨继续看下去。我们看另一个方法basicTypes，apidemo没有使用，但是另一个方法传入了参数，更具代表意义，我们去实现basicTypes方法，并通过Proxy进进行远程调用它（代码就不贴了）。此时这个调用会被proxy对象转换成可以用pacel包装的基础数据类型，参数也被序列化写入一个数据包。一个用户定义的int型code将会被指派给transaction，这个code用来标识方法名，因为Binder此时只允许传递int类型。这就需要客户端和远程服务端做好约定。</p>
+<p>方法实现如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">basicTypes</span><span class="params">(<span class="keyword">int</span> anInt, <span class="keyword">long</span> aLong, <span class="keyword">boolean</span> aBoolean, <span class="keyword">float</span> aFloat, <span class="keyword">double</span> aDouble, java.lang.String aString)</span> <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line"></span>&#123;</span><br><span class="line">android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">_data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">_data.writeInt(anInt);</span><br><span class="line">_data.writeLong(aLong);</span><br><span class="line">_data.writeInt(((aBoolean)?(<span class="number">1</span>):(<span class="number">0</span>)));</span><br><span class="line">_data.writeFloat(aFloat);</span><br><span class="line">_data.writeDouble(aDouble);</span><br><span class="line">_data.writeString(aString);</span><br><span class="line">mRemote.transact(Stub.TRANSACTION_basicTypes, _data, _reply, <span class="number">0</span>);</span><br><span class="line">_reply.readException();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span> &#123;</span><br><span class="line">_reply.recycle();</span><br><span class="line">_data.recycle();</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></p>
+<p>方法首先通过obtain方法获取两个Parcel对象。调用writeInterfaceToken方法用来标识，以便服务端能够识别。然后写入参数，注意这个写入顺序和取出顺序必须是一致的。然后对传给Proxy的binder对象调用了transact方法，该方法中就将code作为参数传入。pacel对象通过jni接口传递到Binder的C++空间，最终传递到Binder驱动。binder驱动会让客户端进程休眠，并且将传过来的pacel数据从客户端进程映射到服务端进程。然后反向的传递，从binder驱动传递到C++中间层，再通过JNI传递到java层。此时Stub的ontransact方法会被调用。方法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">switch</span> (code)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> INTERFACE_TRANSACTION:</span><br><span class="line">&#123;</span><br><span class="line">reply.writeString(DESCRIPTOR);</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">case</span> TRANSACTION_getPid:</span><br><span class="line">&#123;</span><br><span class="line">data.enforceInterface(DESCRIPTOR);</span><br><span class="line"><span class="keyword">int</span> _result = <span class="keyword">this</span>.getPid();</span><br><span class="line">reply.writeNoException();</span><br><span class="line">reply.writeInt(_result);</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">case</span> TRANSACTION_basicTypes:</span><br><span class="line">&#123;</span><br><span class="line">data.enforceInterface(DESCRIPTOR);</span><br><span class="line"><span class="keyword">int</span> _arg0;</span><br><span class="line">_arg0 = data.readInt();</span><br><span class="line"><span class="keyword">long</span> _arg1;</span><br><span class="line">_arg1 = data.readLong();</span><br><span class="line"><span class="keyword">boolean</span> _arg2;</span><br><span class="line">_arg2 = (<span class="number">0</span>!=data.readInt());</span><br><span class="line"><span class="keyword">float</span> _arg3;</span><br><span class="line">_arg3 = data.readFloat();</span><br><span class="line"><span class="keyword">double</span> _arg4;</span><br><span class="line">_arg4 = data.readDouble();</span><br><span class="line">java.lang.String _arg5;</span><br><span class="line">_arg5 = data.readString();</span><br><span class="line"><span class="keyword">this</span>.basicTypes(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);</span><br><span class="line">reply.writeNoException();</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先通过对code的判断，执行对应方法的内容，对数据按顺序一一解包，读出参数。最终调用方法，并将返回值写入parcel，传递给binder驱动。binder驱动重新唤醒客户端进程并把返回值传递给proxy对象，并最后被解包并作为proxy方法的返回值。</p>
+<p>从这一个流程下来，我们可以知道aidl主要就帮助我们完成了包装数据和解包的过程，并调用了transact过程。而用来传递的数据包我们就称为parcel。关于parcel，我们直接看下官方文档的描述;</p>
+<pre><code>Container for a message (data and object references) that can be sent through an IBinder. A Parcel can contain both flattened data that will be unflattened on the other side of the IPC (using the various methods here for writing specific types, or the general Parcelable interface), and references to live IBinder objects that will result in the other side receiving a proxy IBinder connected with the original IBinder in the Parcel.
+</code></pre><p>如果要传递的参数不是基础类型，那就需要对其进行包装，成为parcelable的实例。如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyParcelable</span> <span class="keyword">implements</span> <span class="title">Parcelable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mData;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">describeContents</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel out, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">        out.writeInt(mData);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Parcelable.Creator&lt;MyParcelable&gt; CREATOR</span><br><span class="line">            = <span class="keyword">new</span> Parcelable.Creator&lt;MyParcelable&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> MyParcelable <span class="title">createFromParcel</span><span class="params">(Parcel in)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> MyParcelable(in);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> MyParcelable[] newArray(<span class="keyword">int</span> size) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> MyParcelable[size];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">MyParcelable</span><span class="params">(Parcel in)</span> </span>&#123;</span><br><span class="line">        mData = in.readInt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 最后看下这张图：</p>
+ <img src="http://foocoder.com/images/aidl2.png">
+<p> 是不是很明了了？我想大家看完以后手动写一个远程调用而不使用aidl也是可以完成了。不得不说，android设计的非常好，也用aidl让需要用到ipc的时候对开发者非常友好。android中ipc通信的使用和过程大致如此。欢迎转载，请注明出处，<a href="http://foocoder.com">http://foocoder.com</a>  谢谢了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2012/11/02/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian/" data-id="cije9g3wp0000a71v1pj852zj" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2012/11/02/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/02/25/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          web app指南之构建html5离线应用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/10/25/androidchuang-kou-guan-li-kuang-jia-jie-xi/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">android窗口管理框架解析</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

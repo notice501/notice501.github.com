@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我在用的mac软件(2)-终端环境之zsh和z(*nix都适用) | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="继续上篇介绍我的终端环境。这篇介绍zsh和z，其实这不局限于os x，在所有的*nix系统中都是可用的。
+zsh zsh作为bash的替代品，自然很多人要问：why zsh？ 在Zsh Workshop 有个长长的功能列表，用来回答这个问题。这里讲下我选择zsh的原因，当然，也是介绍zsh强大的功能。
+
+兼容bash。这使得切换到zsh没有任何成本。
+OS X默认的bash版本实在是太老了啊……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我在用的mac软件(2)-终端环境之zsh和z(*nix都适用)">
+<meta property="og:url" content="http://foocoder.com/2013/07/18/wo-zai-yong-de-macruan-jian-2/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="继续上篇介绍我的终端环境。这篇介绍zsh和z，其实这不局限于os x，在所有的*nix系统中都是可用的。
+zsh zsh作为bash的替代品，自然很多人要问：why zsh？ 在Zsh Workshop 有个长长的功能列表，用来回答这个问题。这里讲下我选择zsh的原因，当然，也是介绍zsh强大的功能。
+
+兼容bash。这使得切换到zsh没有任何成本。
+OS X默认的bash版本实在是太老了啊……">
+<meta property="og:image" content="http://foocoder.com/images/mac/cerrect.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/tabcd.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/kill2.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/kill1.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/ls1.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/ls2.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/gitoh.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/zhuanyi.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/wrongcorrect.png">
+<meta property="og:image" content="http://foocoder.com/images/mac/zjump.png">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我在用的mac软件(2)-终端环境之zsh和z(*nix都适用)">
+<meta name="twitter:description" content="继续上篇介绍我的终端环境。这篇介绍zsh和z，其实这不局限于os x，在所有的*nix系统中都是可用的。
+zsh zsh作为bash的替代品，自然很多人要问：why zsh？ 在Zsh Workshop 有个长长的功能列表，用来回答这个问题。这里讲下我选择zsh的原因，当然，也是介绍zsh强大的功能。
+
+兼容bash。这使得切换到zsh没有任何成本。
+OS X默认的bash版本实在是太老了啊……">
+<meta name="twitter:image" content="http://foocoder.com/images/mac/cerrect.png">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-wo-zai-yong-de-macruan-jian-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      我在用的mac软件(2)-终端环境之zsh和z(*nix都适用)
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2013/07/18/wo-zai-yong-de-macruan-jian-2/">
+      <time datetime="2013-07-18T12:53:00.000Z" itemprop="datePublished">2013-07-18</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/mac/">mac</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/mac/zsh/">zsh</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/mac/zsh/shell/">shell</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>继续上篇介绍我的终端环境。这篇介绍zsh和z，其实这不局限于os x，在所有的*nix系统中都是可用的。</p>
+<h1 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h1><p> zsh作为bash的替代品，自然很多人要问：why zsh？<br> 在<a href="http://www.acm.uiuc.edu/workshops/zsh/why.html" target="_blank" rel="external">Zsh Workshop</a> 有个长长的功能列表，用来回答这个问题。这里讲下我选择zsh的原因，当然，也是介绍zsh强大的功能。</p>
+<ol>
+<li>兼容bash。这使得切换到zsh没有任何成本。</li>
+<li>OS X默认的bash版本实在是太老了啊……</li>
+<li>拼写纠正。你总会不小心打错命令。这时，zsh会进行自动拼写纠正，如图：<img src="http://foocoder.com/images/mac/cerrect.png" alt=""></li>
+<li>更强大的补全。<a id="more"></a>
+<ul>
+<li>连按两次tab会列出所有的补全列表并直接开始选择。如图：<img src="http://foocoder.com/images/mac/tabcd.png" alt=""><br>并且可以用方向键来选择，但是对我这种很少用方向键的人来说只能猛敲tab了么，不是，zsh支持使用<code>&lt;ctrl-n/p/f/b&gt;</code>来选择，perfect!</li>
+<li>命令选项补全。有多少人依然记不住tar的命令选项？中枪的去抄20遍……在zsh中只需要键入<code>tar - &lt;tab&gt;</code>就会列出所有的选项和帮助说明。用了zsh之后<code>man</code>少用了好多……</li>
+<li>命令参数补全。zsh 对命令的参数补全也很强大。键入<code>kill &lt;tab&gt;</code>就会列出所有的进程名和对应的进程号。如图：<img src="http://foocoder.com/images/mac/kill2.png" alt="">这还不够，试试键入<code>kill sbin &lt;tab&gt;</code>,如图所示:<img src="http://foocoder.com/images/mac/kill1.png" alt="">自动为sbin这个进程名补全了进程号。kill进程再也不用两步操作了。</li>
+</ul>
+</li>
+<li>更智能的历史命令。在用<code>&lt;ctrl-p&gt;</code>或者<code>方向上键</code>查找历史命令时，zsh支持限制查找。比如，输入<code>ls</code>然后再按方向上键,则只会查找用过的ls命令。而此时使用<code>&lt;ctrl-p&gt;</code>则会仍然按之前的方式查找，忽略<code>ls</code>。</li>
+<li>多个终端会话共享历史记录。经常有多个窗口，tab，tmux的多个session，panel。这些命令历史不能共享实在是很糟糕的回忆。但是有了zsh之后，这些确实成了回忆了,所有的命令历史都可以共享。</li>
+<li>更智能的<code>cd</code>。首先你甚至不需要再输入cd了，直接输入路径即可。第二，在你知道路径的情况下，比如<code>/usr/local/bin</code>你可以输入<code>cd /u/l/b</code>然后按<code>&lt;Tab&gt;</code>进行补全快速输入。这显然不够，zsh还支持路径替换，如果你其实想进入的是<code>/usr/local/bin</code>，不再需要<code>../</code> 了，直接在当前输入<code>cd bin share</code>即可，则<code>bin</code>会替换为<code>share</code>。在之后我会介绍z和autojumper，目录跳转会更方便。 </li>
+<li>更强大的alias。zsh不仅支持普通的alias，例如：<code>alias ls =&#39;ls --color=auto&#39;</code>。zsh还支持后缀alias,即以什么命令打开特定的后缀名文件。例如<code>alias -s js=mvim</code>,输入<code>hello.js</code>，会以vim打开该文件,而不在需要<code>vim hello.js</code>。</li>
+<li>通配符搜索。这也是我最爱的功能之一。之前讲过由于命令补全少用了很多<code>man</code>命令，而这个功能让我少用了很多<code>find</code>命令。    一般的通配符搜索无非是<code>ls -l *.log</code>,如图:<img src="http://foocoder.com/images/mac/ls1.png" alt="">在zsh中可以做到递归的通配符搜索。使用<code>**/</code>来递归搜索，如图<img src="http://foocoder.com/images/mac/ls2.png" alt="">是不是在很多场景下可以取代<code>find</code>？</li>
+</ol>
+<p>以上都是我感觉迁移到zsh之后非常实用的功能。要想从头开始了解和学习zsh，可以访问<a href="http://zsh.sourceforge.net/Guide/zshguide.html" target="_blank" rel="external">A User’s Guide to the Z-Shell</a>。不过大家都很忙，从头开始自己学习和配置会很累。所以现在说到zsh，不得不提的就是<a href="https://github.com/robbyrussell/oh-my-zsh?source=c" target="_blank" rel="external">oh-my-zsh</a>,oh-my-zsh是一个开源的zsh配置管理框架，提供了大量实用的功能，主题等。现在基本都是标配了吧。如图是我在用的默认zsh主题<code>robbyrussell</code>，如图<img src="http://foocoder.com/images/mac/gitoh.png" alt="">可以发它能自动显示当前所在的git分支以及当前本地状态（黄色的小叉表示本地有更新未提交）。</p>
+<p>当然zsh也不是完美无缺。在我使用过程中有两点不是很舒服：</p>
+<ol>
+<li>自动纠正并不总是那么智能。如图：<img src="http://foocoder.com/images/mac/zhuanyi.png" alt=""><br> 但是可以对这些命令使用alias 加上<code>nocorrect</code>前缀，如：</li>
+</ol>
+<p><code>alias rake deploy=&#39;nocorrect rake deploy&#39;</code></p>
+<ol>
+<li><p>一些符号是zsh中保留的，使用需要转义，如图：<img src="http://foocoder.com/images/mac/wrongcorrect.png" alt=""></p>
+<hr>
+<p>下面讲下zsh和oh-my-zsh的安装。</p>
+</li>
+</ol>
+<p><strong>使用brew来安装zsh</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install zsh</span><br></pre></td></tr></table></figure>
+<p> <strong>设置zsh为默认</strong></p>
+<p> 在<code>/etc/shells</code>文件末尾添加</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/zsh</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">执行：</span><br></pre></td></tr></table></figure>
+<p> chsh -s /usr/local/bin/zsh<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"> 最后记得将`~/.bash_prorile`或者`~/.profile`等配置拷贝到~/.zshrc中。</span><br><span class="line"> </span><br><span class="line"> __安装oh-my-zsh__</span><br><span class="line"></span><br><span class="line"> 自动安装:</span><br><span class="line"> </span><br><span class="line">``` </span><br><span class="line">curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh</span><br></pre></td></tr></table></figure></p>
+<p>可以选择自己喜欢的<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes" target="_blank" rel="external">主题</a>。只需要修改<code>~/.zshrc</code>文件中的<code>ZSH_THEME</code>即可。</p>
+<h1 id="z_u548Cautojump"><a href="#z_u548Cautojump" class="headerlink" title="z和autojump"></a>z和autojump</h1><p><a href="https://github.com/rupa/z" target="_blank" rel="external">z</a>和<a href="https://github.com/joelthelion/autojump" target="_blank" rel="external">autojump</a>的功能类似，前者是简单的shell脚本实现，后者由python实现，功能都是可以方便自动匹配到你最多使用的目录并跳转。我在用的是z，如图<img src="http://foocoder.com/images/mac/zjump.png" alt="">，我在根目录输入<code>z github</code>可以自动跳转到我常用的<code>notice501.github.com</code>这个目录，也就是本博客的工程目录。超级方便的工具。autojump用法类似，命令为<code>j</code>而不是<code>z</code>两者的安装方式：</p>
+<p><strong>z</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:rupa/z.git</span><br></pre></td></tr></table></figure>
+<p>而后将z.sh放入环境变量即可。</p>
+<p><strong>autojump</strong></p>
+<p>autojump可以直接使用brew安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install autojump</span><br></pre></td></tr></table></figure>
+<p>有问题和分享欢迎留言交流。也欢迎关注我的<a href="http://weibo.com/notice520" target="_blank" rel="external">微博</a>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2013/07/18/wo-zai-yong-de-macruan-jian-2/" data-id="cije88mnj001kqc1vg8y6qijn" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2013/07/18/wo-zai-yong-de-macruan-jian-2/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/07/28/zhong-duan-huan-jing-zhi-tmux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          终端环境之tmux
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/07/14/wo-zai-yong-de-macruan-jian/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">我在用的mac软件(1)--终端环境之iTerm2</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

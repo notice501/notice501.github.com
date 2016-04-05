@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>详解JavaScript中的this | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JavaScript中的this总是让人迷惑，应该是js众所周知的坑之一。个人也觉得js中的this不是一个好的设计，由于this晚绑定的特性，它可以是全局对象，当前对象，或者…有人甚至因为坑大而不用this。
+其实如果完全掌握了this的工作原理，自然就不会走进这些坑。来看下以下这些情况中的this分别会指向什么：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解JavaScript中的this">
+<meta property="og:url" content="http://foocoder.com/2013/05/03/xiang-jie-javascriptzhong-de-this/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="JavaScript中的this总是让人迷惑，应该是js众所周知的坑之一。个人也觉得js中的this不是一个好的设计，由于this晚绑定的特性，它可以是全局对象，当前对象，或者…有人甚至因为坑大而不用this。
+其实如果完全掌握了this的工作原理，自然就不会走进这些坑。来看下以下这些情况中的this分别会指向什么：">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="详解JavaScript中的this">
+<meta name="twitter:description" content="JavaScript中的this总是让人迷惑，应该是js众所周知的坑之一。个人也觉得js中的this不是一个好的设计，由于this晚绑定的特性，它可以是全局对象，当前对象，或者…有人甚至因为坑大而不用this。
+其实如果完全掌握了this的工作原理，自然就不会走进这些坑。来看下以下这些情况中的this分别会指向什么：">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-xiang-jie-javascriptzhong-de-this" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      详解JavaScript中的this
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2013/05/03/xiang-jie-javascriptzhong-de-this/">
+      <time datetime="2013-05-03T11:28:00.000Z" itemprop="datePublished">2013-05-03</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>JavaScript中的this总是让人迷惑，应该是js众所周知的坑之一。<br>个人也觉得js中的this不是一个好的设计，由于this晚绑定的特性，它可以是全局对象，当前对象，或者…有人甚至因为坑大而不用this。</p>
+<p>其实如果完全掌握了this的工作原理，自然就不会走进这些坑。来看下以下这些情况中的this分别会指向什么：<br><a id="more"></a></p>
+<p>###1.全局代码中的this</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="keyword">this</span>)<span class="comment">//window</span></span><br></pre></td></tr></table></figure>
+<p>全局范围内的this将会指向全局对象，在浏览器中即使window。</p>
+<p>###2.作为单纯的函数调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fooCoder</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.x = x;</span><br><span class="line">&#125;</span><br><span class="line">fooCoder(<span class="number">2</span>);</span><br><span class="line">alert(x);<span class="comment">// 全局变量x值为2</span></span><br></pre></td></tr></table></figure>
+<p>这里this指向了全局对象，即window。在严格模式中，则是undefined。</p>
+<p>###3.作为对象的方法调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"clever coder"</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">	name : <span class="string">"foocoder"</span>,</span><br><span class="line">	hello : <span class="function"><span class="keyword">function</span>(<span class="params">sth</span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">" says "</span> + sth);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">person.hello(<span class="string">"hello world"</span>);</span><br></pre></td></tr></table></figure>
+<p>输出 foocoder says hello world。this指向person对象，即当前对象。</p>
+<p>###4.作为构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> FooCoder();</span><br></pre></td></tr></table></figure>
+<p>函数内部的this指向新创建的对象。</p>
+<p>###5.内部函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"clever coder"</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">	name : <span class="string">"foocoder"</span>,</span><br><span class="line">	hello : <span class="function"><span class="keyword">function</span>(<span class="params">sth</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> sayhello = <span class="function"><span class="keyword">function</span>(<span class="params">sth</span>) </span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">" says "</span> + sth);</span><br><span class="line">		&#125;;</span><br><span class="line">		sayhello(sth);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">person.hello(<span class="string">"hello world"</span>);<span class="comment">//clever coder says hello world</span></span><br></pre></td></tr></table></figure>
+<p>在内部函数中，this没有按预想的绑定到外层函数对象上，而是绑定到了全局对象。这里普遍被认为是JavaScript语言的设计错误，因为没有人想让内部函数中的this指向全局对象。一般的处理方式是将this作为变量保存下来，一般约定为that或者self：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"clever coder"</span>;</span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">	name : <span class="string">"foocoder"</span>,</span><br><span class="line">	hello : <span class="function"><span class="keyword">function</span>(<span class="params">sth</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">var</span> sayhello = <span class="function"><span class="keyword">function</span>(<span class="params">sth</span>) </span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(that.name + <span class="string">" says "</span> + sth);</span><br><span class="line">		&#125;;</span><br><span class="line">		sayhello(sth);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">person.hello(<span class="string">"hello world"</span>);<span class="comment">//foocoder says hello world</span></span><br></pre></td></tr></table></figure>
+<p>###6.使用call和apply设置this<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.hello.call(person, <span class="string">"world"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>apply和call类似，只是后面的参数是通过一个数组传入，而不是分开传入。两者的方法定义：</p>
+<pre><code>call( thisArg [，arg1，arg2，… ] );  // 参数列表，arg1，arg2，...
+apply(thisArg [，argArray] );     // 参数数组，argArray
+</code></pre><p>两者都是将某个函数绑定到某个具体对象上使用，自然此时的this会被显式的设置为第一个参数。</p>
+<p>##简单地总结</p>
+<p>简单地总结以上几点，可以发现，其实只有第六点是让人疑惑的。</p>
+<p>其实就可以总结为以下几点：</p>
+<p>1.当函数作为对象的方法调用时，this指向该对象。</p>
+<p>2.当函数作为淡出函数调用时，this指向全局对象（严格模式时，为undefined）</p>
+<p>3.构造函数中的this指向新创建的对象</p>
+<p>4.嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。</p>
+<p>再总结的简单点，如果在函数中使用了this，只有在该函数直接被某对象调用时，该this才指向该对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj.foocoder();</span><br><span class="line">foocoder.call(obj, ...);</span><br><span class="line">foocoder.apply(obj, …);</span><br></pre></td></tr></table></figure>
+<p>##更进一步</p>
+<p>我们可能经常会写这样的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#some-ele"</span>).click = obj.handler;</span><br></pre></td></tr></table></figure>
+<p>如果在handler中用了this，this会绑定在obj上么？显然不是，赋值以后，函数是在回调中执行的，this会绑定到$(“#some-div”)元素上。这就需要理解函数的执行环境。本文不打算长篇赘述函数的执行环境，可以参考《javascript高级程序设计》中对执行环境和作用域链的相关介绍。这里要指出的时，理解js函数的执行环境，会更好地理解this。</p>
+<p>那我们如何能解决回调函数绑定的问题？ES5中引入了一个新的方法，bind():</p>
+<pre><code>fun.bind(thisArg[, arg1[, arg2[, ...]]])
+
+thisArg
+当绑定函数被调用时,该参数会作为原函数运行时的this指向.当使用new 操作符调用绑定函数时,该参数无效.
+arg1, arg2, ...
+当绑定函数被调用时,这些参数加上绑定函数本身的参数会按照顺序作为原函数运行时的参数.
+</code></pre><p>该方法创建一个新函数，称为绑定函数，绑定函数会以创建它时传入bind方法的第一个参数作为this，传入bind方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数.</p>
+<p>显然bind方法可以很好地解决上述问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#some-ele"</span>).click(person.hello.bind(person));</span><br><span class="line"><span class="comment">//相应元素被点击时，输出foocoder says hello world</span></span><br></pre></td></tr></table></figure>
+<p>其实该方法也很容易模拟，我们看下Prototype.js中bind方法的源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>, args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>), object = args.shift(); </span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">return</span> fn.apply(object, </span><br><span class="line">      args.concat(<span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>))); </span><br><span class="line">  &#125;; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>明白了么？</p>
+<p>相信看完全文以后，this不再是坑～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2013/05/03/xiang-jie-javascriptzhong-de-this/" data-id="cije88mnw001tqc1vsrydh1va" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2013/05/03/xiang-jie-javascriptzhong-de-this/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/07/10/ji-lu-yu-dao-de-ling-sui-wen-ti/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          记录遇到的零碎问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/02/25/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">web app指南之构建html5离线应用</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

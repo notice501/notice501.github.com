@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>每日vim插件--强大的自动补全neocomplete.vim和supertab | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#neocomplete.vim
+今天介绍两个个必备的vim插件，自动补全插件——neocomplete.vim和superTab。
+neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。
+该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要if_lua的支持。
+mac下安装：
+brew">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--强大的自动补全neocomplete.vim和supertab">
+<meta property="og:url" content="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="#neocomplete.vim
+今天介绍两个个必备的vim插件，自动补全插件——neocomplete.vim和superTab。
+neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。
+该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要if_lua的支持。
+mac下安装：
+brew">
+<meta property="og:image" content="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png">
+<meta property="og:image" content="https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png">
+<meta property="og:image" content="https://f.cloud.github.com/assets/41495/622456/fb2cc0bc-cf42-11e2-94e8-403cdcf5427e.png">
+<meta property="og:image" content="https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png">
+<meta property="og:image" content="https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png">
+<meta property="og:image" content="https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--强大的自动补全neocomplete.vim和supertab">
+<meta name="twitter:description" content="#neocomplete.vim
+今天介绍两个个必备的vim插件，自动补全插件——neocomplete.vim和superTab。
+neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。
+该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要if_lua的支持。
+mac下安装：
+brew">
+<meta name="twitter:image" content="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      每日vim插件--强大的自动补全neocomplete.vim和supertab
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/">
+      <time datetime="2014-04-28T13:02:00.000Z" itemprop="datePublished">2014-04-28</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/vim/">vim</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>#neocomplete.vim</p>
+<p>今天介绍两个个必备的vim插件，自动补全插件——<a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="external">neocomplete.vim</a>和superTab。</p>
+<p>neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。</p>
+<p>该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要<a href="http://vimdoc.sourceforge.net/htmldoc/if_lua.html" target="_blank" rel="external">if_lua</a>的支持。</p>
+<p>mac下安装：</p>
+<pre><code>brew install macvim --with-cscope --with-lua --HEAD
+</code></pre><p>或者不用macvim（真的不用么？赶紧试试吧）：</p>
+<pre><code>brew install vim --with-lua
+</code></pre><p>不需要过多的介绍,看作者给的图：</p>
+<a id="more"></a>
+<h3 id="u6587_u4EF6_u8865_u5168"><a href="#u6587_u4EF6_u8865_u5168" class="headerlink" title="文件补全"></a>文件补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png" alt="Original filename completion."><br><img src="https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png" alt="Include filename completion."></p>
+<h3 id="Omni__u8865_u5168"><a href="#Omni__u8865_u5168" class="headerlink" title="Omni 补全"></a>Omni 补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622456/fb2cc0bc-cf42-11e2-94e8-403cdcf5427e.png" alt="Omni completion."></p>
+<h3 id="vimshell_u8865_u5168"><a href="#vimshell_u8865_u5168" class="headerlink" title="vimshell补全"></a><a href="http://github.com/Shougo/vimshell" target="_blank" rel="external">vimshell</a>补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png" alt="Completion with vimshell(http://github.com/Shougo/vimshell)."></p>
+<h3 id="Vim__u8865_u5168"><a href="#Vim__u8865_u5168" class="headerlink" title="Vim 补全"></a>Vim 补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png" alt="Vim completion."><br><img src="https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif" alt="Vim completion with animation."></p>
+<p>作者还给出了推荐配置，每个配置都有对应的英文注释，我就不一一翻译了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!</span><br><span class="line">" Disable AutoComplPop.</span><br><span class="line">let g:acp_enableAtStartup = 0</span><br><span class="line">" Use neocomplete.</span><br><span class="line">let g:neocomplete#enable_at_startup = 1</span><br><span class="line">" Use smartcase.</span><br><span class="line">let g:neocomplete#enable_smart_case = 1</span><br><span class="line">" Set minimum syntax keyword length.</span><br><span class="line">let g:neocomplete#sources#syntax#min_keyword_length = 3</span><br><span class="line">let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'</span><br><span class="line"></span><br><span class="line">" Define dictionary.</span><br><span class="line">let g:neocomplete#sources#dictionary#dictionaries = &#123;</span><br><span class="line">    \ 'default' : '',</span><br><span class="line">    \ 'vimshell' : $HOME.'/.vimshell_hist',</span><br><span class="line">    \ 'scheme' : $HOME.'/.gosh_completions'</span><br><span class="line">        \ &#125;</span><br><span class="line"></span><br><span class="line">" Define keyword.</span><br><span class="line">if !exists('g:neocomplete#keyword_patterns')</span><br><span class="line">    let g:neocomplete#keyword_patterns = &#123;&#125;</span><br><span class="line">endif</span><br><span class="line">let g:neocomplete#keyword_patterns['default'] = '\h\w*'</span><br><span class="line"></span><br><span class="line">" Plugin key-mappings.</span><br><span class="line">inoremap &lt;expr&gt;&lt;C-g&gt;     neocomplete#undo_completion()</span><br><span class="line">inoremap &lt;expr&gt;&lt;C-l&gt;     neocomplete#complete_common_string()</span><br><span class="line"></span><br><span class="line">" Recommended key-mappings.</span><br><span class="line">" &lt;CR&gt;: close popup and save indent.</span><br><span class="line">inoremap &lt;silent&gt; &lt;CR&gt; &lt;C-r&gt;=&lt;SID&gt;my_cr_function()&lt;CR&gt;</span><br><span class="line">function! s:my_cr_function()</span><br><span class="line">  return neocomplete#close_popup() . "\&lt;CR&gt;"</span><br><span class="line">  " For no inserting &lt;CR&gt; key.</span><br><span class="line">  "return pumvisible() ? neocomplete#close_popup() : "\&lt;CR&gt;"</span><br><span class="line">endfunction</span><br><span class="line">" &lt;TAB&gt;: completion.</span><br><span class="line">inoremap &lt;expr&gt;&lt;TAB&gt;  pumvisible() ? "\&lt;C-n&gt;" : "\&lt;TAB&gt;"</span><br><span class="line">" &lt;C-h&gt;, &lt;BS&gt;: close popup and delete backword char.</span><br><span class="line">inoremap &lt;expr&gt;&lt;C-h&gt; neocomplete#smart_close_popup()."\&lt;C-h&gt;"</span><br><span class="line">inoremap &lt;expr&gt;&lt;BS&gt; neocomplete#smart_close_popup()."\&lt;C-h&gt;"</span><br><span class="line">inoremap &lt;expr&gt;&lt;C-y&gt;  neocomplete#close_popup()</span><br><span class="line">inoremap &lt;expr&gt;&lt;C-e&gt;  neocomplete#cancel_popup()</span><br><span class="line">" Close popup by &lt;Space&gt;.</span><br><span class="line">"inoremap &lt;expr&gt;&lt;Space&gt; pumvisible() ? neocomplete#close_popup() : "\&lt;Space&gt;"</span><br><span class="line"></span><br><span class="line">" For cursor moving in insert mode(Not recommended)</span><br><span class="line">"inoremap &lt;expr&gt;&lt;Left&gt;  neocomplete#close_popup() . "\&lt;Left&gt;"</span><br><span class="line">"inoremap &lt;expr&gt;&lt;Right&gt; neocomplete#close_popup() . "\&lt;Right&gt;"</span><br><span class="line">"inoremap &lt;expr&gt;&lt;Up&gt;    neocomplete#close_popup() . "\&lt;Up&gt;"</span><br><span class="line">"inoremap &lt;expr&gt;&lt;Down&gt;  neocomplete#close_popup() . "\&lt;Down&gt;"</span><br><span class="line">" Or set this.</span><br><span class="line">"let g:neocomplete#enable_cursor_hold_i = 1</span><br><span class="line">" Or set this.</span><br><span class="line">"let g:neocomplete#enable_insert_char_pre = 1</span><br><span class="line"></span><br><span class="line">" AutoComplPop like behavior.</span><br><span class="line">"let g:neocomplete#enable_auto_select = 1</span><br><span class="line"></span><br><span class="line">" Shell like behavior(not recommended).</span><br><span class="line">"set completeopt+=longest</span><br><span class="line">"let g:neocomplete#enable_auto_select = 1</span><br><span class="line">"let g:neocomplete#disable_auto_complete = 1</span><br><span class="line">"inoremap &lt;expr&gt;&lt;TAB&gt;  pumvisible() ? "\&lt;Down&gt;" : "\&lt;C-x&gt;\&lt;C-u&gt;"</span><br><span class="line"></span><br><span class="line">" Enable omni completion.</span><br><span class="line">autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS</span><br><span class="line">autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags</span><br><span class="line">autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS</span><br><span class="line">autocmd FileType python setlocal omnifunc=pythoncomplete#Complete</span><br><span class="line">autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags</span><br><span class="line"></span><br><span class="line">" Enable heavy omni completion.</span><br><span class="line">if !exists('g:neocomplete#sources#omni#input_patterns')</span><br><span class="line">  let g:neocomplete#sources#omni#input_patterns = &#123;&#125;</span><br><span class="line">endif</span><br><span class="line">"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]-&gt;\h\w*\|\h\w*::'</span><br><span class="line">"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|-&gt;\)'</span><br><span class="line">"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|-&gt;\)\|\h\w*::'</span><br><span class="line"></span><br><span class="line">" For perlomni.vim setting.</span><br><span class="line">" https://github.com/c9s/perlomni.vim</span><br><span class="line">let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*-&gt;\h\w*\|\h\w*::'</span><br></pre></td></tr></table></figure>
+<p>没有特殊需求，直接copy就用即可。没有复杂的配置，用起来还是非常简单的。</p>
+<p>还有一个比较出名的补全插件是<a href="https://github.com/Valloric/YouCompleteMe" target="_blank" rel="external">YouCompleteMe</a>.大家也可以去看下，应该是现在用的最广泛的补全插件了。我很早就试用过，还是neocomplete要更顺手更快些，总感觉neocomplete要更智能些。</p>
+<p>#superTab</p>
+<p>说到补全还有个不得不说，那就是tab键，必须用tab来进行补全那才是补全啊。其实neocomplete的推荐配置已经配置成了自动提示补全文字，并且支持tab选择，但是还是无法<code>shift-tab</code>回退选择。superTab就是为增强tab而生，当然可以做到这点。</p>
+<p>superTab 和neocomplete一样，几乎不用自己折腾什么配置，也不用过多的介绍，一句话就可以说完它的功能。</p>
+<pre><code>bar
+baz
+b*&lt;Tab&gt; (*为光标所在位置) 
+</code></pre><p>按示例在光标处按下tab，就会展开推荐补全bar和baz，按tab即可进行循环选择。</p>
+<p>可以配置supertab的默认补全类型（对vim补全不了解的同学自己补下omni补全相关知识，需要我介绍可以回复下）：</p>
+<pre><code>let g:SuperTabDefaultCompletionType = &quot;&lt;c-x&gt;&lt;c-u&gt;&quot;
+</code></pre><p>示例把supertab修改为了用户补全，默认是<code>&lt;c-p&gt;</code>.</p>
+<p>今天就介绍到这里。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/" data-id="cije88mlz000cqc1vwnp28bhj" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          每日vim插件--平滑滚动accelerated-smooth-scroll.vim
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">每日vim插件--Gist.vim</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

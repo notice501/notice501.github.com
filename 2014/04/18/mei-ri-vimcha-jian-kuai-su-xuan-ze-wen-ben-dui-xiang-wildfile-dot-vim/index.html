@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>每日vim插件--快速选择文本对象wildfile.vim | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。
+这个插件就是–wildfire（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）
+插件默认定义的候选文本对象为：
+`i&amp;apos;`, `i&amp;quot;`,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--快速选择文本对象wildfile.vim">
+<meta property="og:url" content="http://foocoder.com/2014/04/18/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。
+这个插件就是–wildfire（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）
+插件默认定义的候选文本对象为：
+`i&amp;apos;`, `i&amp;quot;`,">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/69d56e38gw1efk07xfk7kg20jv087myy.gif">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--快速选择文本对象wildfile.vim">
+<meta name="twitter:description" content="之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。
+这个插件就是–wildfire（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）
+插件默认定义的候选文本对象为：
+`i&amp;apos;`, `i&amp;quot;`,">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/69d56e38gw1efk07xfk7kg20jv087myy.gif">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      每日vim插件--快速选择文本对象wildfile.vim
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/18/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim/">
+      <time datetime="2014-04-18T12:06:00.000Z" itemprop="datePublished">2014-04-18</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/vim/">vim</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>之前我们介绍了文本对象，并介绍了两个自定义文本对象的插件。今天介绍的插件也和文本对象有关。他可以用来快速的就近选择一个候选文本对象，并能通过快捷键继续简单的扩大文本对象范围。</p>
+<p>这个插件就是–<a href="https://github.com/Shougo/wildfire.vim" target="_blank" rel="external">wildfire</a>（给的是shougo fork的repo地址，比较喜欢shougo这个插件作者，而且这个fork fix了一个bug）</p>
+<p>插件默认定义的候选文本对象为：</p>
+<pre><code>`i&apos;`, `i&quot;`, `i)`, `i]`, `i}`, `ip` and `it`
+</code></pre><p>来一张官方图</p>
+<a id="more"></a>
+<p><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efk07xfk7kg20jv087myy.gif" alt=""></p>
+<p>有图应该大家能理解这个插件的作用了。</p>
+<p>使用方式也非常简单，按<code>enter</code>选择最近一个文本对象，再按下<code>enter</code>在刚刚的选择之上再选择最近的文本对象。按下<code>&lt;BS&gt;</code>就能回退到上一个选择。</p>
+<p>当然，你可以自定义快捷键：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">" This selects the next closest text object.</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:wildfire_fuel_map</span> = <span class="string">"&lt;ENTER&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">" This selects the previous closest text object.</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:wildfire_water_map</span> = <span class="string">"&lt;BS&gt;"</span></span><br></pre></td></tr></table></figure>
+<p>候选的文本对象也是可以配置的：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">g:wildfire_objects</span> = [<span class="string">"i'"</span>, <span class="string">'i"'</span>, <span class="string">"i)"</span>, <span class="string">"i]"</span>, <span class="string">"i&#125;"</span>, <span class="string">"ip"</span>, <span class="string">"it"</span>]</span><br></pre></td></tr></table></figure>
+<p>插件还支持对文件类型分别定义，比如要在html中只处理tag，忽略其他文本对象，只需要配置：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">" use '*' to mean 'all other filetypes'</span><br><span class="line">" in this example, html and xml share the same text objects</span><br><span class="line">let g:wildfire_objects = &#123;</span><br><span class="line">    \ "*" : ["i'", 'i"', "i)", "i]", "i&#125;", "ip"],</span><br><span class="line">    \ "html,xml" : ["at"],</span><br><span class="line">\ &#125;</span><br></pre></td></tr></table></figure>
+<p>与之类似的一个用的相当广泛的插件还有<a href="https://github.com/terryma/vim-expand-region" target="_blank" rel="external">vim-expand-region</a>。大家可以自己选择。有问题欢迎留言或回复交流。也希望大家推荐自己在用，自己写的插件给我。今天看到一个朋友微信回复我的一个他自己写的插件，我已经立刻用上了，卖个关子，下次介绍。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2014/04/18/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim/" data-id="cije88mmk000nqc1vch0aqxuj" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2014/04/18/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/21/mei-ri-vimcha-jian-xian-shi-git-diff-gitgutter-dot-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          每日vim插件--显示git diff:GitGutter.vim
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/17/mei-ri-vimcha-jian-zhong-fu-motion-space-dot-vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">每日vim插件--可以重复motion的space.vim</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

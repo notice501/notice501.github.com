@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>每日vim插件--vim中的文本对象及相关插件 | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天按读者留言的要求，介绍下文本对象。同时还会介绍我在用的几个文本相关的插件，今天是满满的内容啊。
+所谓文本对象，简单来说就是以一定标准分隔符来标识一段文本，比如一个单词，一句话，一段话。
+使用文本对象后你会发现你在vim中的移动和操作速度提升了不是一点半点。
+在vim中编辑命令的结构如下：
+&amp;lt;number&amp;gt;&amp;lt;command&amp;gt;&amp;lt;text object or motio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--vim中的文本对象及相关插件">
+<meta property="og:url" content="http://foocoder.com/2014/04/14/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="今天按读者留言的要求，介绍下文本对象。同时还会介绍我在用的几个文本相关的插件，今天是满满的内容啊。
+所谓文本对象，简单来说就是以一定标准分隔符来标识一段文本，比如一个单词，一句话，一段话。
+使用文本对象后你会发现你在vim中的移动和操作速度提升了不是一点半点。
+在vim中编辑命令的结构如下：
+&amp;lt;number&amp;gt;&amp;lt;command&amp;gt;&amp;lt;text object or motio">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--vim中的文本对象及相关插件">
+<meta name="twitter:description" content="今天按读者留言的要求，介绍下文本对象。同时还会介绍我在用的几个文本相关的插件，今天是满满的内容啊。
+所谓文本对象，简单来说就是以一定标准分隔符来标识一段文本，比如一个单词，一句话，一段话。
+使用文本对象后你会发现你在vim中的移动和操作速度提升了不是一点半点。
+在vim中编辑命令的结构如下：
+&amp;lt;number&amp;gt;&amp;lt;command&amp;gt;&amp;lt;text object or motio">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      每日vim插件--vim中的文本对象及相关插件
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/14/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian/">
+      <time datetime="2014-04-14T14:56:00.000Z" itemprop="datePublished">2014-04-14</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/vim/">vim</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>今天按读者留言的要求，介绍下文本对象。同时还会介绍我在用的几个文本相关的插件，今天是满满的内容啊。</p>
+<p>所谓文本对象，简单来说就是以一定标准分隔符来标识一段文本，比如一个单词，一句话，一段话。</p>
+<p>使用文本对象后你会发现你在vim中的移动和操作速度提升了不是一点半点。</p>
+<p>在vim中编辑命令的结构如下：</p>
+<pre><code>&lt;number&gt;&lt;command&gt;&lt;text object or motion&gt;
+</code></pre><p>可以看到文本对象和motion的操作是完全一致的，第一个是数字，比如3w，就向前移动三个单词。</p>
+<a id="more"></a>
+<p>文本对象大致有以下几种：</p>
+<pre><code>w  s  p &apos;&apos; &quot;&quot;  &lt;&gt;  []  ()  {} &lt;tag&gt;
+</code></pre><p>其中w表示word，s表示句子，p表示段落，其他的就是昨天介绍过的包围符号，标签用t表示。</p>
+<p>文本对象的操作范围有两种，一种用<code>i</code>表示,是inner的意思，即不包括单词边上的空格符，亦或是<code>&lt;</code>包围符号本身。一种用<code>a</code>表示，是arround的意思，和i相反，使用a就包括了空格符或者包围符号本身。</p>
+<p>文本对象的编辑命令就是vim中的几个常用编辑命令，分别是</p>
+<pre><code>`y：复制`，`d：删除`,`c：替换`，`v：选中`
+</code></pre><p>说的有点多了，来几个例子相信大家就立刻理解了。（例子中*都是光标所在位置）</p>
+<p>比如：</p>
+<pre><code>&lt;*h2&gt;Sample Title&lt;/h2&gt;
+</code></pre><p>按下<code>cit</code>,文本变为：</p>
+<pre><code>&lt;h2&gt;*&lt;/h2&gt;
+</code></pre><p>再比如：<br>    console.log(“stay hungry,” + “stay *foolish”)</p>
+<p>按下<code>da&quot;</code>，文本变为：</p>
+<pre><code>console.log(&quot;stay hungry,&quot; +*)
+</code></pre><p>再按下<code>di)</code>，文本变为：</p>
+<pre><code>console.log()
+</code></pre><p>比如</p>
+<pre><code>Hello Worl*d
+</code></pre><p>按下<code>diw</code>,文本变为：</p>
+<pre><code>Hello
+</code></pre><p>很容易理解是不是？有没有发现为什么说文本对象会非常方便了？无论光标在文本的哪个位置，都可以直接操作整个文本。体验箭步如飞的感觉吧。</p>
+<p>vim还允许使用脚本来自定义文本对象，这就是我们今天要介绍的插件了，这些插件自定义了一些文本对象。</p>
+<p>1.CamelCaseMotion</p>
+<p>该插件是把驼峰词语的每个单词分开，举个例子：</p>
+<pre><code>get*ElementsByClassName
+</code></pre><p>按下<code>di,w</code>,则文本变为：</p>
+<pre><code>getByClassName
+</code></pre><p>非常方便。</p>
+<p>2.argtextobj</p>
+<p>该插件定义了函数内的参数文本对象。比如：</p>
+<pre><code>foo(text, ti*mes, option) {}
+</code></pre><p>按下<code>daa</code>,则文本变为：</p>
+<pre><code>foo(text, option) {}
+</code></pre><p>今天暂时就介绍到这里。都快0点了，赶紧发出来。任何问题都可以回复给我。    </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2014/04/14/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian/" data-id="cije88mmr000tqc1vqrpa1dz3" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2014/04/14/mei-ri-vimcha-jian-vimzhong-de-wen-ben-dui-xiang-ji-xiang-guan-cha-jian/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/15/mei-ri-vimcha-jian-vim-che-xiao-shu-gundo-dot-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          每日vim插件--vim 撤销树Gundo.vim
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/13/mei-ri-vimcha-jian-surround-dot-vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">每日vim插件--surround.vim</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>web app指南之构建html5离线应用 | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。
+html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web app指南之构建html5离线应用">
+<meta property="og:url" content="http://foocoder.com/2013/02/25/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。
+html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web app指南之构建html5离线应用">
+<meta name="twitter:description" content="创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。
+html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      web app指南之构建html5离线应用
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2013/02/25/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong/">
+      <time datetime="2013-02-25T05:02:00.000Z" itemprop="datePublished">2013-02-25</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/html5/">html5</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>创建运行在手机上的web app时，鉴于手机用户的网络情况，我们需要考虑到用户离线使用的情况。</p>
+<p>html5支持构建离线应用程序。使用它的本地缓存机制可以将应用所需的资源文件都缓存到本地，从而实现应用的离线使用。首先要说明的是，本地缓存和传动的浏览器网页缓存是不同的，网页缓存基于网页，也就是缓存一个网页的内容，而不是整个app。同时网页缓存并不可靠，我们不知道我们的app中哪个页面已经缓存，该页面的哪些资源已经缓存，而本地缓存对于缓存内容是完全可控的。</p>
+<a id="more"></a>
+<p>使用离线缓存，除了可以使应用可以离线使用外，还能帮助有效的加快网页加载速度（本地的自然更快），同时降低服务器负载（只需要下载更新的内容）。</p>
+<p>正如之前所提到的，本地缓存可以指定要缓存的内容，这同过配置manifest来实现。可以为整个app配置manifest，也可以为单独某个页面来配置。</p>
+<p>简单的manifest格式如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CACHE MANIFEST</span><br><span class="line">index.html</span><br><span class="line">stylesheet.css</span><br><span class="line">images/logo.png</span><br><span class="line">scripts/main.js</span><br></pre></td></tr></table></figure></p>
+<p>文件的第一行必须是CACHE MANIFEST。</p>
+<p>该manifest声明了需要缓存的html页面，css，图片以及js文件。</p>
+<p>再看一个比较复杂的manifest文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CACHE MANIFEST</span><br><span class="line"># 指定一个版本号</span><br><span class="line"># version 1</span><br><span class="line"># 该类别指定要缓存的资源文件</span><br><span class="line">CACHE:</span><br><span class="line">/favicon.ico</span><br><span class="line">index.html</span><br><span class="line">stylesheet.css</span><br><span class="line">images/logo.png</span><br><span class="line">scripts/main.js</span><br><span class="line"></span><br><span class="line"># 指定不进行缓存的资源文件</span><br><span class="line">NETWORK:</span><br><span class="line">login.php</span><br><span class="line">http://foocoder.com</span><br><span class="line"></span><br><span class="line"># 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源</span><br><span class="line">FALLBACK:</span><br><span class="line">/main.py /static.html</span><br><span class="line">images/large/ images/offline.jpg</span><br><span class="line">*.html /offline.html</span><br></pre></td></tr></table></figure>
+<p>其中#号开头的为注释。因为只有在manifest文件发生改变时才会更新，所以我们可以加个版本号方便控制。</p>
+<p>从该文件中可以看到分为了三个类别：</p>
+<p>CACHE类别指定需要被缓存的资源文件。</p>
+<p>NETWORK类别指定不缓存的资源文件，即只在联网的情况下才能访问。</p>
+<p>FALLBACK每一行都会指定两个文件，第一个为在线时使用的资源，第二个为离线时使用的备用资源。其中*为通配符，表示在线时使用所有的.html文件。</p>
+<p>配置好manifest文件之后，我们只需要在页面上引用即可。如下，在html 标签的manifest属性下指定manifest文件的地址：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">manifest</span>=<span class="string">"app.manifest"</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该地址可以是绝对地址也可以是相对地址，但是该文件的吗MIME 类型必须是text/cache-manifest，所以需要在服务器做相应配置对该类型添加支持，例如吗，对于apache服务器，需要在配置mime.types中添加如下内容：</p>
+<p>AddType text/cache-manifest .manifest<br>到这里为止，就完成了离线缓存的基本内容，在manifest文件发生变化时，浏览器会检查manifest文件并更新缓存。</p>
+<p>我们不得不考虑一个问题，浏览器如何处理本地缓存？当服务端更新了应用程序后，用户打开时是不是会使用最新的资源了？答案是否定的。这需要了解下在使用离线缓存的情况下，浏览器与服务端的整个交互过程。</p>
+<p>1.首次访问</p>
+<p>在首次访问时，没有什么特别，浏览器解析index.html，请求所有的资源文件。随后就会处理manifest文件，请求所有的manifest中的资源文件，注意，即使之前已经请求过了所有的资源文件，这里必须进行重复请求。最后将这些文件缓存到本地。</p>
+<p>2.再次访问</p>
+<p>再次访问时，浏览器发现有本地缓存，所以会加载本地缓存内容。随后会向服务端请求manifest文件，如果manifest文件未更新，返回304代码，浏览器不做处理。如果manifest已经更新过，则请求所有manifest中的资源文件，重新对其缓存。</p>
+<p>所以，即使服务端更新了manifest和其他资源，用户打开时扔是之前的页面。需要重新打开才能使用更新过后的资源。</p>
+<p>有办法立刻更新缓存么？是可以的。我们可以使用applicationCache对象做到这一点。但是也只是能做到立刻更新缓存，还是需要用户重新打开也没才会生效。接下来就看看如何用applicationCache对象立刻更新缓存。</p>
+<p>window.applicationCache下有个status属性。可以通过其知道当前的缓存状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> appCache = <span class="built_in">window</span>.applicationCache; </span><br><span class="line">  </span><br><span class="line"><span class="keyword">switch</span> (appCache.status) &#123; </span><br><span class="line">  <span class="keyword">case</span> appCache.UNCACHED: <span class="comment">// UNCACHED == 0 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'UNCACHED'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">case</span> appCache.IDLE: <span class="comment">// IDLE == 1 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'IDLE'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">case</span> appCache.CHECKING: <span class="comment">// CHECKING == 2 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'CHECKING'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">case</span> appCache.DOWNLOADING: <span class="comment">// DOWNLOADING == 3 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'DOWNLOADING'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">case</span> appCache.UPDATEREADY:  <span class="comment">// UPDATEREADY == 4 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'UPDATEREADY'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">case</span> appCache.OBSOLETE: <span class="comment">// OBSOLETE == 5 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'OBSOLETE'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">default</span>: </span><br><span class="line">    <span class="keyword">return</span> <span class="string">'UKNOWN CACHE STATUS'</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>既然可以获得状态，我们只需要请求更新，随后在状态为appCache.UPDATEREADY时更新缓存时即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">applicationCache.update()方法会尝试更新用户缓存，而applicationCache.swapCache()方法会对本地缓存进行更新：</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> appCache = <span class="built_in">window</span>.applicationCache;</span><br><span class="line"> </span><br><span class="line">appCache.update(); <span class="comment">// 开始更新</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> (appCache.status == <span class="built_in">window</span>.applicationCache.UPDATEREADY) &#123;</span><br><span class="line">  appCache.swapCache();  <span class="comment">// 更新缓存</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正如之前所说的，即使更新了缓存，还是需要重新加载才能使用最新的资源，此时可以提示用户更新。只需要监听onUpdateReady事件，该事件在缓存被下载到本地后出发，从而可以在此时提示用户：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.applicationCache.addEventListener(<span class="string">'updateready'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.applicationCache.status == <span class="built_in">window</span>.applicationCache.UPDATEREADY) &#123;</span><br><span class="line">     <span class="comment">//更新本地缓存</span></span><br><span class="line">      <span class="built_in">window</span>.applicationCache.swapCache();</span><br><span class="line">      <span class="keyword">if</span> (confirm(<span class="string">'已经有新的版本，是否立刻切换到最新版?'</span>)) &#123;</span><br><span class="line">        <span class="built_in">window</span>.location.reload();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<p>applicationCache对象还提供了其他事件，分别为：</p>
+<p>onchecking，onerror，onnoupdate，ondownloading，onprogress，onupdateready，oncached和onobsolete</p>
+<p>在整个浏览器与服务端交互的过程中，所有的错误都会出发error事件，我们可以通过监听error事件进行处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> appCache = <span class="built_in">window</span>.applicationCache;</span><br><span class="line"> </span><br><span class="line">appCache.addEventListener(<span class="string">'error'</span>, handleCacheError, <span class="literal">false</span>);</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleCacheError</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  alert(<span class="string">'Error: Cache failed to update!'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>欢迎留言交流。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2013/02/25/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong/" data-id="cije88mo2001wqc1v3vj3yhb0" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2013/02/25/web-appzhi-nan-zhi-gou-jian-html5chi-xian-ying-yong/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/05/03/xiang-jie-javascriptzhong-de-this/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          详解JavaScript中的this
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/11/02/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">android中的跨进程通信的实现（一）——远程调用过程和aidl</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android窗口管理框架解析 | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。
+窗口可以分为两类：
+
+一种是应用窗口，即由具体应用创建的窗口，其实其中还可以细分出父窗口和子窗口。窗口一般都会对应一个activity。
+
+一种是系统窗口，如状态栏，这类窗口由系统直接通过windowManager来创建，和activity无关。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android窗口管理框架解析">
+<meta property="og:url" content="http://foocoder.com/2012/10/25/androidchuang-kou-guan-li-kuang-jia-jie-xi/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。
+窗口可以分为两类：
+
+一种是应用窗口，即由具体应用创建的窗口，其实其中还可以细分出父窗口和子窗口。窗口一般都会对应一个activity。
+
+一种是系统窗口，如状态栏，这类窗口由系统直接通过windowManager来创建，和activity无关。">
+<meta property="og:image" content="http://foocoder.com/images/androidWIndow.png">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android窗口管理框架解析">
+<meta name="twitter:description" content="窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。
+窗口可以分为两类：
+
+一种是应用窗口，即由具体应用创建的窗口，其实其中还可以细分出父窗口和子窗口。窗口一般都会对应一个activity。
+
+一种是系统窗口，如状态栏，这类窗口由系统直接通过windowManager来创建，和activity无关。">
+<meta name="twitter:image" content="http://foocoder.com/images/androidWIndow.png">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-androidchuang-kou-guan-li-kuang-jia-jie-xi" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android窗口管理框架解析
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2012/10/25/androidchuang-kou-guan-li-kuang-jia-jie-xi/">
+      <time datetime="2012-10-25T08:17:00.000Z" itemprop="datePublished">2012-10-25</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/android-framework/">android framework</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/android-framework/android-窗口管理/">android 窗口管理</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>窗口管理是android的一个核心内容。它管理着窗口的创建和销毁，布局和大小，焦点的控制等等。</p>
+<p>窗口可以分为两类：</p>
+<ul>
+<li><p>一种是应用窗口，即由具体应用创建的窗口，其实其中还可以细分出父窗口和子窗口。窗口一般都会对应一个activity。</p>
+</li>
+<li><p>一种是系统窗口，如状态栏，这类窗口由系统直接通过windowManager来创建，和activity无关。</p>
+</li>
+</ul>
+<a id="more"></a>
+<p>在这里，窗口的概念其实可以说由三部分构成，一部分是用来描述窗口信息的，由WindowState对象表示。一个WindowState对象对应一个窗口，它拥有绘制窗口所需要的信息。但是真正去绘制窗口需要另一部分内容Surface来完成，最终会通过surfaceflinger完成绘图。还有一部分就是对消息的处理，windowmanagerService把窗口信息传递给InputManager，这样InputDispatcher就能根据当前窗口的状态进行消息处理。<br>我们先看下整体的架构图，然后再来看这两种窗口的创建。WindowManager和其他很多android的服务一样，采用C/S的架构。其中windowManagerService跑在System_server进程，作为服务端，客户端通过ipc调用和它进行交互。<br><img src="http://foocoder.com/images/androidWIndow.png" title="窗口管理框架图"></p>
+<p>我们通过完整的应用程序窗口创建流程来了解这个结构和整个过程。我们不去纠结其中代码的一些细枝末节的东西，不去贴一堆代码，通过整体和重要的东西来看。</p>
+<p>#####一.客户端部分</p>
+<p>在客户端，在应用启动的时候，ActivityThread会调用performLaunchActivity方法，去实例化一个activity，同时调用attach方法，并传递很多和activity相关的参数信息。</p>
+<p>其中有个比较重要的东西是一个IBinder对象token，这个token成为activity的标识，windowmanagerService可以通过这个token获得activity当前的运行状态。在WindowManager中会通过该token生成一个WindowToken对象，一个父窗口对应一个WindowToken，而具有相同token的所有其子窗口都会被归到一个WindowToken中。即如果token相同，表示他们都会在一个窗口中。还有个用来标识窗口的类AppWindowToken，继承自WindowToken，它由activity传过来的token生成，和Activity一一对应。通过token，就能找到activity和window的对应关系了。</p>
+<p>继续往下看，attach方法会通过代码mWindow = PolicyManager.makeNewWindow(this)实例化一个phoneWindow对象，但是这个对象还是比较抽象的东西。在activity开始oncreate调用时，会调用setContentView方法。会去获得之前那个phoneWIndow对象对应的DecorView，最后通过层层窗口修饰（状态栏等）后调用activity的makeVisible方法，在方法中通过addiew方法完成窗口的添加。</p>
+<p>windowManager只是提供接口，用了桥接模式，真正实现是WindowManagerImpl类。而调用addiew方法的对象来自另一个类LocalWindowManager，它会做一些简单检查，再通过WindowManagerImp类的addview完成窗口添加。addview大概分三步执行：</p>
+<ol>
+<li>校验该窗口是否已经添加过了。</li>
+<li>判断窗口类型如果是子窗口，则找到它附属的父窗口</li>
+<li>new一个ViewRootImpl对象，最后调用该对象的setView方法。</li>
+</ol>
+<p>setView 方法会最终会通过ipc调用IwindowSession的add方法。Session类实现了该方法，并最终给WindowManagerService处理。客户端的工作至此就完成了。<br>这里说明一下ViewRootImpl类，这其实是个handler。自然的，它一部分功能就是对消息进行处理，将用户的一些操作分发到view中。它也是view和WindowManagerService的桥梁。可以看到它通过一个会话将信息传递到了WindowManagerService。而WIndowManagerService也会通过IWindow接口将指令通过消息的方式发送到ViewRootImpl，ViewRootImpl处理这些消息。</p>
+<p>#####二.服务端</p>
+<p>WindowManagerService的addWindow方法主要做三部分的处理。</p>
+<ol>
+<li>做一些合法性校验</li>
+<li>完成窗口数据的构建</li>
+<li>完成窗口创建后需要作出的一些调整</li>
+</ol>
+<p>我们只看第二部分。首先会new一个WindowState类，该类表示一个窗口。结合WindowToken和AppWindowToken，完整的定义了一个窗口内容。接着创建一个管道，用于处理消息输入。再然后调用attach方法，创建和Surface相关的内容，用于和surfaceFlinger交互。这样，整个窗口就搭建完成了。有了WindowState类对窗口属性的保存以及token对窗口归属的标识，之后就可以通过SurfaceFlinger绘制在屏幕上了。之后通过InputManager，也能处理消息和WindowManagerService之间的传递。保证窗口显示内容和用户操作保持一致性。<br>当然，WindowManagerService靠近10000行的代码完成了很多功能，因为这篇文章只会了解窗口管理的整个架构，这里不一一详解，以后有时间可能会把一些比较有意思的内容再看下：</p>
+<ol>
+<li>窗口的创建和删除</li>
+<li>窗口的显示和隐藏控制</li>
+<li>Z-order顺序管理</li>
+<li>焦点窗口管理</li>
+<li>输入法窗口管理和墙纸窗口管理</li>
+<li>切换动画</li>
+<li>系统消息收集和分发</li>
+</ol>
+<p>现在，再来看开始的架构图，应该就比较清晰了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2012/10/25/androidchuang-kou-guan-li-kuang-jia-jie-xi/" data-id="cije88mo60022qc1vqxzsogb0" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2012/10/25/androidchuang-kou-guan-li-kuang-jia-jie-xi/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2012/11/02/androidzhong-de-kua-jin-cheng-tong-xin-de-shi-xian/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          android中的跨进程通信的实现（一）——远程调用过程和aidl
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/09/28/tan-shu-ju-ku-suo-yin-he-sqlitezhong-suo-yin-de-shi-yong/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">谈数据库索引和Sqlite中索引的使用</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

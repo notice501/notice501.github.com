@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>每日vim插件--显示git diff:GitGutter.vim | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="周末休息了两天。今天继续。今天介绍的是一个可以显示git diff状态的插件——vim-gitgutter.
+所谓显示diff状态，看一张图大家就明白了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--显示git diff:GitGutter.vim">
+<meta property="og:url" content="http://foocoder.com/2014/04/21/mei-ri-vimcha-jian-xian-shi-git-diff-gitgutter-dot-vim/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="周末休息了两天。今天继续。今天介绍的是一个可以显示git diff状态的插件——vim-gitgutter.
+所谓显示diff状态，看一张图大家就明白了">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/69d56e38gw1efni76kr62j20po0os78b.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/69d56e38gw1efnire8hi2j20va0po0yl.jpg">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--显示git diff:GitGutter.vim">
+<meta name="twitter:description" content="周末休息了两天。今天继续。今天介绍的是一个可以显示git diff状态的插件——vim-gitgutter.
+所谓显示diff状态，看一张图大家就明白了">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/69d56e38gw1efni76kr62j20po0os78b.jpg">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mei-ri-vimcha-jian-xian-shi-git-diff-gitgutter-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      每日vim插件--显示git diff:GitGutter.vim
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/21/mei-ri-vimcha-jian-xian-shi-git-diff-gitgutter-dot-vim/">
+      <time datetime="2014-04-21T12:44:00.000Z" itemprop="datePublished">2014-04-21</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>周末休息了两天。今天继续。今天介绍的是一个可以显示git diff状态的插件——<a href="https://github.com/airblade/vim-gitgutter" target="_blank" rel="external">vim-gitgutter</a>.</p>
+<p>所谓显示diff状态，看一张图大家就明白了<br><img src="http://ww1.sinaimg.cn/large/69d56e38gw1efni76kr62j20po0os78b.jpg" alt=""></p>
+<a id="more"></a>
+<p>看最左边的标记列，一看就应该明白了。波浪线表示该行相比HEAD修改过，红色的减号表示这里删除了一行，绿色的+号表示这些行都是新增的。</p>
+<p>这样git diff直接就一目了然，对自己的修改就更清晰了。</p>
+<p>Gitgutter还支持在每个diff区块之间跳转（像图中就分了3块）。默认快捷键为<code>[c</code>和<code>]c</code>。可以非常方便地在各diff之间跳转了。</p>
+<p>当然必须可以自定义mapping：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nmap</span> ]h <span class="symbol">&lt;Plug&gt;</span>GitGutterNextHunk</span><br><span class="line"><span class="keyword">nmap</span> [h <span class="symbol">&lt;Plug&gt;</span>GitGutterPrevHunk</span><br></pre></td></tr></table></figure>
+<p>Gitgutter不仅能显示这些git diff，还能暂存<code>&lt;Leader&gt;hs</code>和回退<code>&lt;Leader&gt;hr</code>修改。</p>
+<p>同样支持自定义mapping：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;Leader&gt;</span><span class="keyword">ha</span> <span class="symbol">&lt;Plug&gt;</span>GitGutterStageHunk</span><br><span class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;Leader&gt;</span>hu <span class="symbol">&lt;Plug&gt;</span>GitGutterRevertHunk</span><br></pre></td></tr></table></figure></p>
+<p>不过这个我用的不是很多，暂时没感觉需要这样细粒度的执行暂存操作。</p>
+<p>但是查看diff的修改我会比较常用，快捷键<code>&lt;Leader&gt;hp</code>,他会显示diff差异。如图所示：</p>
+<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efnire8hi2j20va0po0yl.jpg" alt=""></p>
+<p>gitgutter还支持自定义git diff的参数，比如：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">g:gitgutter_diff_args</span> = <span class="string">'-w'</span></span><br></pre></td></tr></table></figure>
+<p>就介绍这么多了。btw，感觉用了gitgutter，Gundo的会变得略微慢一点。但是，Gitgutter显然是必备插件啊。有问题直接回复。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2014/04/21/mei-ri-vimcha-jian-xian-shi-git-diff-gitgutter-dot-vim/" data-id="cije88mmi000mqc1v7kesvg2r" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2014/04/21/mei-ri-vimcha-jian-xian-shi-git-diff-gitgutter-dot-vim/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/22/mei-ri-vimcha-jian-wen-jian-liu-lan-qi-nerd-treeyi-ji-git-nerdtree-vim-nerdtree-tabs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          每日vim插件--文件浏览器NERD Tree以及git-nerdtree,vim-nerdtree-tabs
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/18/mei-ri-vimcha-jian-kuai-su-xuan-ze-wen-ben-dui-xiang-wildfile-dot-vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">每日vim插件--快速选择文本对象wildfile.vim</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

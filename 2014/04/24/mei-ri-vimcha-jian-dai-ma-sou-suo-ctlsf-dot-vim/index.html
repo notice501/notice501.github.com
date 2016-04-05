@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>每日vim插件--代码搜索ack.vim/ag/ctlsf.vim | Code Rush</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#ack.vim
+ack.vim。应该是大多数vimer的必装插件。
+在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。
+ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。为什么用ack而不是直接用grep？ack号称超越了grep。我基本认同。
+
+ack会显示搜索到的行号列号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--代码搜索ack.vim/ag/ctlsf.vim">
+<meta property="og:url" content="http://foocoder.com/2014/04/24/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="#ack.vim
+ack.vim。应该是大多数vimer的必装插件。
+在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。
+ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。为什么用ack而不是直接用grep？ack号称超越了grep。我基本认同。
+
+ack会显示搜索到的行号列号">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/69d56e38gw1efr1w9s9i8j21kw0ghafr.jpg">
+<meta property="og:image" content="https://camo.githubusercontent.com/fae368edf534ce2228eda41418cb55ee68e19c20/687474703a2f2f692e696d6775722e636f6d2f6d6c576a336d7a2e676966">
+<meta property="og:updated_time" content="2016-01-14T11:12:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--代码搜索ack.vim/ag/ctlsf.vim">
+<meta name="twitter:description" content="#ack.vim
+ack.vim。应该是大多数vimer的必装插件。
+在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。
+ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。为什么用ack而不是直接用grep？ack号称超越了grep。我基本认同。
+
+ack会显示搜索到的行号列号">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/69d56e38gw1efr1w9s9i8j21kw0ghafr.jpg">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34258052-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Code Rush</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://foocoder.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca">
+      <h2 id="name">foocoder</h2>
+      <h3 id="title">App Developer &amp; Designer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+      <a id="follow" href="https://github.com/notice501/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        31
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        0
+        <span>tag</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/notice501" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/notice520" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      每日vim插件--代码搜索ack.vim/ag/ctlsf.vim
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/24/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim/">
+      <time datetime="2014-04-24T11:11:00.000Z" itemprop="datePublished">2014-04-24</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/vim/">vim</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>#ack.vim</p>
+<p><a href="https://github.com/petdance/ack" target="_blank" rel="external">ack.vim</a>。应该是大多数vimer的必装插件。</p>
+<p>在写这篇文章的时候才发现ack已经发布了2.0版本，并且ack 1已经不再维护。但是两者差别不大。这里介绍的基于2.0版本。</p>
+<p>ack就是一个代码搜索工具，类似grep，用perl编写，充分利用了perl对正则的强大处理能力。为什么用ack而不是直接用grep？ack号称超越了grep。我基本认同。</p>
+<ol>
+<li>ack会显示搜索到的行号列号。</li>
+<li>会自动忽略.git这样的文件类型。</li>
+<li>速度很快。</li>
+<li>最重要的是相对grep是一个文本搜索工具，ack就是一个代码搜索工具。你只会搜索到你的js文件，php文件，而不会搜到一些意外的文件类型。</li>
+</ol>
+<a id="more"></a>
+<p>再也不用这样输入：</p>
+<pre><code>grep foo $(find . -name &apos;*.pm&apos; | grep -v .svn)
+</code></pre><p>ack的使用很简单，命令输入：</p>
+<pre><code>ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
+</code></pre><p>如果不输入文件或者文件夹，则默认在当前目录及子目录下搜索。</p>
+<p>ack大致有如下几类OPTION，</p>
+<ol>
+<li>搜索选项，例如-i, –ignore-case ，忽略pattern的大小写</li>
+<li>搜索结果处理选项，例如 -l，只打印有匹配的文件名。</li>
+<li>搜索输出展现选项，例如–heading，在头部输出匹配文件的文件名</li>
+<li>文件搜索，是的，他还是find。例如 <code>Ack -f servicemodel</code> 查找servicemodel相匹配的文件。</li>
+<li>文件过滤。例如 –[no]ignore-dir=name  从待搜索目录中添加或删除目录。</li>
+</ol>
+<p>具体的option可以查看ack文档.</p>
+<p>这些option都可以直接配置到.ackrc中，作为默认配置。全局的ackrc放置于<code>/etc/ackrc</code>,用户的放在<code>$HOME/.ackrc</code>,仅仅用于某项目的就放在项目根目录中。</p>
+<p>ack搜索结果如图所示：</p>
+<p><img src="http://ww3.sinaimg.cn/large/69d56e38gw1efr1w9s9i8j21kw0ghafr.jpg" alt=""></p>
+<p>会打开Quickfix窗口。显示文件名，对于的行列和该行内容。按<code>t</code>可以在新标签打开，按回车直接打开，按v分隔垂直窗口打开等等。和前天介绍的NERD Tree等大多数插件的操作类似。</p>
+<h1 id="ag-vim"><a href="#ag-vim" class="headerlink" title="ag.vim"></a>ag.vim</h1><p>ack的用法就介绍到这里，这里还要介绍的是<a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">ag</a>.和ack没什么区别，只是更快。</p>
+<p>OS X下安装：</p>
+<pre><code>brew install the_silver_searcher
+</code></pre><p>在vim中进行配置：</p>
+<pre><code>let g:ackprg = &apos;ag --nogroup --nocolor --column&apos;
+</code></pre><p>也可以直接安装<a href="https://github.com/rking/ag.vim" target="_blank" rel="external">ag.vim</a>.ack 的 Silver Searcher fork版本。</p>
+<h1 id="ctrlsf-vim"><a href="#ctrlsf-vim" class="headerlink" title="ctrlsf.vim"></a>ctrlsf.vim</h1><p>作者原图：</p>
+<p><img src="https://camo.githubusercontent.com/fae368edf534ce2228eda41418cb55ee68e19c20/687474703a2f2f692e696d6775722e636f6d2f6d6c576a336d7a2e676966" alt=""></p>
+<p>在安装了ack或者ag的基础上再安装该插件即可。正如它的名字，它提供了和sublime text 2中Ctrl-Shift-F 一样的搜索效果。和ack或者ag不同的是，不再是显示一行，而是显示整个上下文。非常好用。</p>
+<p>除此之外，可以按下<code>p</code>进行预览，运行<code>:CtrlSFOpen</code>重新打开搜索结果窗口(默认选择后关闭搜索窗口)。这个插件也是来自国内的朋友。</p>
+<p>今天就介绍到这。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://foocoder.com/2014/04/24/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim/" data-id="cije88mmb000gqc1vhmmovtck" class="article-share-link">Share</a>
+      
+        <a href="http://foocoder.com/2014/04/24/mei-ri-vimcha-jian-dai-ma-sou-suo-ctlsf-dot-vim/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          每日vim插件--Gist.vim
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/23/mei-ri-vimcha-jian-ming-ling-xing-bu-quan-cmdline-completion/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">每日vim插件--命令行补全cmdline-completion</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2000 - 2016 foocoder<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'notice501';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
