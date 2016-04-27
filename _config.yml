@@ -68,7 +68,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://github.com/hexojs/hexo/wiki/Plugins
 ## Themes: https://github.com/hexojs/hexo/wiki/Themes
-theme: icarus
+theme: icarustheme
 
 # Disqus
 disqus_shortname: notice501
@@ -85,3 +85,9 @@ deploy:
   type: git
   repository: git@github.com:notice501/notice501.github.com.git
   branch: master
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
