@@ -1,0 +1,3 @@
+[submodule "themes/icarustheme"]
+	path = themes/icarustheme
+	url = git@github.com:ppoffice/hexo-theme-icarus.git
