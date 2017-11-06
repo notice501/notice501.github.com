@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>每日vim插件--强大的自动补全neocomplete.vim和supertab | Code Rush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="#neocomplete.vim 今天介绍两个个必备的vim插件，自动补全插件——neocomplete.vim和superTab。 neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。 该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要if_lua的支持。 mac下安装： brew">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日vim插件--强大的自动补全neocomplete.vim和supertab">
+<meta property="og:url" content="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="#neocomplete.vim 今天介绍两个个必备的vim插件，自动补全插件——neocomplete.vim和superTab。 neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。 该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要if_lua的支持。 mac下安装： brew">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png">
+<meta property="og:updated_time" content="2017-11-06T09:53:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每日vim插件--强大的自动补全neocomplete.vim和supertab">
+<meta name="twitter:description" content="#neocomplete.vim 今天介绍两个个必备的vim插件，自动补全插件——neocomplete.vim和superTab。 neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。 该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要if_lua的支持。 mac下安装： brew">
+<meta name="twitter:image" content="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Code Rush</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca?s=128" />
+            <h2 id="name">foocoder</h2>
+            <h3 id="title">Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/notice501/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                33
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                1
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                    
+                    <td><a href="https://weibo.com/notice520?ssl_rnd=1509972136.9582&is_hot=1" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+                    
+                    <td><a href="http://foocoder.com/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            每日vim插件--强大的自动补全neocomplete.vim和supertab
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/">
+            <time datetime="2014-04-28T13:02:00.000Z" itemprop="datePublished">2014-04-28</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/vim/">vim</a>
+    </div>
+
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>#neocomplete.vim</p>
+<p>今天介绍两个个必备的vim插件，自动补全插件——<a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="external">neocomplete.vim</a>和superTab。</p>
+<p>neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。</p>
+<p>该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要<a href="http://vimdoc.sourceforge.net/htmldoc/if_lua.html" target="_blank" rel="external">if_lua</a>的支持。</p>
+<p>mac下安装：</p>
+<pre><code>brew install macvim --with-cscope --with-lua --HEAD
+</code></pre><p>或者不用macvim（真的不用么？赶紧试试吧）：</p>
+<pre><code>brew install vim --with-lua
+</code></pre><p>不需要过多的介绍,看作者给的图：</p>
+<a id="more"></a>
+<h3 id="文件补全"><a href="#文件补全" class="headerlink" title="文件补全"></a>文件补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png" alt="Original filename completion."><br><img src="https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png" alt="Include filename completion."></p>
+<h3 id="Omni-补全"><a href="#Omni-补全" class="headerlink" title="Omni 补全"></a>Omni 补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622456/fb2cc0bc-cf42-11e2-94e8-403cdcf5427e.png" alt="Omni completion."></p>
+<h3 id="vimshell补全"><a href="#vimshell补全" class="headerlink" title="vimshell补全"></a><a href="http://github.com/Shougo/vimshell" target="_blank" rel="external">vimshell</a>补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png" alt="Completion with vimshell(http://github.com/Shougo/vimshell)."></p>
+<h3 id="Vim-补全"><a href="#Vim-补全" class="headerlink" title="Vim 补全"></a>Vim 补全</h3><p><img src="https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png" alt="Vim completion."><br><img src="https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif" alt="Vim completion with animation."></p>
+<p>作者还给出了推荐配置，每个配置都有对应的英文注释，我就不一一翻译了：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"><span class="comment">"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!</span></div><div class="line"><span class="comment">" Disable AutoComplPop.</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:acp_enableAtStartup</span> = <span class="number">0</span></div><div class="line"><span class="comment">" Use neocomplete.</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#enable_at_startup = <span class="number">1</span></div><div class="line"><span class="comment">" Use smartcase.</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#enable_smart_case = <span class="number">1</span></div><div class="line"><span class="comment">" Set minimum syntax keyword length.</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#sources#syntax#min_keyword_length = <span class="number">3</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#lock_buffer_name_pattern = <span class="string">'\*ku\*'</span></div><div class="line"></div><div class="line"><span class="comment">" Define dictionary.</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#sources#dictionary#dictionaries = &#123;</div><div class="line">    \ <span class="string">'default'</span> : <span class="string">''</span>,</div><div class="line">    \ <span class="string">'vimshell'</span> : $HOME.<span class="string">'/.vimshell_hist'</span>,</div><div class="line">    \ <span class="string">'scheme'</span> : $HOME.<span class="string">'/.gosh_completions'</span></div><div class="line">        \ &#125;</div><div class="line"></div><div class="line"><span class="comment">" Define keyword.</span></div><div class="line"><span class="keyword">if</span> !exists(<span class="string">'g:neocomplete#keyword_patterns'</span>)</div><div class="line">    <span class="keyword">let</span> <span class="variable">g:neocomplete</span>#keyword_patterns = &#123;&#125;</div><div class="line"><span class="keyword">endif</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#keyword_patterns[<span class="string">'default'</span>] = <span class="string">'\h\w*'</span></div><div class="line"></div><div class="line"><span class="comment">" Plugin key-mappings.</span></div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;C-g&gt;</span>     neocomplete#undo_completion()</div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;C-l&gt;</span>     neocomplete#complete_common_string()</div><div class="line"></div><div class="line"><span class="comment">" Recommended key-mappings.</span></div><div class="line"><span class="comment">" &lt;CR&gt;: close popup and save indent.</span></div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;silent&gt;</span> <span class="symbol">&lt;CR&gt;</span> <span class="symbol">&lt;C-r&gt;</span>=<span class="symbol">&lt;SID&gt;</span>my_cr_function()<span class="symbol">&lt;CR&gt;</span></div><div class="line"><span class="function"><span class="keyword">function</span>! <span class="title">s</span>:<span class="title">my_cr_function</span><span class="params">()</span></span></div><div class="line">  <span class="keyword">return</span> neocomplete#close_popup() . <span class="string">"\&lt;CR&gt;"</span></div><div class="line">  <span class="comment">" For no inserting &lt;CR&gt; key.</span></div><div class="line">  <span class="string">"return pumvisible() ? neocomplete#close_popup() : "</span>\<span class="symbol">&lt;CR&gt;</span><span class="comment">"</span></div><div class="line"><span class="keyword">endfunction</span></div><div class="line"><span class="comment">" &lt;TAB&gt;: completion.</span></div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;TAB&gt;</span>  <span class="built_in">pumvisible</span>() ? <span class="string">"\&lt;C-n&gt;"</span> : <span class="string">"\&lt;TAB&gt;"</span></div><div class="line"><span class="comment">" &lt;C-h&gt;, &lt;BS&gt;: close popup and delete backword char.</span></div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;C-h&gt;</span> neocomplete#smart_close_popup().<span class="string">"\&lt;C-h&gt;"</span></div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;BS&gt;</span> neocomplete#smart_close_popup().<span class="string">"\&lt;C-h&gt;"</span></div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;C-y&gt;</span>  neocomplete#close_popup()</div><div class="line"><span class="keyword">inoremap</span> <span class="symbol">&lt;expr&gt;</span><span class="symbol">&lt;C-e&gt;</span>  neocomplete#cancel_popup()</div><div class="line"><span class="comment">" Close popup by &lt;Space&gt;.</span></div><div class="line"><span class="string">"inoremap &lt;expr&gt;&lt;Space&gt; pumvisible() ? neocomplete#close_popup() : "</span>\<span class="symbol">&lt;Space&gt;</span><span class="comment">"</span></div><div class="line"></div><div class="line"><span class="comment">" For cursor moving in insert mode(Not recommended)</span></div><div class="line"><span class="string">"inoremap &lt;expr&gt;&lt;Left&gt;  neocomplete#close_popup() . "</span>\<span class="symbol">&lt;Left&gt;</span><span class="comment">"</span></div><div class="line"><span class="string">"inoremap &lt;expr&gt;&lt;Right&gt; neocomplete#close_popup() . "</span>\<span class="symbol">&lt;Right&gt;</span><span class="comment">"</span></div><div class="line"><span class="string">"inoremap &lt;expr&gt;&lt;Up&gt;    neocomplete#close_popup() . "</span>\<span class="symbol">&lt;Up&gt;</span><span class="comment">"</span></div><div class="line"><span class="string">"inoremap &lt;expr&gt;&lt;Down&gt;  neocomplete#close_popup() . "</span>\<span class="symbol">&lt;Down&gt;</span><span class="comment">"</span></div><div class="line"><span class="comment">" Or set this.</span></div><div class="line"><span class="comment">"let g:neocomplete#enable_cursor_hold_i = 1</span></div><div class="line"><span class="comment">" Or set this.</span></div><div class="line"><span class="comment">"let g:neocomplete#enable_insert_char_pre = 1</span></div><div class="line"></div><div class="line"><span class="comment">" AutoComplPop like behavior.</span></div><div class="line"><span class="comment">"let g:neocomplete#enable_auto_select = 1</span></div><div class="line"></div><div class="line"><span class="comment">" Shell like behavior(not recommended).</span></div><div class="line"><span class="comment">"set completeopt+=longest</span></div><div class="line"><span class="comment">"let g:neocomplete#enable_auto_select = 1</span></div><div class="line"><span class="comment">"let g:neocomplete#disable_auto_complete = 1</span></div><div class="line"><span class="string">"inoremap &lt;expr&gt;&lt;TAB&gt;  pumvisible() ? "</span>\<span class="symbol">&lt;Down&gt;</span><span class="string">" : "</span>\<span class="symbol">&lt;C-x&gt;</span>\<span class="symbol">&lt;C-u&gt;</span><span class="comment">"</span></div><div class="line"></div><div class="line"><span class="comment">" Enable omni completion.</span></div><div class="line"><span class="keyword">autocmd</span> FileType css <span class="keyword">setlocal</span> omnifunc=csscomplete#CompleteCSS</div><div class="line"><span class="keyword">autocmd</span> FileType html,markdown <span class="keyword">setlocal</span> omnifunc=htmlcomplete#CompleteTags</div><div class="line"><span class="keyword">autocmd</span> FileType javascript <span class="keyword">setlocal</span> omnifunc=javascriptcomplete#CompleteJS</div><div class="line"><span class="keyword">autocmd</span> FileType <span class="keyword">python</span> <span class="keyword">setlocal</span> omnifunc=pythoncomplete#Complete</div><div class="line"><span class="keyword">autocmd</span> FileType xml <span class="keyword">setlocal</span> omnifunc=xmlcomplete#CompleteTags</div><div class="line"></div><div class="line"><span class="comment">" Enable heavy omni completion.</span></div><div class="line"><span class="keyword">if</span> !exists(<span class="string">'g:neocomplete#sources#omni#input_patterns'</span>)</div><div class="line">  <span class="keyword">let</span> <span class="variable">g:neocomplete</span>#sources#omni#input_patterns = &#123;&#125;</div><div class="line"><span class="keyword">endif</span></div><div class="line"><span class="comment">"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]-&gt;\h\w*\|\h\w*::'</span></div><div class="line"><span class="comment">"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|-&gt;\)'</span></div><div class="line"><span class="comment">"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|-&gt;\)\|\h\w*::'</span></div><div class="line"></div><div class="line"><span class="comment">" For perlomni.vim setting.</span></div><div class="line"><span class="comment">" https://github.com/c9s/perlomni.vim</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:neocomplete</span>#sources#omni#input_patterns.<span class="keyword">perl</span> = <span class="string">'\h\w*-&gt;\h\w*\|\h\w*::'</span></div></pre></td></tr></table></figure>
+<p>没有特殊需求，直接copy就用即可。没有复杂的配置，用起来还是非常简单的。</p>
+<p>还有一个比较出名的补全插件是<a href="https://github.com/Valloric/YouCompleteMe" target="_blank" rel="external">YouCompleteMe</a>.大家也可以去看下，应该是现在用的最广泛的补全插件了。我很早就试用过，还是neocomplete要更顺手更快些，总感觉neocomplete要更智能些。</p>
+<p>#superTab</p>
+<p>说到补全还有个不得不说，那就是tab键，必须用tab来进行补全那才是补全啊。其实neocomplete的推荐配置已经配置成了自动提示补全文字，并且支持tab选择，但是还是无法<code>shift-tab</code>回退选择。superTab就是为增强tab而生，当然可以做到这点。</p>
+<p>superTab 和neocomplete一样，几乎不用自己折腾什么配置，也不用过多的介绍，一句话就可以说完它的功能。</p>
+<pre><code>bar
+baz
+b*&lt;Tab&gt; (*为光标所在位置) 
+</code></pre><p>按示例在光标处按下tab，就会展开推荐补全bar和baz，按tab即可进行循环选择。</p>
+<p>可以配置supertab的默认补全类型（对vim补全不了解的同学自己补下omni补全相关知识，需要我介绍可以回复下）：</p>
+<pre><code>let g:SuperTabDefaultCompletionType = &quot;&lt;c-x&gt;&lt;c-u&gt;&quot;
+</code></pre><p>示例把supertab修改为了用户补全，默认是<code>&lt;c-p&gt;</code>.</p>
+<p>今天就介绍到这里。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/" data-id="cj9o6svfi001hn7t95mpuopsj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    每日vim插件--平滑滚动accelerated-smooth-scroll.vim
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2014/04/25/mei-ri-vimcha-jian-gist-dot-vim/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">每日vim插件--Gist.vim</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" class="title">记一次orm库性能优化，谈谈android的注解处理和代码生成</a></p>
+                            <p class="item-date"><time datetime="2017-11-06T12:51:23.000Z" itemprop="datePublished">2017-11-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/08/vim环境搭建/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://77flrh.com1.z0.glb.clouddn.com/屏幕快照%202016-04-08%20下午5.38.43.png)" alt="用vim开发react native的环境搭建" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/08/vim环境搭建/" class="title">用vim开发react native的环境搭建</a></p>
+                            <p class="item-date"><time datetime="2016-04-08T09:45:03.000Z" itemprop="datePublished">2016-04-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://foocoder.qiniudn.com/blog/syntasticsyntastic.png?token=hYfsyKwhHPe-Ga-1Hypx5F8CwimEywvTI8XdNpEm:z6zQYbdezgOYcKfzok7LEkuRDkg=:eyJTIjoiZm9vY29kZXIucWluaXVkbi5jb20vYmxvZy9zeW50YXN0aWNzeW50YXN0aWMucG5nIiwiRSI6MTQwMDA2ODU2N30=)" alt="vim中的语法检查-syntastic" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" class="title">vim中的语法检查-syntastic</a></p>
+                            <p class="item-date"><time datetime="2014-05-13T11:29:00.000Z" itemprop="datePublished">2014-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ww4.sinaimg.cn/large/69d56e38gw1eg4vqmtvzsj20b408cdgf.jpg)" alt="vim 重复操作的利器--点命令" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" class="title">vim 重复操作的利器--点命令</a></p>
+                            <p class="item-date"><time datetime="2014-05-06T12:18:00.000Z" itemprop="datePublished">2014-05-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ww4.sinaimg.cn/large/69d56e38gw1efwtsjauuag20qj0ivkjm.gif)" alt="每日vim插件--平滑滚动accelerated-smooth-scroll.vim" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/vim/">vim</a></p>
+                            <p class="item-title"><a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" class="title">每日vim插件--平滑滚动accelerated-smooth-scroll.vim</a></p>
+                            <p class="item-date"><time datetime="2014-04-29T14:11:00.000Z" itemprop="datePublished">2014-04-29</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm-Annotation-Processing-注解处理/">orm, Annotation Processing, 注解处理</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 foocoder<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'notice501';
+    
+    
+    var disqus_url = 'http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

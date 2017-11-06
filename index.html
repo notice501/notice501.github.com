@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Code Rush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="foocoder&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Code Rush">
+<meta property="og:url" content="http://foocoder.com/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="foocoder&apos;s blog">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Code Rush">
+<meta name="twitter:description" content="foocoder&apos;s blog">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Code Rush</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca?s=128" />
+            <h2 id="name">foocoder</h2>
+            <h3 id="title">Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/notice501/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                33
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                1
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                    
+                    <td><a href="https://weibo.com/notice520?ssl_rnd=1509972136.9582&is_hot=1" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+                    
+                    <td><a href="http://foocoder.com/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main">
+    <article id="post-记一次orm库性能优化，谈谈android的注解处理和代码生成" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/">记一次orm库性能优化，谈谈android的注解处理和代码生成</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/">
+            <time datetime="2017-11-06T12:51:23.000Z" itemprop="datePublished">2017-11-06</time>
+        </a>
+    </div>
+
+
+                    
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/orm-Annotation-Processing-注解处理/">orm, Annotation Processing, 注解处理</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>很早的时候因为业务的需要，找不到一款合适的orm框架，当时自己写了一个。很长时间过去了，一直想对这个orm库做一次性能优化，换掉原有的反射的注解处理方式，而是通过代码生成，从而大幅提高性能。</p>
+<p>原有的orm库通过反射的注解处理方式来实现。原有的Table注解声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.TYPE)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Table &#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="meta">@Target</span>(ElementType.FIELD)</div><div class="line">    <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line">    <span class="meta">@interface</span> Column &#123;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">nullable</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isUnionKey</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</div><div class="line">      </div><div class="line">        ......</div><div class="line">    &#125;</div><div class="line">  ......</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里简单介绍下注解的知识。通过关键字@interface来定义注解，这里定一个了一个名为Table的注解，Table声明本身上面也有两个注解，这个叫做元注解，一共有四种元注解，分别为：</p>
+<ul>
+<li><code>@Retention</code> 注解的有效范围<ul>
+<li><code>SOURCE</code>，只在源码中可用，一般用来增加代码理解和代码检查等，常见的如Override</li>
+<li><code>CLASS</code>, 默认选项，在源码和字节码中可用，但仅存于字节码文件中，运行时无法获取</li>
+<li><code>RUNTIME</code>, 在源码,字节码,运行时均可用</li>
+</ul>
+</li>
+<li><code>@Target</code> 指定注解修饰的程序元素，如 <code>TYPE</code>, <code>METHOD</code>, <code>CONSTRUCTOR</code>, <code>FIELD</code>, <code>PARAMETER</code>等，未标注则表示可修饰所有</li>
+<li><code>@Inherited</code> 是否可以被继承，默认为false</li>
+<li><code>@Documented</code> 是否会保存到 Javadoc 文档中</li>
+</ul>
+<p>回到上述的表注解定义，可以看到定义了一个Target为TYPE的Table类注解和一个Type为FIELD的Column成员变量注解。</p>
+<p>完成以后，我们就可以如下来定一个对象的同时创建一张表：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Table</span>(name = User.TABLE_NAME)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Table</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TABLE_NAME = <span class="string">"user"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String COLUME_ID = <span class="string">"id"</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String COLUME_NAME = <span class="string">"name"</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String COLUME_AGE = <span class="string">"age"</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String COLUME_MALE = <span class="string">"male"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Table</span>.Column(name = COLUME_ID, isPrimaryKey = <span class="keyword">true</span>)</div><div class="line">    String id;</div><div class="line"></div><div class="line">    <span class="meta">@Table</span>.Column(name = COLUME_NAME, defaultValue = <span class="string">"unknown"</span>)</div><div class="line">    String name;</div><div class="line"></div><div class="line">    <span class="meta">@Table</span>.Column(name = COLUME_AGE)</div><div class="line">    <span class="keyword">int</span> age;</div><div class="line"></div><div class="line">    <span class="meta">@Table</span>.Column(name = COLUME_MALE)</div><div class="line">    <span class="keyword">boolean</span> isMale;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一个简单的User对象，有id，name，age，isMale四个成员变量，通过注解声明表名为有四个colunm的’user’表。</p>
+<p>使用orm库让插入和建表一样简单，不用写sql操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">User user = <span class="keyword">new</span> User();</div><div class="line">user.id = <span class="number">0</span>;</div><div class="line">user.name = <span class="string">"Tom"</span>;</div><div class="line">user.age =<span class="number">10</span>;</div><div class="line">user.save();</div></pre></td></tr></table></figure>
+<p>上面代码定义了一个User对象，并调用了User对象的save方法，save()方法来自父类Table类。这里说下整个建表和插入一个user数据的核心逻辑。</p>
+<p>首先建表过程，关于获取列信息的部分如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Field[] fields = columnType.getDeclaredFields();</div><div class="line"><span class="keyword">for</span> (Field field : fields) &#123;</div><div class="line">	<span class="keyword">if</span> (field.isAnnotationPresent(Column.class)) &#123;                  </div><div class="line">    	Column annotationColumn = field.getAnnotation(Column.class);</div><div class="line">        <span class="keyword">if</span> (annotationColumn == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        String columnName = columnAnnotation.name();</div><div class="line">        String isPrimaryKey = columnAnnotation.isPrimaryKey();</div><div class="line">        .........</div><div class="line">        Class&lt;?&gt; type = field.getType();</div><div class="line">        SQLiteType columnType = JavaToSQLiteType.getJavaSQLiteType(type);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了控制篇幅，不讲具体orm实现，只贴出部分核心代码。首先通过反射获取User里所有的fields，判断field是否有Column注解，有则获取注解上的column信息，包括每个column的columnName，isPrimaryKey等。拿到了每一个列的具体信息，再完成java类型到sqlite类型的转换，表的列信息就全部获取到了。最后将其生成sql代码并执行，这样一张表就建好了。</p>
+<p>插入操作也是通过反射来完成，通过反射获取user对象的所有field的值，再通过之前建表时就获取的表名，列名就可以用sql语句完成数据的插入。</p>
+<p>可以看到整个orm的核心逻辑都是通过反射来实现的，包括表的创建以及增删改查。这也是这个库1.x版本的性能瓶颈，实测下来插入查询都会比一些流行库慢很多。所以这次优化的核心点就是去反射。也就是要替换原有通过反射来获取用户声明的表结构的部分。实现的方法就是接下来要讲的通过编译时注解进行代码生成，完成表结构获取，增删改查的代码生成。从而去掉大量反射逻辑，大幅提高性能。</p>
+<p>首先改变注解定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.TYPE)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Table &#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="meta">@Target</span>(ElementType.FIELD)</div><div class="line">    <span class="meta">@Retention</span>(RetentionPolicy.CLASS)</div><div class="line">    <span class="meta">@interface</span> Column &#123;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">nullable</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isUnionKey</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</div><div class="line">      </div><div class="line">        ......</div><div class="line">    &#125;</div><div class="line">  ......</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意唯一改变的就是@Retention注解，从原有的<code>RetentionPolicy.RUNTIME</code>改成<code>@Retention(RetentionPolicy.CLASS)</code>。前面已经提到，也就是从运行时注解改为编译时注解，从而在编译时通过注解处理生成代码，完成表信息，增删改查接口的代码生成。</p>
+<p>还是说建表和插入操作。建表只需要获取声明的表信息，所以应该提供一个方法来获取表的所有列信息，而插入方法很直白，就是要用于数据插入。那代码生成需要一个initColumnInfoList方法和一个save方法。来看实现。</p>
+<p>注解的处理只需继承AbstractProcessor类，主要实现process方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@AutoService</span>(Processor.class)</div><div class="line"><span class="meta">@SupportedOptions</span>(&#123;OrmProcessor.TARGET_MODULE_NAME&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrmProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line"></div><div class="line">    ........</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnv)</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">        handleTableAnnotation(roundEnv);</div><div class="line">		....</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 处理 <span class="doctag">@Table</span> 注解</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> roundEnv</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleTableAnnotation</span><span class="params">(RoundEnvironment roundEnv)</span> </span>&#123;</div><div class="line">        Set&lt;? extends Element&gt; set = roundEnv.getElementsAnnotatedWith(Table.class);</div><div class="line">        <span class="keyword">for</span> (Element element : set) &#123;</div><div class="line">            <span class="keyword">if</span> (isValid(element)) &#123;</div><div class="line">                TypeElement typeElement = (TypeElement) element;</div><div class="line">                PackageElement packageElement = (PackageElement) element.getEnclosingElement();</div><div class="line"></div><div class="line">                Map&lt;Table.Column, VariableInfo&gt; columnMap = <span class="keyword">new</span> TreeMap&lt;&gt;(AdapterGenerator.sTableColumnComparator);</div><div class="line"></div><div class="line">                List&lt;VariableElement&gt; variableElementList = ElementFilter.fieldsIn(typeElement.getEnclosedElements());</div><div class="line">                <span class="keyword">for</span> (VariableElement ve : variableElementList) &#123;</div><div class="line">                    Table.Column column = ve.getAnnotation(Table.Column.class);</div><div class="line">                    <span class="keyword">if</span> (column == <span class="keyword">null</span>) &#123;</div><div class="line">                        <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line">                    String variableName = ve.getSimpleName().toString();</div><div class="line"></div><div class="line">                    <span class="comment">// 获取属性类型</span></div><div class="line">                    TypeMirror typeMirror = ve.asType();</div><div class="line"></div><div class="line">                    columnMap.put(column, <span class="keyword">new</span> VariableInfo(variableName, typeMirror));</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                String fullName = typeElement.getQualifiedName().toString();</div><div class="line">                String className = typeElement.getSimpleName().toString();</div><div class="line">                String packageName = packageElement.getQualifiedName().toString();</div><div class="line"></div><div class="line">                ClassInfo classInfo = <span class="keyword">new</span> ClassInfo(fullName, className, packageName);</div><div class="line"></div><div class="line">                Table table = typeElement.getAnnotation(Table.class);</div><div class="line">                String tableName = table.name();</div><div class="line"></div><div class="line">                AdapterGenerator.generateTableAdapter(processingEnv.getFiler(), classInfo, tableName, columnMap);</div><div class="line"></div><div class="line">                tableMap.put(fullName, ADAPTER_PACKAGE + <span class="string">"."</span> + className + TABLE_ADAPTER_POSTFIX);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">  </div><div class="line">  ....... </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过参数roundEnv拿到User表注解中的所有信息，包括表名,列名以及类型。其中<code>AdapterGenerator.generateTableAdapter</code>方法将获取到的表信息生成java代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">generateTableAdapter</span><span class="params">(Filer filer, ClassInfo classInfo, String tableName,</span></span></div><div class="line"><span class="function"><span class="params">                                           Map&lt;Table.Column, VariableInfo&gt; columnMap)</span> </span>&#123;</div><div class="line"></div><div class="line">   </div><div class="line">      .....</div><div class="line"></div><div class="line">       <span class="comment">// initColumnInfoList方法</span></div><div class="line">       MethodSpec.Builder initListBuilder = MethodSpec.methodBuilder(<span class="string">"initColumnInfoList"</span>)</div><div class="line">               .addAnnotation(Override.class)</div><div class="line">               .addModifiers(Modifier.PROTECTED)</div><div class="line">               .addStatement(<span class="string">"columnInfoList = new $T()"</span>, arrayListClassName);</div><div class="line">       <span class="keyword">for</span> (Map.Entry&lt;Table.Column, VariableInfo&gt; entry : columnMap.entrySet()) &#123;</div><div class="line">           Table.Column column = entry.getKey();</div><div class="line">           VariableInfo variableInfo = entry.getValue();</div><div class="line"></div><div class="line">           initListBuilder.addStatement(<span class="string">"$T info_$L = new $T($L, $S, $L, $S, $L, $L, $L, $L, $S, $L, $L)"</span>,</div><div class="line">                   tableColumnInfoClassName,</div><div class="line">                   variableInfo.name,</div><div class="line">                   tableColumnInfoClassName,</div><div class="line">                   variableInfo.typeName.toString() + <span class="string">".class"</span>,</div><div class="line">                   column.name(),</div><div class="line">                   column.nullable(),</div><div class="line">					......</div><div class="line"></div><div class="line">           );</div><div class="line">           initListBuilder.addStatement(<span class="string">"columnInfoList.add(info_$L)"</span>, variableInfo.name);</div><div class="line">       &#125;</div><div class="line">       MethodSpec initList = initListBuilder.build();</div><div class="line"></div><div class="line">   <span class="comment">// save方法</span></div><div class="line">       MethodSpec.Builder saveBuilder = MethodSpec.methodBuilder(<span class="string">"save"</span>)</div><div class="line">               .addAnnotation(Override.class)</div><div class="line">               .addModifiers(Modifier.PUBLIC)</div><div class="line">               .returns(<span class="keyword">long</span>.class)</div><div class="line">               .addParameter(modelClassName, <span class="string">"model"</span>)</div><div class="line">               .addStatement(<span class="string">"$T contentValues = new $T()"</span>, contentValueClassName, contentValueClassName);</div><div class="line">       <span class="keyword">for</span> (Map.Entry&lt;Table.Column, VariableInfo&gt; entry : columnMap.entrySet()) &#123;</div><div class="line">           Table.Column column = entry.getKey();</div><div class="line">           VariableInfo variableInfo = entry.getValue();</div><div class="line">           <span class="comment">// 自增字段不主动赋值</span></div><div class="line">           <span class="keyword">if</span> (!column.isAutoincrement()) &#123;</div><div class="line">               saveBuilder.addStatement(<span class="string">"contentValues.put($S, $L)"</span>, column.name(),</div><div class="line">                       getVariableGetter(variableInfo.name, variableInfo.typeName));</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       saveBuilder.addStatement(<span class="string">"if (database == null) &#123;getDatabase();&#125;"</span>);</div><div class="line">       saveBuilder.addStatement(<span class="string">"return database.insert(tableName, null, contentValues)"</span>);</div><div class="line">       MethodSpec save = saveBuilder.build();</div><div class="line">......</div><div class="line"></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>上述代码通过<a href="https://github.com/square/javapoet" target="_blank" rel="external">javapoet</a>来生成java代码，遍历传进来的所有column名称以及类型，生成了<code>initColumnInfoList</code>和<code>save</code>方法。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initColumnInfoList</span><span class="params">()</span> </span>&#123;</div><div class="line">   columnInfoList = <span class="keyword">new</span> ArrayList();</div><div class="line">   TableColumnInfo info_name = <span class="keyword">new</span> TableColumnInfo(java.lang.String.class, <span class="string">"name"</span>, <span class="keyword">true</span>, <span class="string">"unknown"</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="string">""</span>, <span class="keyword">new</span> String[]&#123;&#125;, -<span class="number">2147483648</span>);</div><div class="line">   columnInfoList.add(info_name);</div><div class="line">   TableColumnInfo info_isMale = <span class="keyword">new</span> TableColumnInfo(<span class="keyword">boolean</span>.class, <span class="string">"male"</span>, <span class="keyword">true</span>, <span class="string">""</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="string">""</span>, <span class="keyword">new</span> String[]&#123;&#125;, -<span class="number">2147483648</span>);</div><div class="line">   columnInfoList.add(info_isMale);</div><div class="line">   TableColumnInfo info_id = <span class="keyword">new</span> TableColumnInfo(java.lang.String.class, <span class="string">"id"</span>, <span class="keyword">true</span>, <span class="string">""</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="string">""</span>, <span class="keyword">new</span> String[]&#123;&#125;, -<span class="number">2147483648</span>);</div><div class="line">   columnInfoList.add(info_id);</div><div class="line">   TableColumnInfo info_age = <span class="keyword">new</span> TableColumnInfo(<span class="keyword">int</span>.class, <span class="string">"age"</span>, <span class="keyword">true</span>, <span class="string">""</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="string">""</span>, <span class="keyword">new</span> String[]&#123;&#125;, -<span class="number">2147483648</span>);</div><div class="line">   columnInfoList.add(info_age);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">save</span><span class="params">(User model)</span> </span>&#123;</div><div class="line">   ContentValues contentValues = <span class="keyword">new</span> ContentValues();</div><div class="line">   contentValues.put(<span class="string">"name"</span>, model.getName());</div><div class="line">   contentValues.put(<span class="string">"male"</span>, model.isMale());</div><div class="line">   contentValues.put(<span class="string">"id"</span>, model.getId());</div><div class="line">   contentValues.put(<span class="string">"age"</span>, model.getAge());</div><div class="line">   <span class="keyword">if</span> (database == <span class="keyword">null</span>) &#123;getDatabase();&#125;;</div><div class="line">   <span class="keyword">return</span> database.insert(tableName, <span class="keyword">null</span>, contentValues);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>initColumnInfoList构造了columnInfoList，有了他自然可以建表了，而save方法很清晰就是常用的一个插入操作了。</p>
+<p>当然，生成代码的initColumnInfoList方法还是需要通过反射来调一次。</p>
+<p>这样优化后，效率大幅提升，数据表插入效率提升30%，查询效率提升60%。</p>
+<p>再总结下，其实大部分依赖反射的实现就都可以通过代码生成来解决。代码生成提高了库本身的复杂度，也增加了使用者的编译速度，但是相比性能的大幅提示来说，还是非常值得的。</p>
+<p>写完回头看看觉得有点杂糅，因为既涉及到orm的实现，又涉及到注解处理。有空再单独写篇注解处理吧。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" data-id="cj9o6svff001fn7t9896ybpe5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="react-vim环境搭建" class="article article-type-react" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/04/08/vim环境搭建/">用vim开发react native的环境搭建</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/04/08/vim环境搭建/">
+            <time datetime="2016-04-08T09:45:03.000Z" itemprop="datePublished">2016-04-08</time>
+        </a>
+    </div>
+
+
+                    
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>续费博客域名的时候发现，一晃竟然两年没更新了……只能说时间过的真是好快。前几天把博客切换到了hexo，因为octopress的构建速度实在是已经不能支持继续写更多的博客了。</p>
+<p>最近有时间就会去研究下react native，打算接下来写一系列react native相关的文章。</p>
+<p>写react编辑器自然还是用我最喜欢的vim，可以配置下语法高亮，语法检查和代码片段自动生成。<br></p>
+            <p class="article-more-link">
+                <a href="/2016/04/08/vim环境搭建/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2016/04/08/vim环境搭建/" data-id="cj9o6svfn001ln7t96m140qhq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2016/04/08/vim环境搭建/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2016/04/08/vim环境搭建/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-vimzhong-de-yu-fa-jian-cha-syntastic" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/">vim中的语法检查-syntastic</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/">
+            <time datetime="2014-05-13T11:29:00.000Z" itemprop="datePublished">2014-05-13</time>
+        </a>
+    </div>
+
+
+                    
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>最近比较忙，有几天没更新了。今天有个同事问我一个语法插件的问题，向他介绍了Sytanstic.vim。那今天就来介绍下这个必备的插件吧。</p>
+<p>很多人喜欢IDE就是因为他的语法检查，有了<a href="https://github.com/scrooloose/syntastic" target="_blank" rel="external">Sytanstic.vim</a>,这个问题就不复存在了。（当然，仅仅是语法检查）</p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>上一张官方图：</p>
+<p><img src="http://foocoder.qiniudn.com/blog/syntasticsyntastic.png?token=hYfsyKwhHPe-Ga-1Hypx5F8CwimEywvTI8XdNpEm:z6zQYbdezgOYcKfzok7LEkuRDkg=:eyJTIjoiZm9vY29kZXIucWluaXVkbi5jb20vYmxvZy9zeW50YXN0aWNzeW50YXN0aWMucG5nIiwiRSI6MTQwMDA2ODU2N30=" alt=""></p></p>
+            <p class="article-more-link">
+                <a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" data-id="cj9o6svfq001nn7t9o55najv2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/">vim 重复操作的利器--点命令</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/">
+            <time datetime="2014-05-06T12:18:00.000Z" itemprop="datePublished">2014-05-06</time>
+        </a>
+    </div>
+
+
+                    
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1eg4vqmtvzsj20b408cdgf.jpg" alt=""></p>
+<p>之前介绍过可以重复motion的插件space.vim，有朋友留言说<code>.</code>不是也可以？其实<code>.</code>确实可以重复很多动作，但是无法重复motion。其实<code>;</code>和<code>,</code>倒是可以重复motion。不过space.vim可以重复更多操作，之前的博客有全部列出来。</p>
+<p>今天主要就介绍<code>.</code>命令。</p>
+<p>这个命令就用来重复上一次的操作。比如:<code>dw</code>,再按<code>.</code>就会再删除一个单词。他可以重复的命令非常多，比如插入操作<code>a</code>,<code>i</code>，比如替换删除操作<code>c</code>,<code>s</code>, <code>r</code>还有<code>J</code>,<code>~</code>等常用的操作。但是我却很难概括他到底可以重复哪些操作，我基本归纳为重复对当前buffer造成改变的操作，虽然并不准确.</p>
+<p>了解了基本的用途，来看看使用场景吧。我说说我一般的用法:</p></p>
+            <p class="article-more-link">
+                <a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" data-id="cj9o6svfa001an7t93t45ypn0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/">每日vim插件--平滑滚动accelerated-smooth-scroll.vim</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/">
+            <time datetime="2014-04-29T14:11:00.000Z" itemprop="datePublished">2014-04-29</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/vim/">vim</a>
+    </div>
+
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>今天介绍一个简单的插件：<a href="https://github.com/yonchu/accelerated-smooth-scroll" target="_blank" rel="external">accelerated-smooth-scroll.</a><br>很简单，就是让<code>&lt;C-D&gt;/&lt;C-U&gt;</code>和<code>&lt;C-F&gt;/&lt;C-B&gt;</code>不再突然出现，而是出现滚动效果。同时，在连续滚动时，还有加速效果。<br>做了个gif图，真实效果比图片要更流畅一些，如图所示：</p>
+<p><img src="http://ww4.sinaimg.cn/large/69d56e38gw1efwtsjauuag20qj0ivkjm.gif" alt=""></p>
+<p>今天就介绍它啦。几乎是用的最多的插件……</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" data-id="cj9o6svfc001cn7t9q7h6whnk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/">每日vim插件--强大的自动补全neocomplete.vim和supertab</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/">
+            <time datetime="2014-04-28T13:02:00.000Z" itemprop="datePublished">2014-04-28</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/vim/">vim</a>
+    </div>
+
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>#neocomplete.vim</p>
+<p>今天介绍两个个必备的vim插件，自动补全插件——<a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="external">neocomplete.vim</a>和superTab。</p>
+<p>neocomplete.vim是来自shougo的作品。该插件维护了当前buffer的一个关键词列表，从而提供强大的关键词补全功能。</p>
+<p>该插件是他前作neocomplcache的升级版，速度更快，功能更强大。不过该插件需要<a href="http://vimdoc.sourceforge.net/htmldoc/if_lua.html" target="_blank" rel="external">if_lua</a>的支持。</p>
+<p>mac下安装：</p>
+<pre><code>brew install macvim --with-cscope --with-lua --HEAD
+</code></pre><p>或者不用macvim（真的不用么？赶紧试试吧）：</p>
+<pre><code>brew install vim --with-lua
+</code></pre><p>不需要过多的介绍,看作者给的图：</p></p>
+            <p class="article-more-link">
+                <a href="/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/" data-id="cj9o6svfi001hn7t95mpuopsj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2014/04/28/mei-ri-vimcha-jian-qiang-da-de-zi-dong-bu-quan-neocomplete-dot-vim/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" class="title">记一次orm库性能优化，谈谈android的注解处理和代码生成</a></p>
+                            <p class="item-date"><time datetime="2017-11-06T12:51:23.000Z" itemprop="datePublished">2017-11-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/08/vim环境搭建/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://77flrh.com1.z0.glb.clouddn.com/屏幕快照%202016-04-08%20下午5.38.43.png)" alt="用vim开发react native的环境搭建" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/08/vim环境搭建/" class="title">用vim开发react native的环境搭建</a></p>
+                            <p class="item-date"><time datetime="2016-04-08T09:45:03.000Z" itemprop="datePublished">2016-04-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://foocoder.qiniudn.com/blog/syntasticsyntastic.png?token=hYfsyKwhHPe-Ga-1Hypx5F8CwimEywvTI8XdNpEm:z6zQYbdezgOYcKfzok7LEkuRDkg=:eyJTIjoiZm9vY29kZXIucWluaXVkbi5jb20vYmxvZy9zeW50YXN0aWNzeW50YXN0aWMucG5nIiwiRSI6MTQwMDA2ODU2N30=)" alt="vim中的语法检查-syntastic" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" class="title">vim中的语法检查-syntastic</a></p>
+                            <p class="item-date"><time datetime="2014-05-13T11:29:00.000Z" itemprop="datePublished">2014-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ww4.sinaimg.cn/large/69d56e38gw1eg4vqmtvzsj20b408cdgf.jpg)" alt="vim 重复操作的利器--点命令" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" class="title">vim 重复操作的利器--点命令</a></p>
+                            <p class="item-date"><time datetime="2014-05-06T12:18:00.000Z" itemprop="datePublished">2014-05-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ww4.sinaimg.cn/large/69d56e38gw1efwtsjauuag20qj0ivkjm.gif)" alt="每日vim插件--平滑滚动accelerated-smooth-scroll.vim" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/vim/">vim</a></p>
+                            <p class="item-title"><a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" class="title">每日vim插件--平滑滚动accelerated-smooth-scroll.vim</a></p>
+                            <p class="item-date"><time datetime="2014-04-29T14:11:00.000Z" itemprop="datePublished">2014-04-29</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm-Annotation-Processing-注解处理/">orm, Annotation Processing, 注解处理</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 foocoder<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'notice501';
+    
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

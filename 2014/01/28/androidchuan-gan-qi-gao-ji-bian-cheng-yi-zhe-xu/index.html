@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>《Android传感器高级编程》译者序 | Code Rush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="翻看手机中的应用，就能发现大多数应用都已经使用了传感器。让微信彻底火起来的“附近的人”和“摇一摇”、碰一碰交换信息的Bump、各种运动记录app、神奇的“磁力探测仪”、火爆的游戏Temple Run……手机设备中的传感器让应用的可玩性大大增加，提供了各种创新的交互方式，以及在PC上很难实现的功能。在我看来，移动设备相对PC来说的主要优势在于随时随地的便携性，还有就是丰富的传感器。用好传感器，已经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Android传感器高级编程》译者序">
+<meta property="og:url" content="http://foocoder.com/2014/01/28/androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu/index.html">
+<meta property="og:site_name" content="Code Rush">
+<meta property="og:description" content="翻看手机中的应用，就能发现大多数应用都已经使用了传感器。让微信彻底火起来的“附近的人”和“摇一摇”、碰一碰交换信息的Bump、各种运动记录app、神奇的“磁力探测仪”、火爆的游戏Temple Run……手机设备中的传感器让应用的可玩性大大增加，提供了各种创新的交互方式，以及在PC上很难实现的功能。在我看来，移动设备相对PC来说的主要优势在于随时随地的便携性，还有就是丰富的传感器。用好传感器，已经">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/69d56e38gw1ecz2n3vnnaj209p09qaas.jpg">
+<meta property="og:updated_time" content="2017-11-06T09:53:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Android传感器高级编程》译者序">
+<meta name="twitter:description" content="翻看手机中的应用，就能发现大多数应用都已经使用了传感器。让微信彻底火起来的“附近的人”和“摇一摇”、碰一碰交换信息的Bump、各种运动记录app、神奇的“磁力探测仪”、火爆的游戏Temple Run……手机设备中的传感器让应用的可玩性大大增加，提供了各种创新的交互方式，以及在PC上很难实现的功能。在我看来，移动设备相对PC来说的主要优势在于随时随地的便携性，还有就是丰富的传感器。用好传感器，已经">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/69d56e38gw1ecz2n3vnnaj209p09qaas.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Code Rush</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/c8d3ee2c26095aa48bb648cd7d083dca?s=128" />
+            <h2 id="name">foocoder</h2>
+            <h3 id="title">Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/notice501/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                33
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                1
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                    
+                    <td><a href="https://weibo.com/notice520?ssl_rnd=1509972136.9582&is_hot=1" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+                    
+                    <td><a href="http://foocoder.com/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            《Android传感器高级编程》译者序
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/01/28/androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu/">
+            <time datetime="2014-01-28T02:55:00.000Z" itemprop="datePublished">2014-01-28</time>
+        </a>
+    </div>
+
+
+                    
+                    
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://ww2.sinaimg.cn/large/69d56e38gw1ecz2n3vnnaj209p09qaas.jpg" alt=""></p>
+<p>翻看手机中的应用，就能发现大多数应用都已经使用了传感器。让微信彻底火起来的“附近的人”和“摇一摇”、碰一碰交换信息的Bump、各种运动记录app、神奇的“磁力探测仪”、火爆的游戏Temple Run……手机设备中的传感器让应用的可玩性大大增加，提供了各种创新的交互方式，以及在PC上很难实现的功能。在我看来，移动设备相对PC来说的主要优势在于随时随地的便携性，还有就是丰富的传感器。用好传感器，已经是手机应用开发的必修课。</p>
+<p>可是开始听到本书书名时，对翻译本书并没有什么兴趣。我自己也写过一本Android开发方面的书，觉得介绍传感器编程的话，一个章节足以。可是在看了英文书后，发现本书并不是简单地介绍Android传感器API的调用，而是非常专业细致地介绍了Android传感器。这本书将教会你真正用好Android传感器。</p>
+<a id="more"></a>
+<p>首先，本书对传感器的介绍都非常深入。我一直认为，要真正用好一个东西，必须了解其原理。本书对传感器的原理都作了必要的解读，就拿第1章来说，相信大家都知道GPS的原理，但是你知道A-GPS吗？S-GPS呢？是否知道Wi-Fi定位和移动网络定位的原理呢？想要用好Android的定位服务，这些知识是必需的。我的一位朋友前几天还问我，他玩微信中“附近的人”，明明在杭州却老是定位在南京。其实原因就是他在使用Wi-Fi定位，而这个路由器在南京呆了6年，在Google的数据库中早就被定位在了南京的某地，Google并没有即时更新该数据库。如果微信考虑这种情况，相信可以对这种状况做一些特别的处理。</p>
+<p>其次，本书的范围很广。与其说是介绍传感器，倒不如说是介绍如何充分利用Android设备的硬件能力。本书分4个部分，涵盖了定位的相关内容、各种物理传感器的介绍(包括重力传感器、加速计、磁强计等，还介绍了AOA和ADK)，同时还包括了NFC、摄像头、图像处理、麦克风等，以及语音识别和文本转语音的内容。可以说，本书完全涵盖了Android的硬件设备能力，能够用来打造一个非常有趣的应用。运用好这些硬件，可以充分发挥Android设备智能和便携的特性。同时这也是相对Web 应用来说非常大的优势。书中甚至包括了最近火热的Arduino的使用介绍，读者可以尽情地创新创意。</p>
+<p>再次，本书的示例非常丰富，并且很多都可以简单复用。书中有着大量的示例，大多都是作者对传感器使用的最佳实践，并且结合了实际的使用场景，而不是简单的demo。同时，作者提供了大量框架性的代码，读者都可以直接复用。通过这些示例，读者可以快速掌握这些传感器的用法。</p>
+<p>在翻译本书的过程中，感谢我的家人，你们给了我最大的支持。感谢我的好朋友徐婷翻译了第六章，且对本书一丝不苟的校对，让行文更加通顺优美，在很多专业知识上也提供了宝贵的建议并对本书的第6章有所贡献，在整个翻译过程中给了我莫大的支持和鼓励。感谢我所有的朋友和同事，本书的完成少不了你们的鼓励和支持。感谢清华大学出版社的编辑给了足够的耐心，并给了我很多的建议和帮助，让我获益匪浅。<br>本书的翻译过程非常艰辛，可谓一波三折。在本书付梓之际，虽然高兴，却也多了几分惶恐。这也是我的第一本译作，自觉水平有限，而本书其实又由多个作者完成，语言风格迥异，虽然我已经尽了很大的努力，但是肯定难免会有一些错漏和偏颇之处。对于本书的任何想法和意见都欢迎发送邮件至notice520@gmail.com。</p>
+<p>最后，希望本书能帮助各位开发人员打造更美、更有创意、更有趣的移动应用。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://foocoder.com/2014/01/28/androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu/" data-id="cj9o6svee000on7t934xp70v1" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://foocoder.com/2014/01/28/androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://foocoder.com/2014/01/28/androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/04/01/mei-ri-vimcha-jian-kai-pian-zhi-vundle/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    每日vim插件--开篇之vundle
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/09/22/wo-zai-yong-de-macruan-jian-3-xiao-lu-pian/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">我在用的mac软件(3)-效率篇</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/11/06/记一次orm库性能优化，谈谈android的注解处理和代码生成/" class="title">记一次orm库性能优化，谈谈android的注解处理和代码生成</a></p>
+                            <p class="item-date"><time datetime="2017-11-06T12:51:23.000Z" itemprop="datePublished">2017-11-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/08/vim环境搭建/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://77flrh.com1.z0.glb.clouddn.com/屏幕快照%202016-04-08%20下午5.38.43.png)" alt="用vim开发react native的环境搭建" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/08/vim环境搭建/" class="title">用vim开发react native的环境搭建</a></p>
+                            <p class="item-date"><time datetime="2016-04-08T09:45:03.000Z" itemprop="datePublished">2016-04-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://foocoder.qiniudn.com/blog/syntasticsyntastic.png?token=hYfsyKwhHPe-Ga-1Hypx5F8CwimEywvTI8XdNpEm:z6zQYbdezgOYcKfzok7LEkuRDkg=:eyJTIjoiZm9vY29kZXIucWluaXVkbi5jb20vYmxvZy9zeW50YXN0aWNzeW50YXN0aWMucG5nIiwiRSI6MTQwMDA2ODU2N30=)" alt="vim中的语法检查-syntastic" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2014/05/13/vimzhong-de-yu-fa-jian-cha-syntastic/" class="title">vim中的语法检查-syntastic</a></p>
+                            <p class="item-date"><time datetime="2014-05-13T11:29:00.000Z" itemprop="datePublished">2014-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ww4.sinaimg.cn/large/69d56e38gw1eg4vqmtvzsj20b408cdgf.jpg)" alt="vim 重复操作的利器--点命令" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2014/05/06/vim-zhong-fu-cao-zuo-de-li-qi-dian-ming-ling/" class="title">vim 重复操作的利器--点命令</a></p>
+                            <p class="item-date"><time datetime="2014-05-06T12:18:00.000Z" itemprop="datePublished">2014-05-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ww4.sinaimg.cn/large/69d56e38gw1efwtsjauuag20qj0ivkjm.gif)" alt="每日vim插件--平滑滚动accelerated-smooth-scroll.vim" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/vim/">vim</a></p>
+                            <p class="item-title"><a href="/2014/04/29/mei-ri-vimcha-jian-ping-hua-gun-dong-accelerated-smooth-scroll-dot-vim/" class="title">每日vim插件--平滑滚动accelerated-smooth-scroll.vim</a></p>
+                            <p class="item-date"><time datetime="2014-04-29T14:11:00.000Z" itemprop="datePublished">2014-04-29</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm-Annotation-Processing-注解处理/">orm, Annotation Processing, 注解处理</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 foocoder<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'notice501';
+    
+    
+    var disqus_url = 'http://foocoder.com/2014/01/28/androidchuan-gan-qi-gao-ji-bian-cheng-yi-zhe-xu/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
